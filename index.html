@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>小小素指令</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <style>
+        /* 定义CSS变量（颜色主题） */
+        :root {
+            --primary-color: #A1BDFF;  /* 主色调 - 淡蓝色 */
+            --text-color: #333;        /* 主要文字颜色 - 深灰色 */
+            --light-bg: #DBE6FF;       /* 页面背景色 - 非常淡的蓝色 */
+            --card-bg: #ffffff;        /* 卡片背景色 - 纯白色 */
+            --border-color: #CCCCFF;   /* 边框颜色 - 比主色更淡的蓝色 */
+            --danger-color: #FFB3C0;   /* 管理员区域颜色 - 粉色 */
+            --info-color: #85DFB5;     /* 查询区域颜色 - 淡绿色 */
+        }
+        
+        /* 全局样式重置 */
+        * {
+            margin: 0;                 /* 外边距归零 */
+            padding: 0;                /* 内边距归零 */
+            box-sizing: border-box;    /* 盒模型计算方式 */
+            font-family: 'Microsoft YaHei', sans-serif; /* 字体设置 */
+        }
+        
+        /* 页面主体样式 */
+        body {
+            background-color: var(--light-bg); /* 使用定义的背景色 */
+            color: var(--text-color);          /* 使用定义的文字颜色 */
+            padding-top: 60px;                 /* 顶部留出60px空间给固定头部 */
+        }
+        
+        /* 顶部导航栏样式 */
+        #header {
+            background-color: var(--primary-color); /* 使用主色调 */
+            padding: 15px 18px;      /* 内边距：上下15px，左右20px */
+            display: flex;           /* 弹性布局 */
+            align-items: center;     /* 垂直居中 */
+            position: fixed;         /* 固定定位 */
+            width: 100%;             /* 宽度100% */
+            top: 0;                  /* 顶部对齐 */
+            z-index: 100;            /* 层级设置，确保在最上层 */
+            color: white;            /* 文字颜色白色 */
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1); /* 添加阴影效果 */
+        }
+        
+        /* 标题样式 */
+        #title {
+            font-size: 36px;        /* 字体大小18px */
+            font-weight: bold;      /* 加粗 */
+            text-align: center;     /* 文字居中 */
+            flex-grow: 1;           /* 弹性布局中占据剩余空间 */
+        }
+        
+        /* 版本标签样式 */
+        .version-badge {
+            background-color: var(--primary-color); /* 使用主色调 */
+            color: white;            /* 文字白色 */
+            padding: 3px 8px;        /* 内边距：上下3px，左右8px */
+            border-radius: 10px;     /* 圆角10px */
+            font-size: 28px;         /* 字体大小12px */
+            margin-left: 10px;       /* 左边距10px */
+            vertical-align: middle;  /* 垂直居中 */
+        }
+        
+        /* 主容器样式 */
+        .container {
+            max-width: 800px;        /* 最大宽度900px */
+            margin: 0 auto;          /* 水平居中 */
+            padding: 20px;           /* 内边距20px */
+        }
+        
+        /* 指令区块样式 */
+        .section {
+            background-color: var(--card-bg); /* 使用卡片背景色 */
+            border-radius: 8px;       /* 圆角8px */
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05); /* 阴影效果 */
+            margin-bottom: 20px;      /* 底部外边距20px */
+            overflow: hidden;         /* 隐藏溢出内容 */
+        }
+        
+        /* 区块头部通用样式 */
+        .section-header {
+            background-color: var(--primary-color); /* 默认使用主色调 */
+            color: white;             /* 文字白色 */
+            padding: 12px 15px;       /* 内边距：上下12px，左右15px */
+            font-size: 16px;          /* 字体大小16px */
+            font-weight: bold;        /* 加粗 */
+            display: flex;            /* 弹性布局 */
+            align-items: center;      /* 垂直居中 */
+        }
+        
+        /* 区块头部图标样式 */
+        .section-header i {
+            margin-right: 8px;        /* 图标右边距8px */
+        }
+        
+        /* 管理员区块头部特殊样式 */
+        .section-header.admin {
+            background-color: var(--danger-color); /* 使用危险色（粉色） */
+        }
+        
+        /* 查询区块头部特殊样式 */
+        .section-header.query {
+            background-color: var(--info-color); /* 使用信息色（淡绿色） */
+        }
+        
+        /* 指令网格布局 */
+        .commands-grid {
+            display: grid;                          /* 网格布局 */
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); /* 自动填充，最小300px */
+            gap: 15px;                              /* 网格间距15px */
+            padding: 10px;                          /* 内边距15px */
+        }
+        
+        /* 单个指令卡片样式 */
+        .command-card {
+            background-color: white;                /* 背景白色 */
+            border-radius: 6px;                     /* 圆角6px */
+            padding: 8px;                          /* 内边距12px */
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05); /* 轻微阴影 */
+        }
+        
+        /* 指令名称样式 */
+        .command-name {
+            font-weight: bold;      /* 加粗 */
+            margin-bottom: 6px;     /* 底部外边距6px */
+            color: var(--text-color); /* 使用文字颜色 */
+        }
+        
+        /* 指令描述样式 */
+        .command-desc {
+            color: #666;            /* 灰色文字 */
+            font-size: 13px;        /* 字体大小13px */
+            line-height: 1.4;       /* 行高1.4倍 */
+        }
+        
+        /* 指令示例样式 */
+        .command-example {
+            margin-top: 6px;        /* 顶部外边距6px */
+            font-size: 12px;        /* 字体大小12px */
+            color: #888;            /* 浅灰色文字 */
+            background-color: #EBF1FF; /* 淡蓝色背景 */
+            padding: 4px 6px;       /* 内边距：上下4px，左右6px */
+            border-radius: 3px;     /* 圆角3px */
+            display: inline-block;  /* 行内块元素 */
+        }
+        
+        /* 响应式设计 - 屏幕宽度小于768px时的样式 */
+        @media (max-width: 768px) {
+            .commands-grid {
+                grid-template-columns: 1fr; /* 单列布局 */
+            }
+            
+            .container {
+                padding: 15px;      /* 缩小内边距 */
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 顶部导航栏 -->
+    <div id="container">
+        <div id="title">小小素指令<span class="version-badge">v1.10.13</span></div>
+    </div>
+    
+    <!-- 主内容区 -->
+    <div class="container">
+        <!-- 基础指令部分 -->
+        <div class="section">
+            <div class="section-header">
+                <i class="fas fa-list-ul"></i> 基础指令
+            </div>
+            <div class="commands-grid">
+                <!-- 每个指令卡片 -->
+                <div class="command-card">
+                    <div class="command-name">mcp [服务器地址]</div>
+                    <div class="command-desc">查询服务器状态</div>
+                    <div class="command-example">示例: mcp 2b2t.org</div>
+                </div>
+                <div class="command-card">
+                    <div class="command-name">#签到</div>
+                    <div class="command-desc">每日签到。</div>
+                </div>
+                <div class="command-card">
+                    <div class="command-name">小小酥 [@用户(默认自己)]</div>
+                    <div class="command-desc">查询小小酥的数量。</div>
+                    <div class="command-example">示例: 小小酥 @Az_Su</div>
+                </div>
+                <div class="command-card">
+                    <div class="command-name">小小酥.pay〈@用户〉〈金额〉</div>
+                    <div class="command-desc">向某人转账(税率245%)</div>
+                    <div class="command-example">示例: 小小酥.pay @Az_Su 100</div>
+                </div>
+                <div class="command-card">
+                    <div class="command-name">大转盘〈@用户/开启/关闭〉</div>
+                    <div class="command-desc">禁言大转盘，每次消耗100个小小酥。</div>
+                    <div class="command-example">示例: 大转盘 @许愿沙</div>
+                </div>
+                <div class="command-card">
+                    <div class="command-name">我要进群</div>
+                    <div class="command-desc">加入小小素交流群</div>
+                    <div class="command-desc">请添加小小素为好友，私信发送该指令！</div>
+                </div>
+                <div class="command-card">
+                    <div class="command-name">领取小小酥</div>
+                    <div class="command-desc">加入小小素交流群领取1000小小酥！</div>
+                </div>
+                <div class="command-card">
+                    <div class="command-name">赞助小小素/给小小素喂水晶</div>
+                    <div class="command-desc">赞助。</div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 玩家信息查询指令部分 -->
+        <div class="section">
+            <div class="section-header query">
+                <i class="fas fa-search"></i> 玩家信息查询指令
+            </div>
+            <div class="commands-grid">
+                <!-- 查询指令卡片... -->
+                <div class="command-card">
+                    <div class="command-name">org.s〈玩家ID〉</div>
+                    <div class="command-desc">查询2b2t.org玩家信息。</div>
+                    <div class="command-example">示例: org.s Az_Su</div>
+                </div>
+                <div class="command-card">
+                    <div class="command-name">org.t</div>
+                    <div class="command-desc">查询2b2t.org在线玩家列表。</div>
+                    <div class="command-example">示例: org.t</div>
+                </div>
+                <div class="command-card">
+                    <div class="command-name">org.r〈类型〉</div>
+                    <div class="command-desc">查询2b2t.org排行榜前20。</div>
+                    <div class="command-desc">支持类型：playtime(p),kills(k),deaths(d)</div>
+                    <div class="command-example">示例: org.r p</div>
+                </div>
+                <div class="command-card">
+                    <div class="command-name">org.r〈类型〉[玩家ID]</div>
+                    <div class="command-desc">查询2b2t.org玩家排名。</div>
+                    <div class="command-desc">支持类型：playtime(p),kills(k),deaths(d),all</div>
+                    <div class="command-example">示例: org.r all Az_Su</div>
+                </div>
+                <div class="command-card">
+                    <div class="command-name">gg.s/t/r ......</div>
+                    <div class="command-desc">2b2t.gg数据不再更新。</div>
+                </div>
+                <div class="command-card">
+                    <div class="command-name">pub.t</div>
+                    <div class="command-desc">查询2b2t.pub在线玩家列表。</div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 管理员指令部分 -->
+        <div class="section">
+            <div class="section-header admin">
+                <i class="fas fa-terminal"></i> 管理员指令
+            </div>
+            <div class="commands-grid">
+                <div class="command-card">
+                    <div class="command-name">mute〈@用户〉〈禁言时间〉</div>
+                    <div class="command-desc">禁言某人，禁言时间支持单位：s(默认),min,h,d，禁言时间为0即解除禁言。</div>
+                    <div class="command-example">示例: mute @晚辅君 30d</div>
+                </div>
+                <div class="command-card">
+                    <div class="command-name">kick〈@用户〉[拉黑(可选)]</div>
+                    <div class="command-desc">将某人踢出群聊，支持拉黑。</div>
+                    <div class="command-example">示例: kick @晚辅君 拉黑</div>
+                </div>
+                <div class="command-card">
+                    <div class="command-name">mcp.绑定〈服务器地址〉</div>
+                    <div class="command-desc">绑定当前群聊或私聊的mcping默认服务器地址。</div>
+                </div>
+                <div class="command-card">
+                    <div class="command-name">mcp.白名单〈IP地址/关闭〉</div>
+                    <div class="command-desc">添加或关闭白名单，一旦添加则视为本群开启白名单。</div>
+                </div>
+                <div class="command-card">
+                    <div class="command-name">小小素.入群欢迎</div>
+                    <div class="command-desc">设置或取消入群欢迎，支持多种变量。</div>
+                </div>
+                <div class="command-card">
+                    <div class="command-name">小小酥.give〈@用户〉〈金额〉</div>
+                    <div class="command-desc">为某人发放小小酥，金额支持负数(扣除小小酥)，仅限高级管理员使用。</div>
+                </div>
+                <div class="command-card">
+                    <div class="command-name">unban〈@用户〉</div>
+                    <div class="command-desc">从黑名单中移除某人，仅限高级管理员使用。</div>
+                </div>
+                <div class="command-card">
+                    <div class="command-name">ban〈@用户〉</div>
+                    <div class="command-desc">黑名单，仅限高级管理员使用。</div>
+                </div>
+                <div class="command-card">
+                    <div class="command-name">小小素.复读机〈开启/关闭〉</div>
+                    <div class="command-desc">开启或关闭复读机功能，支持单双句复读，默认开启。</div>
+                </div>
+                <div class="command-card">
+                    <div class="command-name">小小素管理员〈添加/删除/清空〉〈@A@B@C〉</div>
+                    <div class="command-desc">添加本群的小小素管理员。</div>
+                    <div class="command-example">示例: 小小素.管理员 @Az_Su</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
