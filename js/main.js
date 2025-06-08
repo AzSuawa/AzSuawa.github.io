@@ -17,7 +17,7 @@ document.querySelectorAll('#sidebar ul li a[href^="#"]').forEach(link => {
             item.classList.remove('active');
         });
         this.parentElement.classList.add('active');
-        document.querySelectorAll('.page').forEach(page => {
+        document.querySelectorAll('.card').forEach(page => {
             page.classList.remove('active');
         });
         const pageId = this.getAttribute('data-page');
