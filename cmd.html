@@ -126,12 +126,12 @@
     position: fixed;
     top: 10px;
     left: 18px;
-    background-color: rgba(120, 158, 246, 0.7); /* 修改为 rgba 并设置透明度 0.7 */
-    color: white; /* 文字保持不透明 */
+    background-color: rgba(120, 158, 246, 0.7); /* 背景色，70% 不透明 */
+    color: white;
     border: none;
     border-radius: 8px;
-    width: 40px;
-    height: 40px;
+    width: 80px;  /* 加宽（长方形） */
+    height: 40px; /* 高度不变 */
     font-size: 18px;
     display: flex;
     align-items: center;
@@ -139,7 +139,15 @@
     cursor: pointer;
     z-index: 101;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    text-decoration: none; /* 去除下划线 */
+    transition: all 0.2s ease; /* 悬停动画 */
 }
+
+.home-button:hover {
+    background-color: rgba(120, 158, 246, 0.9); /* 悬停时加深 */
+    transform: scale(1.05); /* 轻微放大 */
+}
+
        
     </style>
     <link rel="icon" href="./favicon.ico" type="image/x-icon">
