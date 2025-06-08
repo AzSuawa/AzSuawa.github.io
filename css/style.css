@@ -96,22 +96,7 @@ body {
 #content.shifted {
     margin-left: 250px;
 }
-.page {
-    display: none;
-    background: var(--light-bg);
-    border-radius: 8px;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-    margin-bottom: 20px;
-}
-#a.page {
-    background: (226,12,100,1); 
-    box-shadow: none; 
-    padding: 0; 
-}
 
-.page.active {
-    display: block;
-}
 h1 {
     padding: 15px 20px;
     font-size: 18px;
