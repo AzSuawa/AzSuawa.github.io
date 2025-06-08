@@ -123,6 +123,7 @@ h1 {
     font-size: 14px;
 }
 
+
 .card {
     background: var(--card-bg);
     border-radius: 8px;
@@ -131,7 +132,7 @@ h1 {
     overflow: hidden;
 }
 
-#a .card h1 {
+.card h1 {
     padding: 15px 20px;
     font-size: 18px;
     color: var(--text-color);
@@ -139,9 +140,11 @@ h1 {
     margin: 0;
 }
 
-#a .card .command-section {
+.card .command-section {
     padding: 15px;
 }
+
+
 
 @media (min-width: 1024px) {
     #sidebar {
