@@ -43,7 +43,7 @@ body {
     transform: scale(0.95); 
 }
 #title {
-    font-size: 22px;
+    font-size: 24px;
     font-weight: bold;
 }
 #sidebar {
@@ -104,9 +104,9 @@ body {
     margin-bottom: 20px;
 }
 #a.page {
-    background: (226,12,100,1); /* 移除page背景色 */
-    box-shadow: none;        /* 移除page阴影 */
-    padding: 0;              /* 移除内边距 */
+    background: (226,12,100,1); 
+    box-shadow: none; 
+    padding: 3; 
 }
 
 .page.active {
