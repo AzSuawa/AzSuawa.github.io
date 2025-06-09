@@ -4,8 +4,10 @@
     --light-bg: #E5EDFF;
     --card-bg: #ffffff;
     --border-color: #e1e8ff;
-    --hover-blue: #4285f4; 
-    --hover-bg: rgba(66, 133, 244, 0.08); 
+    --hover-blue: #4285f4;
+    --hover-bg: rgba(66, 133, 244, 0.08);
+    --danger-color: #FFB3C0;
+    --info-color: #85DFB5;
 }
 
 * {
@@ -18,7 +20,6 @@
 body {
     background-color: var(--light-bg);
     color: var(--text-color);
-    transition: background-color 0.3s ease; 
 }
 
 #header {
@@ -31,7 +32,6 @@ body {
     top: 0;
     z-index: 100;
     color: white;
-    transition: background-color 0.3s ease; 
 }
 
 #menu-btn {
@@ -41,11 +41,6 @@ body {
     border: none;
     color: white;
     margin-right: 20px;
-    transition: transform 0.2s ease; 
-}
-
-#menu-btn:active {
-    transform: scale(0.95); 
 }
 
 #title {
@@ -55,7 +50,7 @@ body {
 
 #sidebar {
     position: fixed;
-    top: 0px;
+    top: 0;
     left: -250px;
     width: 250px;
     height: 100%;
@@ -77,11 +72,10 @@ body {
 #sidebar ul li {
     padding: 12px 20px;
     border-bottom: 1px solid var(--border-color);
-    transition: all 0.3s ease; 
 }
 
 #sidebar ul li:hover {
-    background-color: var(--hover-bg); 
+    background-color: var(--hover-bg);
 }
 
 #sidebar ul li a {
@@ -89,18 +83,16 @@ body {
     text-decoration: none;
     display: block;
     font-size: 15px;
-    transition: color 0.3s ease; 
 }
 
 #sidebar ul li a:hover {
-    color: var(--hover-blue) !important; 
+    color: var(--hover-blue);
 }
 
 #sidebar ul li i {
     margin-right: 10px;
     width: 20px;
     text-align: center;
-    transition: color 0.3s ease; 
 }
 
 #content {
@@ -134,28 +126,84 @@ body {
     margin: 0;
 }
 
-.card .command-section {
+.command-section {
     padding: 15px;
 }
 
-.command-item {
-    padding: 10px 0;
-    border-bottom: 1px dashed var(--border-color);
-    transition: background-color 0.3s ease; 
+/* 指令页面专用样式 */
+.version-badge {
+    background-color: var(--primary-color);
+    color: white;
+    padding: 2px 8px;
+    border-radius: 10px;
+    font-size: 14px;
+    margin-left: 10px;
+    vertical-align: middle;
 }
 
-.command-item:hover {
-    background-color: rgba(0,0,0,0.02); 
+.cmd-container {
+    padding: 15px;
+}
+
+.cmd-section {
+    background: var(--card-bg);
+    border-radius: 8px;
+    margin-bottom: 20px;
+    overflow: hidden;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+}
+
+.cmd-section-header {
+    background: var(--primary-color);
+    color: white;
+    padding: 12px 15px;
+    font-size: 15px;
+    display: flex;
+    align-items: center;
+}
+
+.cmd-section-header.admin {
+    background: var(--danger-color);
+}
+
+.cmd-section-header.query {
+    background: var(--info-color);
+}
+
+.cmd-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 12px;
+    padding: 12px;
+}
+
+.command-card {
+    background: white;
+    padding: 10px;
+    border-radius: 6px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
 }
 
 .command-name {
     font-weight: bold;
+    color: var(--text-color);
     margin-bottom: 5px;
 }
 
 .command-desc {
     color: #666;
-    font-size: 14px;
+    font-size: 13px;
+    line-height: 1.4;
+}
+
+.command-example {
+    display: inline-block;
+    margin-top: 5px;
+    padding: 3px 6px;
+    background: #F0F5FF;
+    border-radius: 4px;
+    font-size: 12px;
+    color: #555;
 }
 
 @media (min-width: 1024px) {
@@ -166,7 +214,7 @@ body {
         margin-left: 250px;
     }
     #menu-btn {
-        display: block !important;
+        display: none;
     }
 }
 
@@ -180,26 +228,8 @@ body {
     #menu-btn {
         display: block;
     }
-}
-
-#sidebar.desktop-hidden {
-    left: -250px;
-}
-
-#content.desktop-shifted {
-    margin-left: 0;
-}
-
-body.color-change {
-    animation: bgChange 10s infinite alternate;
-}
-
-
-
-@keyframes bgChange {
-    0% { background-color: #E5EDFF; } 
-    25% { background-color: #E5FFED; } 
-    50% { background-color: #EDE5FF; } 
-    75% { background-color: #FFEDE5; } 
-    100% { background-color: #E5F4FF; } 
+    
+    .cmd-grid {
+        grid-template-columns: 1fr;
+    }
 }
