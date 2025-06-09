@@ -53,24 +53,22 @@ document.querySelectorAll('#sidebar ul li a[href^="#"]').forEach(link => {
 });
 
 // 页面加载时根据hash显示对应内容
-if(window.location.hash) {
-    const pageId = window.location.hash.substring(1);
-    const menuItem = document.querySelector(`#sidebar a[data-page="${pageId}"]`);
-    if(menuItem) {
-        // 模拟点击对应的菜单项
-        menuItem.click();
+window.addEventListener('DOMContentLoaded', function() {
+    if(window.location.hash) {
+        const pageId = window.location.hash.substring(1);
+        const menuItem = document.querySelector(`#sidebar a[data-page="${pageId}"]`);
+        if(menuItem) {
+            // 模拟点击对应的菜单项
+            menuItem.click();
+        } else {
+            // 默认显示首页
+            showHomePage();
+        }
     } else {
-        // 默认显示首页
-        document.getElementById('a-welcome').classList.add('active');
-        document.getElementById('a-group').classList.add('active');
-        document.querySelector('#sidebar ul li:first-child').classList.add('active');
+        // 无hash时默认显示首页
+        showHomePage();
     }
-} else {
-    // 无hash时默认显示首页
-    document.getElementById('a-welcome').classList.add('active');
-    document.getElementById('a-group').classList.add('active');
-    document.querySelector('#sidebar ul li:first-child').classList.add('active');
-}
+});
 
 // 窗口大小变化时的响应式处理
 window.addEventListener('resize', function() {
@@ -87,3 +85,10 @@ window.addEventListener('resize', function() {
         content.classList.remove('desktop-shifted');
     }
 });
+
+// 显示首页的函数
+function showHomePage() {
+    document.getElementById('a-welcome').classList.add('active');
+    document.getElementById('a-group').classList.add('active');
+    document.querySelector('#sidebar ul li:first-child').classList.add('active');
+}
