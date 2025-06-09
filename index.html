@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <link rel="stylesheet" href="css/style.css">
     <link rel="icon" href="./favicon.ico" type="image/x-icon">
+    <meta name="theme-color" content="#A1BDFF">
 </head>
 <body>
     <div id="header">
@@ -19,15 +20,15 @@
         <ul>
             <li class="active"><a href="#a" data-page="a"><i class="fas fa-home"></i> 首页</a></li>
             <li><a href="#b" data-page="b"><i class="fas fa-star"></i> aaa</a></li>
-            <li><a href="cmd.html"><i class="fas fa-list-alt"></i> 指令列表</a></li>
+            <li><a href="#c" data-page="c"><i class="fas fa-list-alt"></i> 指令列表</a></li>
             <li><a href="#d" data-page="d"><i class="fas fa-book"></i> 小故事</a></li>
         </ul>
     </div>
     <div id="content">
-        <!-- 首页部分 -->
+        
         <div class="card active" id="a-welcome">
             <h1>欢迎使用小小素(p≧w≦q)</h1>
-            <div class="command-section" style="margin-bottom: 20px;">
+            <div class="command-section">
                 <p>太忙惹过半个月再弄</p>
             </div>
         </div>
@@ -38,7 +39,6 @@
             </div>
         </div>
         
-        <!-- 动态内容插入点 -->
         <div id="dynamic-content"></div>
     </div>
     <script src="js/main.js"></script>
