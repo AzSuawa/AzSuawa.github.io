@@ -48,6 +48,13 @@ body {
     font-weight: bold;
 }
 
+#cmd-title {
+    font-size: 36px;        
+    font-weight: bold;      
+    text-align: center;     
+    flex-grow: 1;           
+}
+
 #sidebar {
     position: fixed;
     top: 0;
