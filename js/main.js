@@ -14,10 +14,83 @@ document.getElementById('menu-btn').addEventListener('click', function() {
     }
 });
 
-// 侧边栏菜单项点击事件
+// 侧边栏菜单项点击事件 - 稳定版本
 document.querySelectorAll('#sidebar ul li a[href^="#"]').forEach(link => {
     link.addEventListener('click', function(e) {
+        // 彻底阻止所有默认行为和冒泡
         e.preventDefault();
+        e.stopPropagation();
+        e.stopImmediatePropagation();
+        
+        // 使用双重requestAnimationFrame确保在渲染周期后执行
+        requestAnimationFrame(() => {
+            requestAnimationFrame(() => {
+                // 更新UI状态
+                updateActiveState(this);
+                
+                // 切换卡片显示
+                toggleCards(this.getAttribute('data-page'));
+                
+                // 确保滚动位置重置
+                resetScrollPosition();
+                
+                // 处理移动端侧边栏
+                handleMobileSidebar();
+                
+                // 安全更新URL
+                updateUrlHash(this.getAttribute('data-page'));
+            });
+        });
+    });
+});
+
+// 提取的独立函数
+function updateActiveState(clickedElement) {
+    document.querySelectorAll('#sidebar ul li').forEach(item => {
+        item.classList.remove('active');
+    });
+    clickedElement.parentElement.classList.add('active');
+}
+
+function toggleCards(pageId) {
+    document.querySelectorAll('.card').forEach(card => {
+        card.classList.remove('active');
+    });
+    
+    if(pageId === 'a') {
+        document.getElementById('a-welcome').classList.add('active');
+        document.getElementById('a-group').classList.add('active');
+    } else {
+        document.getElementById(pageId).classList.add('active');
+    }
+}
+
+function resetScrollPosition() {
+    window.scrollTo({
+        top: 0,
+        left: 0,
+        behavior: 'instant'
+    });
+    document.documentElement.scrollTop = 0;
+    document.body.scrollTop = 0;
+}
+
+function handleMobileSidebar() {
+    if(window.innerWidth <= 1023) {
+        document.getElementById('sidebar').classList.remove('active');
+        document.getElementById('content').classList.remove('shifted');
+    }
+}
+
+function updateUrlHash(pageId) {
+    if(history.replaceState) {
+        history.replaceState(null, null, `#${pageId}`);
+    } else {
+        window.location.hash = `#${pageId}`;
+    }
+}
+
+        
         
         // 更新菜单激活状态
         document.querySelectorAll('#sidebar ul li').forEach(item => {
