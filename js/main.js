@@ -1,3 +1,5 @@
+import { loadPageStyles, showHomePage } from './utils.js';
+
 // 侧边栏菜单按钮点击事件
 document.getElementById('menu-btn').addEventListener('click', function() {
     const sidebar = document.getElementById('sidebar');
@@ -44,6 +46,9 @@ document.querySelectorAll('#sidebar ul li a[href^="#"]').forEach(link => {
                 document.getElementById(pageId).classList.add('active');
             }
 
+            // 加载页面特有样式
+            loadPageStyles(pageId);
+
             // 强制重置滚动位置
             window.scrollTo(0, 0);
             
@@ -58,7 +63,6 @@ document.querySelectorAll('#sidebar ul li a[href^="#"]').forEach(link => {
         });
     });
 });
-
 
 // 页面加载时根据hash显示对应内容
 window.addEventListener('DOMContentLoaded', function() {
@@ -93,10 +97,3 @@ window.addEventListener('resize', function() {
         content.classList.remove('desktop-shifted');
     }
 });
-
-// 显示首页的函数
-function showHomePage() {
-    document.getElementById('a-welcome').classList.add('active');
-    document.getElementById('a-group').classList.add('active');
-    document.querySelector('#sidebar ul li:first-child').classList.add('active');
-}
