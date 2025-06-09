@@ -15,6 +15,7 @@ document.getElementById('menu-btn').addEventListener('click', function() {
 // 页面内容映射
 const pageContentMap = {
     'b': 'pages/b.html',
+    'c': 'pages/c.html',
     'd': 'pages/d.html'
 };
 
@@ -71,6 +72,9 @@ async function loadPageContent(pageId) {
         
         // 激活新加载的卡片
         document.getElementById(pageId).classList.add('active');
+        
+        // 滚动到顶部
+        window.scrollTo(0, 0);
     } catch (err) {
         console.error('加载失败:', err);
         container.innerHTML = `
