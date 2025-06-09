@@ -194,6 +194,10 @@ body.color-change {
     animation: bgChange 10s infinite alternate;
 }
 
+html {
+    scroll-behavior: auto !important; 
+}
+
 @keyframes bgChange {
     0% { background-color: #E5EDFF; } 
     25% { background-color: #E5FFED; } 
