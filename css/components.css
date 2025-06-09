@@ -1,0 +1,44 @@
+.card {
+    background: var(--card-bg);
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+    margin-bottom: 20px;
+    overflow: hidden;
+    display: none;
+}
+
+.card.active {
+    display: block;
+}
+
+.card h1 {
+    padding: 15px 20px;
+    font-size: 18px;
+    color: var(--text-color);
+    border-bottom: 1px solid var(--border-color);
+    margin: 0;
+}
+
+.card .command-section {
+    padding: 15px;
+}
+
+.command-item {
+    padding: 10px 0;
+    border-bottom: 1px dashed var(--border-color);
+    transition: background-color 0.3s ease; 
+}
+
+.command-item:hover {
+    background-color: rgba(0,0,0,0.02); 
+}
+
+.command-name {
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.command-desc {
+    color: #666;
+    font-size: 14px;
+}
