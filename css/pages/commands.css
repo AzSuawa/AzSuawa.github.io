@@ -1,0 +1,27 @@
+.card h1 {
+    color: #2e86de;
+    text-align: center;
+    font-size: 22px;
+    padding: 20px 0;
+    border-bottom: 2px solid #2e86de;
+}
+
+.command-item {
+    padding: 15px;
+    margin: 10px 0;
+    background-color: #f8f9fa;
+    border-radius: 6px;
+    border-left: 4px solid #2e86de;
+}
+
+.command-name {
+    color: #2e86de;
+    font-size: 16px;
+    margin-bottom: 8px;
+}
+
+.command-desc {
+    color: #666;
+    font-size: 14px;
+    line-height: 1.5;
+}
