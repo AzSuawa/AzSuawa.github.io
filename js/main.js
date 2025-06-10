@@ -79,7 +79,7 @@ async function loadPageContent(pageId) {
         console.error('加载失败:', err);
         container.innerHTML = `
             <div class="card active error">
-                <h1>加载错误</h1>
+                <h1>加载失败(＞﹏＜)</h1>
                 <p>${err.message}</p>
             </div>
         `;
