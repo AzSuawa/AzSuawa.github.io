@@ -104,8 +104,9 @@ window.addEventListener('DOMContentLoaded', function() {
 
 // 显示首页
 function showHomePage() {
-    document.getElementById('a-welcome').classList.add('active');
-    document.getElementById('a-group').classList.add('active');
+    document.getElementById('a-0').classList.add('active');
+    document.getElementById('a-1').classList.add('active');
+    document.getElementById('a-2').classList.add('active');
     document.querySelector('#sidebar ul li:first-child').classList.add('active');
 }
 
