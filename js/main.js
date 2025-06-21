@@ -41,8 +41,10 @@ document.querySelectorAll('#sidebar ul li a[href^="#"]').forEach(link => {
 
         if(pageId === 'a') {
             // 显示首页卡片
-            document.getElementById('a-welcome').classList.add('active');
-            document.getElementById('a-group').classList.add('active');
+            document.getElementById('a-0').classList.add('active');
+            document.getElementById('a-1').classList.add('active');
+           
+document.getElementById('a-2').classList.add('active');
             document.getElementById('dynamic-content').innerHTML = '';
         } else {
             // 加载动态内容
