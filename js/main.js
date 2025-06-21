@@ -16,7 +16,8 @@ document.getElementById('menu-btn').addEventListener('click', function() {
 const pageContentMap = {
     'b': 'pages/b.html',
     'c': 'pages/c.html',
-    'd': 'pages/d.html'
+    'd': 'pages/d.html',
+    'e': 'pages/e.html'
 };
 
 // 侧边栏菜单项点击事件
