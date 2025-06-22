@@ -1,0 +1,154 @@
+
+<div id="e">
+    <div id="cmd-title">小小素指令<span class="version-badge">v1.10.15</span></div>
+    </div>
+    <div class="cmd-container">
+        
+        <div class="cmd-section">
+            <div class="cmd-section-header">
+                <i class="fas fa-list-ul"></i>
+‎ 基础指令
+            </div>
+            <div class="cmd-grid">
+                <div class="command-card">
+                    <div class="command-name">mcp [服务器地址]</div>
+                    <div class="command-desc">查询服务器状态</div>
+                    <div class="command-example">示例: mcp 2b2t.org</div>
+                </div>
+                <div class="command-card">
+                    <div class="command-name">#签到</div>
+                    <div class="command-desc">每日签到。</div>
+                </div>
+                <div class="command-card">
+                    <div class="command-name">小小酥 [@用户(默认自己)]</div>
+                    <div class="command-desc">查询小小酥的数量。</div>
+                    <div class="command-example">示例: 小小酥 @Az_Su</div>
+                </div>
+                <div class="command-card">
+                    <div class="command-name">小小酥.pay〈@用户〉〈金额〉</div>
+                    <div class="command-desc">向某人转账(税率245%)</div>
+                    <div class="command-example">示例: 小小酥.pay @Az_Su 100</div>
+                </div>
+                <div class="command-card">
+                    <div class="command-name">大转盘〈@用户/开启/关闭〉</div>
+                    <div class="command-desc">禁言大转盘，每次消耗100个小小酥。</div>
+                    <div class="command-example">示例: 大转盘 @许愿沙</div>
+                </div>
+                <div class="command-card">
+                    <div class="command-name">我要进群</div>
+                    <div class="command-desc">加入小小素交流群</div>
+                    <div class="command-desc">请添加小小素为好友，私信发送该指令！</div>
+                </div>
+                <div class="command-card">
+                    <div class="command-name">领取小小酥</div>
+                    <div class="command-desc">加入小小素交流群领取1000小小酥！</div>
+                </div>
+                <div class="command-card">
+                    <div class="command-name">赞助小小素/给小小素喂水晶</div>
+                    <div class="command-desc">赞助。</div>
+                </div>
+            </div>
+        </div>
+
+        
+        <div class="cmd-section">
+            <div class="cmd-section-header query">
+                <i class="fas fa-search"></i>‎ 玩家信息查询指令
+            </div>
+            <div class="cmd-grid">
+                <div class="command-card">
+                    <div class="command-name">org.s〈玩家ID〉</div>
+                    <div class="command-desc">查询2b2t.org玩家信息。</div>
+                    <div class="command-example">示例: org.s Az_Su</div>
+                </div>
+                <div class="command-card">
+                    <div class="command-name">org.t</div>
+                    <div class="command-desc">查询2b2t.org在线玩家列表。</div>
+                    <div class="command-example">示例: org.t</div>
+                </div>
+                <div class="command-card">
+                    <div class="command-name">org.r〈类型〉</div>
+                    <div class="command-desc">查询2b2t.org排行榜前20。</div>
+                    <div class="command-desc">支持类型：playtime(p),kills(k),deaths(d)</div>
+                    <div class="command-example">示例: org.r p</div>
+                </div>
+                <div class="command-card">
+                    <div class="command-name">org.r〈类型〉[玩家ID]</div>
+                    <div class="command-desc">查询2b2t.org玩家排名。</div>
+                    <div class="command-desc">支持类型：playtime(p),kills(k),deaths(d),all</div>
+                    <div class="command-example">示例: org.r all Az_Su</div>
+                </div>
+                <div class="command-card">
+                    <div class="command-name">gg.s/t/r  ......</div>
+                    <div class="command-desc">2b2t.gg数据不再更新。</div>
+                </div>
+                <div class="command-card">
+                    <div class="command-name">pub.t</div>
+                    <div class="command-desc">查询2b2t.pub在线玩家列表。</div>
+                </div>
+            </div>
+        </div>
+
+        
+        <div class="cmd-section">
+            <div class="cmd-section-header admin">
+                <i class="fas fa-terminal"></i>‎ 管理员指令
+            </div>
+            <div class="cmd-grid">
+                <div class="command-card">
+                    <div class="command-name">mute〈@用户〉〈禁言时间〉</div>
+                    <div class="command-desc">禁言某人，禁言时间支持单位：s(默认),min,h,d，禁言时间为0即解除禁言。</div>
+                    <div class="command-example">示例: mute @晚辅君 30d</div>
+                </div>
+                <div class="command-card">
+                    <div class="command-name">kick〈@用户〉[拉黑(可选)]</div>
+                    <div class="command-desc">将某人踢出群聊，支持拉黑。</div>
+                    <div class="command-example">示例: kick @晚辅君 拉黑</div>
+                </div>
+                <div class="command-card">
+                    <div class="command-name">mcp.绑定〈服务器地址〉</div>
+                    <div class="command-desc">绑定当前群聊或私聊的mcping默认服务器地址。</div>
+                </div>
+                <div class="command-card">
+                    <div class="command-name">mcp.白名单〈IP地址/关闭〉</div>
+                    <div class="command-desc">添加或关闭白名单，一旦添加则视为本群开启白名单。</div>
+                </div>
+                <div class="command-card">
+                    <div class="command-name">小小素.入群欢迎</div>
+                    <div class="command-desc">设置或取消入群欢迎，支持多种变量。</div>
+                </div>
+                <div class="command-card">
+                    <div class="command-name">小小酥.give〈@用户〉〈金额〉</div>
+                    <div class="command-desc">为某人发放小小酥，金额支持负数(扣除小小酥)，仅限高级管理员使用。</div>
+               </div>
+               <div class="command-card">
+                    <div class="command-name">小小素.宵禁〈开始时间(hh:mm)〉〈结束时间(hh:mm)〉</div>
+                    <div class="command-desc">设置宵禁。</div>
+                    <div class="command-example">示例: 小小素.宵禁 23:30 7:00</div>
+               </div>
+               <div class="command-card">
+                    <div class="command-name">小小素.宵禁 -1</div>
+                    <div class="command-desc">关闭宵禁。</div>
+                    <div class="command-example">示例: 小小素.宵禁 -1</div>
+                </div>
+                <div class="command-card">
+                    <div class="command-name">unban〈@用户〉</div>
+                    <div class="command-desc">从黑名单中移除某人，仅限高级管理员使用。</div>
+                </div>
+                <div class="command-card">
+                    <div class="command-name">ban〈@用户〉</div>
+                    <div class="command-desc">黑名单，仅限高级管理员使用。</div>
+                </div>
+                <div class="command-card">
+                    <div class="command-name">小小素.复读机〈开启/关闭〉</div>
+                    <div class="command-desc">开启或关闭复读机功能，支持单双句复读，默认开启。</div>
+                </div>
+                <div class="command-card">
+                    <div class="command-name">小小素管理员〈添加/删除/清空〉〈@A@B@C〉</div>
+                    <div class="command-desc">添加本群的小小素管理员。</div>
+                    <div class="command-example">示例: 小小素.管理员 @Az_Su</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

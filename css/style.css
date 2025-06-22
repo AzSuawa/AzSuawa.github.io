@@ -137,6 +137,111 @@ body {
     padding: 15px;
 }
 
+.command-section p {
+    font-size: 16px;   
+    margin-bottom: 10px; 
+}
+
+.command-section .fa-circle {
+    font-size: 6px;      
+    color: none; 
+    margin-right: 10px;  
+    vertical-align: middle; 
+}
+
+.sponsor-table {
+    width: 80%;
+}
+
+
+
+.sponsor-table th, .sponsor-table td {
+    padding: 10px;
+    text-align: left;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.sponsor-table th {
+    background-color: var(--primary-color);
+    color: white;
+    font-weight: bold;
+}
+
+.sponsor-table tr:hover {
+    background-color: var(--hover-bg);
+}
+
+@media (max-width: 600px) {
+    .sponsor-table {
+        display: block;
+        overflow-x: auto;
+    }
+    .sponsor-table {
+    width: 100%;
+    }
+}
+
+
+/* 分组标题样式 */
+.menu-group {
+    border-bottom: 1px solid var(--border-color);
+}
+
+.group-header {
+    padding: 12px 20px;
+    display: flex;
+    font-size: 16px;
+    font-weight: bold;
+    align-items: center;
+    cursor: pointer;
+    user-select: none;
+}
+
+.group-header:hover {
+    background-color: var(--hover-bg);
+}
+
+.group-header i:first-child {
+    margin-right: 10px;
+    color: var(--primary-color);
+}
+
+.group-header .toggle {
+    margin-left: auto;
+    font-size: 12px;
+    transition: transform 0.3s;
+}
+
+/* 子菜单样式 */
+.submenu {
+    list-style: none;
+    overflow: hidden;
+    transition: max-height 0.3s ease;
+}
+
+.submenu li {
+    padding: 8px 20px 8px 40px; /* 缩进子菜单 */
+    border-bottom: none;
+}
+
+.submenu li a {
+    font-size: 14px !important;
+    font-weight: bold;
+}
+
+/* 折叠动画 */
+.menu-group.active .fa-chevron-down {
+    transform: rotate(180deg);
+}
+
+.menu-group.active .fa-folder {
+    display: none;
+}
+
+.menu-group:not(.active) .fa-folder-open {
+    display: none;
+}
+
 .version-badge {
     background-color: var(--primary-color);
     color: white;

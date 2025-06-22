@@ -17,8 +17,71 @@ const pageContentMap = {
     'b': 'pages/b.html',
     'c': 'pages/c.html',
     'd': 'pages/d.html',
-    'e': 'pages/e.html'
+    'e': 'pages/e.html',
+    'f': 'pages/f.html',
+    'g': 'pages/g.html'
 };
+
+// 折叠菜单功能
+document.querySelectorAll('.group-header').forEach(header => {
+    header.addEventListener('click', function() {
+        const group = this.parentElement;
+        const submenu = this.nextElementSibling;
+        const icon = this.querySelector('.toggle');
+        
+        // 切换展开状态
+        group.classList.toggle('active');
+        
+        // 动画效果
+        if (group.classList.contains('active')) {
+            submenu.style.display = 'block';
+            icon.classList.replace('fa-chevron-right', 'fa-chevron-down');
+        } else {
+            submenu.style.display = 'none';
+            icon.classList.replace('fa-chevron-down', 'fa-chevron-right');
+        }
+    });
+});
+
+// 阻止链接默认行为并加载内容
+document.querySelectorAll('.command-link').forEach(link => {
+    link.addEventListener('click', function(e) {
+        e.preventDefault();
+        const pageId = this.getAttribute('data-page');
+        
+        // 隐藏所有卡片
+        document.querySelectorAll('.card').forEach(card => {
+            card.classList.remove('active');
+        });
+        
+        if(pageId === 'c') {
+            // 加载常见问题内容
+            document.getElementById('dynamic-content').innerHTML = `
+                <div class="card active">
+                    <h1>常见问题</h1>
+                    <div class="command-section">
+                        <!-- 这里放你的常见问题内容 -->
+                    </div>
+                </div>
+            `;
+        } else {
+            // 加载其他页面内容
+            loadPageContent(pageId); // 使用你现有的loadPageContent函数
+        }
+        
+        // 更新URL（不刷新页面）
+        history.pushState(null, null, `#${pageId}`);
+    });
+});
+
+// 处理浏览器前进/后退
+window.addEventListener('popstate', function() {
+    if(window.location.hash) {
+        const pageId = window.location.hash.substring(1);
+        const menuItem = document.querySelector(`[data-page="${pageId}"]`);
+        if(menuItem) menuItem.click();
+    }
+});
 
 // 侧边栏菜单项点击事件
 document.querySelectorAll('#sidebar ul li a[href^="#"]').forEach(link => {
@@ -62,21 +125,26 @@ document.getElementById('a-2').classList.add('active');
     });
 });
 
-// 加载页面内容
 async function loadPageContent(pageId) {
     const container = document.getElementById('dynamic-content');
-    
     try {
         const response = await fetch(pageContentMap[pageId]);
         if (!response.ok) throw new Error('Network response was not ok');
-        
         const html = await response.text();
         container.innerHTML = html;
-        
-        // 激活新加载的卡片
-        document.getElementById(pageId).classList.add('active');
-        
-        // 滚动到顶部
+
+        // 调试：打印加载的内容和卡片数量
+        console.log('Loaded HTML:', html);
+        console.log('Cards found:', container.querySelectorAll('.card').length);
+
+        // 激活所有卡片
+        const cards = container.querySelectorAll('.card');
+        if (cards.length === 0) {
+            console.warn('No cards found in loaded content.');
+        } else {
+            cards.forEach(card => card.classList.add('active'));
+        }
+
         window.scrollTo(0, 0);
     } catch (err) {
         console.error('加载失败:', err);
