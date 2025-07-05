@@ -19,7 +19,8 @@ const pageContentMap = {
     'd': 'pages/d.html',
     'e': 'pages/e.html',
     'f': 'pages/f.html',
-    'g': 'pages/g.html'
+    'g': 'pages/g.html',
+    'mcp': 'pages/mcp.html'
 };
 
 // 折叠菜单功能
