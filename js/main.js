@@ -20,7 +20,8 @@ const pageContentMap = {
     'e': 'pages/e.html',
     'f': 'pages/f.html',
     'g': 'pages/g.html',
-    'mcp': 'pages/mcp.html'
+    'mcp': 'mcp.html',
+    'skin': 'skim.html'
 };
 
 // 折叠菜单功能
