@@ -126,6 +126,28 @@
             margin-bottom: 15px;
             font-family: monospace;
         }
+        /* 新增的主页按钮样式 */
+        .home-button-container {
+            position: fixed;
+            right: 20px;
+            bottom: 20px;
+            z-index: 1000;
+        }
+        .home-button {
+            background-color: #A1BDFF;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            text-decoration: none;
+            display: inline-block;
+            transition: background-color 0.3s;
+        }
+        .home-button:hover {
+            background-color: #8CAEFF;
+        }
     </style>
 </head>
 <body>
@@ -153,6 +175,11 @@
         </div>
         
         <div id="fileList"></div>
+    </div>
+
+    <!-- 新增的主页按钮 -->
+    <div class="home-button-container">
+        <a href="https://azsu.top" class="home-button">主页</a>
     </div>
 
     <script>
@@ -309,17 +336,11 @@
                         statusSpan.className = 'file-status status-error';
                     }
                 } else {
-                    let errorMsg = '上传失败';
-                    try {
-                        const response = JSON.parse(xhr.responseText);
-                        errorMsg = response.message || errorMsg;
-                    } catch (e) {}
-                    
-                    showError(errorMsg);
+                    showError('上传失败: ' + xhr.statusText);
                     
                     // 更新文件状态
                     const statusSpan = fileItem.querySelector('.file-status');
-                    statusSpan.textContent = errorMsg;
+                    statusSpan.textContent = '上传失败';
                     statusSpan.className = 'file-status status-error';
                 }
             };
@@ -339,14 +360,17 @@
         // 显示错误信息
         function showError(message) {
             statusText.textContent = message;
+            statusText.style.color = '#dc3545';
             progressContainer.style.display = 'block';
-            uploadProgress.value = 0;
         }
         
         // 格式化文件大小
         function formatFileSize(bytes) {
-            if (bytes < 1024) return bytes + ' Bytes';
-            return (bytes / 1024).toFixed(2) + ' KB';
+            if (bytes === 0) return '0 Bytes';
+            const k = 1024;
+            const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+            const i = Math.floor(Math.log(bytes) / Math.log(k));
+            return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
         }
     </script>
 </body>
