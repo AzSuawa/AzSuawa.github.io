@@ -32,6 +32,8 @@
         #content {
             padding: 20px;
             min-height: 100vh;
+            max-width: 800px;
+            margin: 0 auto;
         }
 
         .card {
@@ -46,6 +48,7 @@
         h1 {
             margin-bottom: 20px;
             color: var(--text-color);
+            text-align: center;
         }
 
         .form-group {
@@ -98,12 +101,6 @@
             margin: 20px 0;
         }
 
-
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-
         .error {
             color: #ff4444;
             margin-top: 10px;
@@ -113,6 +110,7 @@
 </head>
 <body>
     <div id="content">
+        <h1>小小素MCPing</h1>
         <div class="card">
             <div class="form-group">
                 <label for="ip">服务器地址</label>
@@ -154,8 +152,8 @@
             // 显示加载动画
             loadingDiv.style.display = 'block';
 
-            // 构建API URL
-            let apiUrl = `https://a.api.azsu.top:20086/pingpng?ip=${encodeURIComponent(ip)}`;
+            // 构建API URL，添加时间戳防止缓存
+            let apiUrl = `https://a.api.azsu.top:20086/pingpng?ip=${encodeURIComponent(ip)}&t=${Date.now()}`;
             if (watermark) {
                 apiUrl += `&watermark=${encodeURIComponent(watermark)}`;
             }
@@ -164,6 +162,8 @@
             const img = new Image();
             img.onload = function() {
                 loadingDiv.style.display = 'none';
+                // 先清空结果再添加新图片
+                resultDiv.innerHTML = '';
                 resultDiv.appendChild(img);
             };
             img.onerror = function() {
