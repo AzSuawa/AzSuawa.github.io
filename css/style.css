@@ -62,7 +62,7 @@ body {
     width: 250px;
     height: 100%;
     background: #F0F5FF;
-    transition: left 0.3s;
+    transition: left 0.3;
     z-index: 99;
     padding-top: 60px;
     box-shadow: 2px 0 10px rgba(0,0,0,0.1);
@@ -104,7 +104,7 @@ body {
 
 #content {
     padding: 70px 20px 20px;
-    transition: margin-left 0.3s;
+    transition: margin-left 0.3;
     min-height: 100vh;
 }
 
@@ -209,14 +209,14 @@ body {
 .group-header .toggle {
     margin-left: auto;
     font-size: 12px;
-    transition: transform 0.3s;
+    transition: transform 0.3;
 }
 
 /* 子菜单样式 */
 .submenu {
     list-style: none;
     overflow: hidden;
-    transition: max-height 0.3s ease;
+    transition: max-height 0.3 ease;
 }
 
 .submenu li {
@@ -275,6 +275,10 @@ body {
 
 .cmd-section-header.admin {
     background: var(--danger-color);
+}
+
+.cmd-section-header.super-admin {
+    background: #9370DB;
 }
 
 .cmd-section-header.query {
