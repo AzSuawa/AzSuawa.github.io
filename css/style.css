@@ -149,19 +149,22 @@ body {
     vertical-align: middle; 
 }
 
+/* 修改.sponsor-table相关样式部分 */
 .sponsor-table {
-    width: 100%;
+    width: auto; /* 改为自动宽度 */
+    max-width: 100%; /* 最大不超过容器宽度 */
     border-collapse: collapse;
-    table-layout: auto;
+    margin: 0 auto; /* 居中显示 */
 }
 
 .sponsor-table th, 
 .sponsor-table td {
-    padding: 10px 8px;
+    padding: 10px 15px;
     text-align: left;
     border-bottom: 1px solid var(--border-color);
-    word-break: break-word; /* 允许单词换行 */
-    hyphens: auto; /* 自动添加连字符 */
+    word-break: break-word;
+    hyphens: auto;
+    min-width: 80px; /* 设置最小宽度保证可读性 */
 }
 
 .sponsor-table th {
@@ -342,39 +345,48 @@ body {
     }
 }
 
-/* 移动端表格优化 */
-@media (max-width: 768px) {
+/* 桌面端优化 */
+@media (min-width: 1024px) {
     .sponsor-table {
-        display: block;
-        overflow-x: auto;
-        -webkit-overflow-scrolling: touch;
-        font-size: 0.9em; /* 整体缩小文字 */
+        width: 80%; /* 桌面端占据80%宽度 */
     }
     
-    .sponsor-table th, 
+    .sponsor-table th,
     .sponsor-table td {
-        padding: 8px 6px;
-        min-width: 0; /* 移除最小宽度限制 */
-    }
-    
-    .command-section {
-        padding: 10px;
+        padding: 12px 20px;
+        font-size: 15px;
     }
 }
 
-/* 极窄屏幕进一步优化 */
-@media (max-width: 480px) {
+/* 平板端优化 */
+@media (max-width: 1023px) and (min-width: 768px) {
     .sponsor-table {
-        font-size: 0.85em; /* 进一步缩小文字 */
+        width: 90%; /* 平板端占据90%宽度 */
+    }
+}
+
+/* 移动端优化 */
+@media (max-width: 767px) {
+    .sponsor-table {
+        width: 100%; /* 移动端占据100%宽度 */
+        display: block;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
     }
     
-    .sponsor-table th, 
+    .sponsor-table th,
     .sponsor-table td {
-        padding: 6px 4px;
+        padding: 8px 12px;
+        font-size: 14px;
     }
-    
-    .card h1 {
-        padding: 12px 15px;
-        font-size: 16px;
+}
+
+/* 极小屏幕优化 */
+@media (max-width: 480px) {
+    .sponsor-table th,
+    .sponsor-table td {
+        padding: 6px 10px;
+        font-size: 13px;
+        min-width: 60px; /* 减小最小宽度 */
     }
 }
