@@ -348,7 +348,7 @@ body {
 /* 桌面端优化 */
 @media (min-width: 1024px) {
     .sponsor-table {
-        width: 80%; /* 桌面端占据80%宽度 */
+        width: 60%; 
     }
     
     .sponsor-table th,
@@ -361,14 +361,14 @@ body {
 /* 平板端优化 */
 @media (max-width: 1023px) and (min-width: 768px) {
     .sponsor-table {
-        width: 90%; /* 平板端占据90%宽度 */
+        width: 80%; 
     }
 }
 
 /* 移动端优化 */
 @media (max-width: 767px) {
     .sponsor-table {
-        width: 100%; /* 移动端占据100%宽度 */
+        width: 100%; 
         display: block;
         overflow-x: auto;
         -webkit-overflow-scrolling: touch;
@@ -387,6 +387,6 @@ body {
     .sponsor-table td {
         padding: 6px 10px;
         font-size: 13px;
-        min-width: 60px; /* 减小最小宽度 */
+        min-width: 60px; 
     }
 }
