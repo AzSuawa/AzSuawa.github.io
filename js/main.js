@@ -19,6 +19,7 @@ const pageContentMap = {
     'ac': 'pages/ac.html',
     'cmds': 'pages/cmds.html',
     'ba': 'pages/ba.html',
+    'bb': 'pages/bb.html',
     'g': 'pages/g.html',
     'mcp': 'mcp.html',
     'skin': 'skim.html'
