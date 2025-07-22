@@ -14,11 +14,11 @@ document.getElementById('menu-btn').addEventListener('click', function() {
 
 // 页面内容映射
 const pageContentMap = {
-    'b': 'pages/b.html',
-    'c': 'pages/c.html',
-    'd': 'pages/d.html',
-    'e': 'pages/e.html',
-    'f': 'pages/f.html',
+    'aa': 'pages/aa.html',
+    'ab': 'pages/ab.html',
+    'ac': 'pages/ac.html',
+    'cmds': 'pages/cmds.html',
+    'ba': 'pages/ba.html',
     'g': 'pages/g.html',
     'mcp': 'mcp.html',
     'skin': 'skim.html'
