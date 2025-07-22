@@ -150,15 +150,18 @@ body {
 }
 
 .sponsor-table {
-    width: 65%;
+    width: 100%;
+    border-collapse: collapse;
+    table-layout: auto;
 }
 
-
-
-.sponsor-table th, .sponsor-table td {
-    padding: 10px;
+.sponsor-table th, 
+.sponsor-table td {
+    padding: 10px 8px;
     text-align: left;
     border-bottom: 1px solid var(--border-color);
+    word-break: break-word; /* 允许单词换行 */
+    hyphens: auto; /* 自动添加连字符 */
 }
 
 .sponsor-table th {
@@ -170,17 +173,6 @@ body {
 .sponsor-table tr:hover {
     background-color: var(--hover-bg);
 }
-
-@media (max-width: 600px) {
-    .sponsor-table {
-        display: block;
-        overflow-x: auto;
-    }
-    .sponsor-table {
-    width: 100%;
-    }
-}
-
 
 /* 分组标题样式 */
 .menu-group {
@@ -321,6 +313,7 @@ body {
     color: #555;
 }
 
+/* 响应式设计 - 桌面优先 */
 @media (min-width: 1024px) {
     #sidebar {
         left: 0;
@@ -346,5 +339,42 @@ body {
     
     .cmd-grid {
         grid-template-columns: 1fr;
+    }
+}
+
+/* 移动端表格优化 */
+@media (max-width: 768px) {
+    .sponsor-table {
+        display: block;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        font-size: 0.9em; /* 整体缩小文字 */
+    }
+    
+    .sponsor-table th, 
+    .sponsor-table td {
+        padding: 8px 6px;
+        min-width: 0; /* 移除最小宽度限制 */
+    }
+    
+    .command-section {
+        padding: 10px;
+    }
+}
+
+/* 极窄屏幕进一步优化 */
+@media (max-width: 480px) {
+    .sponsor-table {
+        font-size: 0.85em; /* 进一步缩小文字 */
+    }
+    
+    .sponsor-table th, 
+    .sponsor-table td {
+        padding: 6px 4px;
+    }
+    
+    .card h1 {
+        padding: 12px 15px;
+        font-size: 16px;
     }
 }
