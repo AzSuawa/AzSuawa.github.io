@@ -323,7 +323,7 @@ body {
 
 .ban-table th,
 .ban-table td {
-    font-size: 10px; /* 设置你想要的字体大小 */
+    font-size: 6px; /* 设置你想要的字体大小 */
     padding: 8px 12px;
 }
 
