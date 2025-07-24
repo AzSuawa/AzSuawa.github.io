@@ -330,12 +330,12 @@ body {
 /* 设置ban表格的列宽百分比 */
 .ban-table th:nth-child(1),
 .ban-table td:nth-child(1) {
-    width: 35%;
+    width: 30%;
 }
 
 .ban-table th:nth-child(2),
 .ban-table td:nth-child(2) {
-    width: 35%;
+    width: 40%;
 }
 
 .ban-table th:nth-child(3),
