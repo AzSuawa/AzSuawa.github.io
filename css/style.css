@@ -315,33 +315,69 @@ body {
     font-size: 12px;
     color: #555;
 }
-/* 为ban表格创建特定类 */
+/* Ban表格固定样式 - 不受响应式影响 */
 .ban-table {
     width: auto;
     max-width: 100%;
+    border-collapse: collapse;
+    margin: 0 auto;
 }
 
 .ban-table th,
 .ban-table td {
-    font-size: 2px; /* 设置你想要的字体大小 */
     padding: 8px 12px;
+    font-size: 14px; /* 固定字体大小 */
+    text-align: left;
+    border-bottom: 1px solid var(--border-color);
+    word-break: break-word;
+    hyphens: auto;
 }
 
-/* 设置ban表格的列宽百分比 */
+/* 固定列宽百分比 */
 .ban-table th:nth-child(1),
-.ban-table td:nth-child(1) {
-    width: 30%;
-}
+.ban-table td:nth-child(1) { width: 30%; }
 
 .ban-table th:nth-child(2),
-.ban-table td:nth-child(2) {
-    width: 40%;
-}
+.ban-table td:nth-child(2) { width: 40%; }
 
 .ban-table th:nth-child(3),
-.ban-table td:nth-child(3) {
-    width: 30%;
+.ban-table td:nth-child(3) { width: 30%; }
+
+.ban-table th {
+    background-color: var(--primary-color);
+    color: white;
+    font-weight: bold;
 }
+
+.ban-table tr:hover {
+    background-color: var(--hover-bg);
+}
+
+/* 禁用所有响应式调整 */
+@media (max-width: 1023px) and (min-width: 768px),
+       (max-width: 767px),
+       (max-width: 480px) {
+    .ban-table,
+    .ban-table th,
+    .ban-table td {
+        /* 保持原有参数 */
+        width: auto !important;
+        max-width: 100% !important;
+        font-size: 14px !important;
+        padding: 8px 12px !important;
+    }
+    
+    /* 保持列宽百分比 */
+    .ban-table th:nth-child(1),
+    .ban-table td:nth-child(1) { width: 30% !important; }
+    
+    .ban-table th:nth-child(2),
+    .ban-table td:nth-child(2) { width: 40% !important; }
+    
+    .ban-table th:nth-child(3),
+    .ban-table td:nth-child(3) { width: 30% !important; }
+}
+
 
 
 /* 响应式设计 - 桌面优先 */
