@@ -1,3 +1,14 @@
+document.addEventListener('DOMContentLoaded', function() {
+    // 检查当前 URL 是否有 hash，如果没有则设置默认 hash
+    if (!window.location.hash) {
+        window.location.hash = '#ba';
+    }
+    
+    // 这里应该有你现有的路由处理代码
+    // 确保它能正确处理 hash 变化并加载对应内容
+});
+
+
 // 侧边栏菜单按钮点击事件
 document.getElementById('menu-btn').addEventListener('click', function() {
     const sidebar = document.getElementById('sidebar');
