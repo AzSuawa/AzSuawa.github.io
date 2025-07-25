@@ -363,7 +363,7 @@ body {
         /* 保持原有参数 */
         width: auto !important;
         max-width: 100% !important;
-        font-size: 14px !important;
+        font-size: 10px !important;
         padding: 8px 12px !important;
     }
     
