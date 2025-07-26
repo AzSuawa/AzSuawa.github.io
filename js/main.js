@@ -35,6 +35,7 @@ const pageContentMap = {
     'g': 'pages/g.html',
     'mcp': 'mcp.html',
     'skin': 'skim.html'
+    'ban-qwqwcllwww': 'pages/ban/qwqwcllwww.html',
 };
 
 // 折叠菜单功能
