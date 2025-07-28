@@ -335,13 +335,13 @@ body {
 
 /* 固定列宽百分比 */
 .ban-table th:nth-child(1),
-.ban-table td:nth-child(1) { width: 26%; }
+.ban-table td:nth-child(1) { width: 27%; }
 
 .ban-table th:nth-child(2),
-.ban-table td:nth-child(2) { width: 36%; }
+.ban-table td:nth-child(2) { width: 34%; }
 
 .ban-table th:nth-child(3),
-.ban-table td:nth-child(3) { width: 38%; }
+.ban-table td:nth-child(3) { width: 39%; }
 
 .ban-table th {
     background-color: var(--primary-color);
