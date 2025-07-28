@@ -354,8 +354,7 @@ body {
 }
 
 /* 禁用所有响应式调整 */
-@media (max-width: 1023px) and (min-width: 768px),
-       (max-width: 767px),
+@media (max-width: 767px),
        (max-width: 480px) {
     .ban-table,
     .ban-table th,
