@@ -367,13 +367,13 @@ body {
     
     /* 保持列宽百分比 */
     .ban-table th:nth-child(1),
-    .ban-table td:nth-child(1) { width: 26% !important; }
+    .ban-table td:nth-child(1) { width: 27% !important; }
     
     .ban-table th:nth-child(2),
-    .ban-table td:nth-child(2) { width: 36% !important; }
+    .ban-table td:nth-child(2) { width: 34% !important; }
     
     .ban-table th:nth-child(3),
-    .ban-table td:nth-child(3) { width: 38% !important; }
+    .ban-table td:nth-child(3) { width: 39% !important; }
 }
 
 
