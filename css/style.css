@@ -399,6 +399,89 @@ body {
     }
 }
 
+/* sp表格专用样式 - 强制固定布局 */
+.sp-table {
+    width: 100%;
+    max-width: 100%;
+    table-layout: fixed; /* 关键属性：强制使用固定布局 */
+    border-collapse: collapse;
+    margin: 0 auto;
+}
+
+/* 表头和单元格基础样式 */
+.sp-table th,
+.sp-table td {
+    padding: 10px 12px;
+    text-align: left;
+    border-bottom: 1px solid var(--border-color);
+    overflow: hidden;
+    text-overflow: ellipsis; /* 文字过长时显示省略号 */
+    word-break: break-word;
+}
+
+/* 严格的列宽控制 */
+.sp-table th:nth-child(1),
+.sp-table td:nth-child(1) { 
+    width: 27%;
+    min-width: 100px; /* 设置最小宽度防止过窄 */
+}
+
+.sp-table th:nth-child(2),
+.sp-table td:nth-child(2) { 
+    width: 53%;
+    min-width: 120px;
+}
+
+.sp-table th:nth-child(3),
+.sp-table td:nth-child(3) { 
+    width: 20%;
+    min-width: 150px;
+}
+
+/* 表头样式 */
+.sp-table th {
+    background-color: var(--primary-color);
+    color: white;
+    font-weight: bold;
+    position: sticky;
+    top: 0;
+}
+
+/* 悬停效果 */
+.sp-table tr:hover {
+    background-color: var(--hover-bg);
+}
+
+/* 移动端特殊处理 */
+@media (max-width: 767px) {
+    .sp-table-wrapper {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+    
+    .sp-table {
+        width: auto; /* 在小屏幕取消100%宽度 */
+        min-width: 100%; /* 但至少与容器同宽 */
+    }
+    
+    /* 保持列宽比例但允许滚动 */
+    .sp-table th:nth-child(1),
+    .sp-table td:nth-child(1) { width: 27%; }
+    
+    .sp-table th:nth-child(2),
+    .sp-table td:nth-child(2) { width: 53%; }
+    
+    .sp-table th:nth-child(3),
+    .sp-table td:nth-child(3) { width: 20%; }
+    
+    /* 调整文字大小和间距 */
+    .sp-table th,
+    .sp-table td {
+        padding: 8px 10px;
+        font-size: 13px;
+        white-space: nowrap; /* 防止自动换行 */
+    }
+}
 
 
 
