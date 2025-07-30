@@ -35,7 +35,7 @@ const pageContentMap = {
     'g': 'pages/g.html',
     'mcp': 'mcp.html',
     'skin': 'skim.html',
-    'sp': 'sp.html',
+    'sp': 'pages/sp.html',
     'ban-qwqwcllwww': 'pages/ban/qwqwcllwww.html',
     'ban-mam1145': 'pages/ban/mam1145.html'
 };
