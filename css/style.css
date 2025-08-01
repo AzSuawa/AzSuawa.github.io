@@ -148,59 +148,34 @@ body {
     margin-right: 10px;  
     vertical-align: middle; 
 }
-/* 1. 外层容器（必需） */
-.table-wrapper {
-    
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
-}
 
-
-/* 默认表格样式 - 使用ban表格的布局样式 */
-table {
-    width: auto;
+/* 默认表格样式 - 强制固定布局 */
+.sponsor-table {
+    width: 100%;
+    max-width: 100%;
     table-layout: fixed;
-    min-width: 100%
     border-collapse: collapse;
     margin: 0 auto;
 }
 
-/* 表头和单元格基础样式 */
-th,
-td {
-    padding: 10px 12px;
+.sponsor-table th, 
+.sponsor-table td {
+    padding: 10px 15px;
     text-align: left;
     border-bottom: 1px solid var(--border-color);
-    overflow: hidden;
-    text-overflow: ellipsis;
     word-break: break-word;
-    white-space: nowrap
+    hyphens: auto;
+    min-width: 80px;
 }
 
-/* 表头样式 */
-th {
+.sponsor-table th {
     background-color: var(--primary-color);
     color: white;
     font-weight: bold;
-    position: sticky;
-    top: 0;
 }
 
-/* 悬停效果 */
-tr:hover {
+.sponsor-table tr:hover {
     background-color: var(--hover-bg);
-}
-
-/* Ban表格专用样式 - 仅调整字体大小 */
-.ban-table th,
-.ban-table td {
-    font-size: 14px;
-}
-
-/* SP表格专用样式 - 仅调整字体大小 */
-.sp-table th,
-.sp-table td {
-    font-size: 14px;
 }
 
 /* 分组标题样式 */
@@ -342,38 +317,16 @@ tr:hover {
     color: #555;
 }
 
-/* 移动端特殊处理 */
-@media (max-width: 767px) {
-    .table-wrapper {
-        overflow-x: auto;
-        -webkit-overflow-scrolling: touch;
-    }
-    
-    table {
-        width: auto;
-        
-    }
-    
-    th,
-    td {
-        padding: 8px 10px;
-        font-size: 13px;
-        white-space: nowrap;
-    }
-    
-    .ban-table th,
-    .ban-table td {
-        font-size: 13px;
-    }
-    
-    .sp-table th,
-    .sp-table td {
-        font-size: 13px;
-    }
-    
-    .cmd-grid {
-        grid-template-columns: 1fr;
-    }
+/* Ban表格专用样式 - 仅调整字体 */
+.ban-table th,
+.ban-table td {
+    font-size: 14px;
+}
+
+/* sp表格专用样式 - 仅调整字体 */
+.sp-table th,
+.sp-table td {
+    font-size: 14px;
 }
 
 /* 响应式设计 - 桌面优先 */
@@ -387,9 +340,28 @@ tr:hover {
     #menu-btn {
         display: none;
     }
+    
+    .sponsor-table {
+        width: 60%; 
+    }
+    
+    .sponsor-table th,
+    .sponsor-table td {
+        padding: 12px 20px;
+        font-size: 15px;
+    }
+    
+    /* Ban和sp表格在桌面端的字体调整 */
+    .ban-table th,
+    .ban-table td,
+    .sp-table th,
+    .sp-table td {
+        font-size: 15px;
+    }
 }
 
-@media (max-width: 1023px) {
+/* 平板端优化 */
+@media (max-width: 1023px) and (min-width: 768px) {
     #sidebar {
         left: -250px;
     }
@@ -399,33 +371,67 @@ tr:hover {
     #menu-btn {
         display: block;
     }
-}
-
-/* 桌面端优化 */
-@media (min-width: 1024px) {
-    table {
-        width: 60%; 
+    
+    .cmd-grid {
+        grid-template-columns: 1fr;
     }
     
-    th,
-    td {
-        padding: 12px 20px;
-        font-size: 15px;
+    .sponsor-table {
+        width: 80%; 
+    }
+    
+    /* Ban和sp表格在平板端的字体调整 */
+    .ban-table th,
+    .ban-table td,
+    .sp-table th,
+    .sp-table td {
+        font-size: 14px;
     }
 }
 
-/* 平板端优化 */
-@media (max-width: 1023px) and (min-width: 768px) {
-    table {
-        width: 80%; 
+/* 移动端优化 */
+@media (max-width: 767px) {
+    .sponsor-table-wrapper {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+    
+    .sponsor-table {
+        width: 100%; 
+        display: block;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+    
+    .sponsor-table th,
+    .sponsor-table td {
+        padding: 8px 12px;
+        font-size: 14px;
+    }
+    
+    /* Ban和sp表格在移动端的字体调整 */
+    .ban-table th,
+    .ban-table td,
+    .sp-table th,
+    .sp-table td {
+        font-size: 13px;
     }
 }
 
 /* 极小屏幕优化 */
 @media (max-width: 480px) {
-    th,
-    td {
+    .sponsor-table th,
+    .sponsor-table td {
         padding: 6px 10px;
         font-size: 13px;
+        min-width: 60px; 
+    }
+    
+    /* Ban和sp表格在极小屏幕的字体调整 */
+    .ban-table th,
+    .ban-table td,
+    .sp-table th,
+    .sp-table td {
+        font-size: 12px;
     }
 }
