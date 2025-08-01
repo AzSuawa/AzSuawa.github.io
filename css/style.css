@@ -160,7 +160,8 @@ body {
 table {
     width: auto;
     table-layout: auto;
-    max-width: 100%;
+    min-width: 100%;
+    max-width: none;
     border-collapse: collapse;
     margin: 0 auto;
 }
