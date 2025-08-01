@@ -148,6 +148,13 @@ body {
     margin-right: 10px;  
     vertical-align: middle; 
 }
+/* 1. 外层容器（必需） */
+.table-wrapper {
+    width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
 
 /* 默认表格样式 - 使用ban表格的布局样式 */
 table {
