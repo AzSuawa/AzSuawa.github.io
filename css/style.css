@@ -149,32 +149,23 @@ body {
     vertical-align: middle; 
 }
 
-/* 表格容器样式 - 确保水平滚动 */
-.sponsor-table-wrapper,
-.ban-table-wrapper,
-.sp-table-wrapper {
-    width: 100%;
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
-    margin-bottom: 20px;
-}
-
-/* 默认表格样式 */
+/* 默认表格样式 - 现在具有与ban/sp列表相同的响应式特性 */
 .sponsor-table {
     width: 100%;
-    min-width: 600px;
+    max-width: 100%;
     table-layout: fixed;
     border-collapse: collapse;
+    margin: 0 auto;
 }
 
 .sponsor-table th, 
 .sponsor-table td {
-    padding: 10px 15px;
+    padding: 10px 12px;
     text-align: left;
     border-bottom: 1px solid var(--border-color);
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
+    word-break: break-word;
+    hyphens: auto;
+    min-width: 80px;
 }
 
 .sponsor-table th {
@@ -184,64 +175,6 @@ body {
 }
 
 .sponsor-table tr:hover {
-    background-color: var(--hover-bg);
-}
-
-/* Ban表格样式 */
-.ban-table {
-    width: 100%;
-    min-width: 600px;
-    table-layout: fixed;
-    border-collapse: collapse;
-}
-
-.ban-table th,
-.ban-table td {
-    padding: 10px 15px;
-    text-align: left;
-    border-bottom: 1px solid var(--border-color);
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    font-size: 14px; /* 特定字体大小 */
-}
-
-.ban-table th {
-    background-color: var(--primary-color);
-    color: white;
-    font-weight: bold;
-}
-
-.ban-table tr:hover {
-    background-color: var(--hover-bg);
-}
-
-/* sp表格样式 */
-.sp-table {
-    width: 100%;
-    min-width: 600px;
-    table-layout: fixed;
-    border-collapse: collapse;
-}
-
-.sp-table th,
-.sp-table td {
-    padding: 10px 15px;
-    text-align: left;
-    border-bottom: 1px solid var(--border-color);
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    font-size: 14px; /* 特定字体大小 */
-}
-
-.sp-table th {
-    background-color: var(--primary-color);
-    color: white;
-    font-weight: bold;
-}
-
-.sp-table tr:hover {
     background-color: var(--hover-bg);
 }
 
@@ -384,6 +317,123 @@ body {
     color: #555;
 }
 
+/* Ban表格专用样式 */
+.ban-table {
+    width: 100%;
+    max-width: 100%;
+    table-layout: fixed;
+    border-collapse: collapse;
+    margin: 0 auto;
+}
+
+.ban-table th,
+.ban-table td {
+    padding: 10px 12px;
+    text-align: left;
+    border-bottom: 1px solid var(--border-color);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    word-break: break-word;
+}
+
+/* 严格的列宽控制 */
+.ban-table th:nth-child(1),
+.ban-table td:nth-child(1) { width: 27%; min-width: 100px; }
+
+.ban-table th:nth-child(2),
+.ban-table td:nth-child(2) { width: 34%; min-width: 120px; }
+
+.ban-table th:nth-child(3),
+.ban-table td:nth-child(3) { width: 39%; min-width: 150px; }
+
+.ban-table th {
+    background-color: var(--primary-color);
+    color: white;
+    font-weight: bold;
+    position: sticky;
+    top: 0;
+}
+
+.ban-table tr:hover {
+    background-color: var(--hover-bg);
+}
+
+/* sp表格专用样式 */
+.sp-table {
+    width: 100%;
+    max-width: 100%;
+    table-layout: fixed;
+    border-collapse: collapse;
+    margin: 0 auto;
+}
+
+.sp-table th,
+.sp-table td {
+    padding: 10px 12px;
+    text-align: left;
+    border-bottom: 1px solid var(--border-color);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    word-break: break-word;
+}
+
+/* 严格的列宽控制 */
+.sp-table th:nth-child(1),
+.sp-table td:nth-child(1) { width: 27%; min-width: 100px; }
+
+.sp-table th:nth-child(2),
+.sp-table td:nth-child(2) { width: 53%; min-width: 120px; }
+
+.sp-table th:nth-child(3),
+.sp-table td:nth-child(3) { width: 20%; min-width: 150px; }
+
+.sp-table th {
+    background-color: var(--primary-color);
+    color: white;
+    font-weight: bold;
+    position: sticky;
+    top: 0;
+}
+
+.sp-table tr:hover {
+    background-color: var(--hover-bg);
+}
+
+/* 移动端特殊处理 - 所有表格添加左右滑动功能 */
+@media (max-width: 767px) {
+    .sponsor-table-wrapper,
+    .ban-table-wrapper,
+    .sp-table-wrapper {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+    
+    .sponsor-table,
+    .ban-table,
+    .sp-table {
+        width: auto;
+        min-width: 100%;
+    }
+    
+    /* 默认表格调整 */
+    .sponsor-table th,
+    .sponsor-table td {
+        padding: 8px 10px;
+        font-size: 13px;
+        white-space: nowrap;
+    }
+    
+    /* ban/sp表格仅调整字体大小 */
+    .ban-table th,
+    .ban-table td,
+    .sp-table th,
+    .sp-table td {
+        padding: 8px 10px;
+        font-size: 13px;
+        /* 保持自动换行 */
+    }
+}
+
 /* 响应式设计 - 桌面优先 */
 @media (min-width: 1024px) {
     #sidebar {
@@ -396,6 +446,7 @@ body {
         display: none;
     }
     
+    /* 桌面端表格优化 */
     .sponsor-table {
         width: 60%; 
     }
@@ -405,18 +456,9 @@ body {
         padding: 12px 20px;
         font-size: 15px;
     }
-    
-    /* Ban和sp表格在桌面端的字体调整 */
-    .ban-table th,
-    .ban-table td,
-    .sp-table th,
-    .sp-table td {
-        font-size: 15px;
-    }
 }
 
-/* 平板端优化 */
-@media (max-width: 1023px) and (min-width: 768px) {
+@media (max-width: 1023px) {
     #sidebar {
         left: -250px;
     }
@@ -431,39 +473,9 @@ body {
         grid-template-columns: 1fr;
     }
     
+    /* 平板端表格优化 */
     .sponsor-table {
         width: 80%; 
-    }
-    
-    /* Ban和sp表格在平板端的字体调整 */
-    .ban-table th,
-    .ban-table td,
-    .sp-table th,
-    .sp-table td {
-        font-size: 14px;
-    }
-}
-
-/* 移动端优化 */
-@media (max-width: 767px) {
-    .sponsor-table,
-    .ban-table,
-    .sp-table {
-        min-width: 800px;
-    }
-    
-    .sponsor-table th,
-    .sponsor-table td {
-        padding: 8px 12px;
-        font-size: 14px;
-    }
-    
-    /* Ban和sp表格在移动端的字体调整 */
-    .ban-table th,
-    .ban-table td,
-    .sp-table th,
-    .sp-table td {
-        font-size: 13px;
     }
 }
 
@@ -473,13 +485,6 @@ body {
     .sponsor-table td {
         padding: 6px 10px;
         font-size: 13px;
-    }
-    
-    /* Ban和sp表格在极小屏幕的字体调整 */
-    .ban-table th,
-    .ban-table td,
-    .sp-table th,
-    .sp-table td {
-        font-size: 12px;
+        min-width: 60px; 
     }
 }
