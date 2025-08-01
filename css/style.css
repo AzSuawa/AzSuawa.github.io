@@ -151,7 +151,7 @@ body {
 
 /* 默认表格样式 - 使用ban表格的布局样式 */
 table {
-    width: 100%;
+    width: auto;
     max-width: 100%;
     table-layout: fixed;
     border-collapse: collapse;
