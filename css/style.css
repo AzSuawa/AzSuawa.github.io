@@ -149,8 +149,8 @@ body {
     vertical-align: middle; 
 }
 
-/* 默认表格样式 - 现在具有与ban/sp列表相同的响应式特性 */
-.sponsor-table {
+/* 默认表格样式 - 使用ban表格的布局样式 */
+table {
     width: 100%;
     max-width: 100%;
     table-layout: fixed;
@@ -158,24 +158,41 @@ body {
     margin: 0 auto;
 }
 
-.sponsor-table th, 
-.sponsor-table td {
+/* 表头和单元格基础样式 */
+th,
+td {
     padding: 10px 12px;
     text-align: left;
     border-bottom: 1px solid var(--border-color);
+    overflow: hidden;
+    text-overflow: ellipsis;
     word-break: break-word;
-    hyphens: auto;
-    min-width: 80px;
 }
 
-.sponsor-table th {
+/* 表头样式 */
+th {
     background-color: var(--primary-color);
     color: white;
     font-weight: bold;
+    position: sticky;
+    top: 0;
 }
 
-.sponsor-table tr:hover {
+/* 悬停效果 */
+tr:hover {
     background-color: var(--hover-bg);
+}
+
+/* Ban表格专用样式 - 仅调整字体大小 */
+.ban-table th,
+.ban-table td {
+    font-size: 14px;
+}
+
+/* SP表格专用样式 - 仅调整字体大小 */
+.sp-table th,
+.sp-table td {
+    font-size: 14px;
 }
 
 /* 分组标题样式 */
@@ -317,120 +334,37 @@ body {
     color: #555;
 }
 
-/* Ban表格专用样式 */
-.ban-table {
-    width: 100%;
-    max-width: 100%;
-    table-layout: fixed;
-    border-collapse: collapse;
-    margin: 0 auto;
-}
-
-.ban-table th,
-.ban-table td {
-    padding: 10px 12px;
-    text-align: left;
-    border-bottom: 1px solid var(--border-color);
-    overflow: hidden;
-    text-overflow: ellipsis;
-    word-break: break-word;
-}
-
-/* 严格的列宽控制 */
-.ban-table th:nth-child(1),
-.ban-table td:nth-child(1) { width: 27%; min-width: 100px; }
-
-.ban-table th:nth-child(2),
-.ban-table td:nth-child(2) { width: 34%; min-width: 120px; }
-
-.ban-table th:nth-child(3),
-.ban-table td:nth-child(3) { width: 39%; min-width: 150px; }
-
-.ban-table th {
-    background-color: var(--primary-color);
-    color: white;
-    font-weight: bold;
-    position: sticky;
-    top: 0;
-}
-
-.ban-table tr:hover {
-    background-color: var(--hover-bg);
-}
-
-/* sp表格专用样式 */
-.sp-table {
-    width: 100%;
-    max-width: 100%;
-    table-layout: fixed;
-    border-collapse: collapse;
-    margin: 0 auto;
-}
-
-.sp-table th,
-.sp-table td {
-    padding: 10px 12px;
-    text-align: left;
-    border-bottom: 1px solid var(--border-color);
-    overflow: hidden;
-    text-overflow: ellipsis;
-    word-break: break-word;
-}
-
-/* 严格的列宽控制 */
-.sp-table th:nth-child(1),
-.sp-table td:nth-child(1) { width: 27%; min-width: 100px; }
-
-.sp-table th:nth-child(2),
-.sp-table td:nth-child(2) { width: 53%; min-width: 120px; }
-
-.sp-table th:nth-child(3),
-.sp-table td:nth-child(3) { width: 20%; min-width: 150px; }
-
-.sp-table th {
-    background-color: var(--primary-color);
-    color: white;
-    font-weight: bold;
-    position: sticky;
-    top: 0;
-}
-
-.sp-table tr:hover {
-    background-color: var(--hover-bg);
-}
-
-/* 移动端特殊处理 - 所有表格添加左右滑动功能 */
+/* 移动端特殊处理 */
 @media (max-width: 767px) {
-    .sponsor-table-wrapper,
-    .ban-table-wrapper,
-    .sp-table-wrapper {
+    .table-wrapper {
         overflow-x: auto;
         -webkit-overflow-scrolling: touch;
     }
     
-    .sponsor-table,
-    .ban-table,
-    .sp-table {
+    table {
         width: auto;
         min-width: 100%;
     }
     
-    /* 默认表格调整 */
-    .sponsor-table th,
-    .sponsor-table td {
+    th,
+    td {
         padding: 8px 10px;
         font-size: 13px;
         white-space: nowrap;
     }
     
-    /* ban/sp表格仅调整字体大小 */
     .ban-table th,
-    .ban-table td,
+    .ban-table td {
+        font-size: 13px;
+    }
+    
     .sp-table th,
     .sp-table td {
-        padding: 8px 10px;
         font-size: 13px;
-        /* 保持自动换行 */
+    }
+    
+    .cmd-grid {
+        grid-template-columns: 1fr;
     }
 }
 
@@ -445,17 +379,6 @@ body {
     #menu-btn {
         display: none;
     }
-    
-    /* 桌面端表格优化 */
-    .sponsor-table {
-        width: 60%; 
-    }
-    
-    .sponsor-table th,
-    .sponsor-table td {
-        padding: 12px 20px;
-        font-size: 15px;
-    }
 }
 
 @media (max-width: 1023px) {
@@ -468,23 +391,33 @@ body {
     #menu-btn {
         display: block;
     }
-    
-    .cmd-grid {
-        grid-template-columns: 1fr;
+}
+
+/* 桌面端优化 */
+@media (min-width: 1024px) {
+    table {
+        width: 60%; 
     }
     
-    /* 平板端表格优化 */
-    .sponsor-table {
+    th,
+    td {
+        padding: 12px 20px;
+        font-size: 15px;
+    }
+}
+
+/* 平板端优化 */
+@media (max-width: 1023px) and (min-width: 768px) {
+    table {
         width: 80%; 
     }
 }
 
 /* 极小屏幕优化 */
 @media (max-width: 480px) {
-    .sponsor-table th,
-    .sponsor-table td {
+    th,
+    td {
         padding: 6px 10px;
         font-size: 13px;
-        min-width: 60px; 
     }
 }
