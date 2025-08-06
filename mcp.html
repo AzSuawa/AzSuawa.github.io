@@ -159,7 +159,7 @@
             loadingDiv.style.display = 'block';
 
             // 构建API URL，添加时间戳防止缓存
-            let apiUrl = `https://a.api.azsu.top:20086/pingpng?ip=${encodeURIComponent(ip)}&t=${Date.now()}`;
+            let apiUrl = `https://a.api.azsu.top:23/pingpng?ip=${encodeURIComponent(ip)}&t=${Date.now()}`;
             if (watermark) {
                 apiUrl += `&watermark=${encodeURIComponent(watermark)}`;
             }
