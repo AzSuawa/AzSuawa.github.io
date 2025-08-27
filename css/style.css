@@ -301,7 +301,7 @@ body {
 }
 
 .command-desc {
-    color: 666;
+    color: #666;
     font-size: 13px;
     line-height: 1.4;
 }
@@ -316,11 +316,11 @@ body {
     color: #555;
 }
 
-/* Ban表格专用样式 - 强制固定布局 */
+/* Ban表格专用样式 - 自动扩展列宽 */
 .ban-table {
-    width: 100%;
+    width: auto; /* 自动宽度 */
     max-width: 100%;
-    table-layout: fixed; /* 关键属性：强制使用固定布局 */
+    table-layout: auto; /* 自动布局 */
     border-collapse: collapse;
     margin: 0 auto;
 }
@@ -331,8 +331,8 @@ body {
     padding: 10px 12px;
     text-align: left;
     border-bottom: 1px solid var(--border-color);
-    overflow: hidden;
     white-space: nowrap; /* 禁止自动换行 */
+    overflow: visible; /* 内容可见 */
 }
 
 /* 表头样式 */
@@ -349,11 +349,11 @@ body {
     background-color: var(--hover-bg);
 }
 
-/* sp表格专用样式 - 强制固定布局 */
+/* sp表格专用样式 - 自动扩展列宽 */
 .sp-table {
-    width: 100%;
+    width: auto; /* 自动宽度 */
     max-width: 100%;
-    table-layout: fixed; /* 关键属性：强制使用固定布局 */
+    table-layout: auto; /* 自动布局 */
     border-collapse: collapse;
     margin: 0 auto;
 }
@@ -364,8 +364,8 @@ body {
     padding: 10px 12px;
     text-align: left;
     border-bottom: 1px solid var(--border-color);
-    overflow: hidden;
     white-space: nowrap; /* 禁止自动换行 */
+    overflow: visible; /* 内容可见 */
 }
 
 /* 表头样式 */
@@ -386,14 +386,15 @@ body {
 @media (max-width: 767px) {
     .ban-table-wrapper,
     .sp-table-wrapper {
-        overflow-x: auto;
+        overflow-x: auto; /* 允许横向滚动 */
         -webkit-overflow-scrolling: touch;
+        width: 100%;
     }
     
     .ban-table,
     .sp-table {
-        width: auto; /* 在小屏幕取消100%宽度 */
-        min-width: 100%; /* 但至少与容器同宽 */
+        width: auto; /* 自动宽度 */
+        min-width: 100%; /* 最小宽度为容器宽度 */
     }
     
     /* 调整文字大小和间距 */
@@ -403,7 +404,7 @@ body {
     .sp-table td {
         padding: 8px 10px;
         font-size: 13px;
-        white-space: nowrap; /* 防止自动换行 */
+        white-space: nowrap; /* 保持不换行 */
     }
 }
 
@@ -417,6 +418,13 @@ body {
     }
     #menu-btn {
         display: none;
+    }
+    
+    /* 桌面端表格容器也需要横向滚动 */
+    .ban-table-wrapper,
+    .sp-table-wrapper {
+        overflow-x: auto;
+        width: 100%;
     }
 }
 
