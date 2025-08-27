@@ -315,175 +315,81 @@ body {
     font-size: 12px;
     color: #555;
 }
-/* Ban表格专用样式 - 强制固定布局 */
+
+/* Ban表格基础样式 */
 .ban-table {
     width: 100%;
     max-width: 100%;
-    table-layout: fixed; /* 关键属性：强制使用固定布局 */
     border-collapse: collapse;
     margin: 0 auto;
 }
 
-/* 表头和单元格基础样式 */
 .ban-table th,
 .ban-table td {
     padding: 10px 12px;
     text-align: left;
     border-bottom: 1px solid var(--border-color);
-    overflow: hidden;
-    text-overflow: ellipsis; /* 文字过长时显示省略号 */
     word-break: break-word;
 }
 
-/* 严格的列宽控制 */
-.ban-table th:nth-child(1),
-.ban-table td:nth-child(1) { 
-    width: 27%;
-    min-width: 100px; /* 设置最小宽度防止过窄 */
-}
-
-.ban-table th:nth-child(2),
-.ban-table td:nth-child(2) { 
-    width: 34%;
-    min-width: 120px;
-}
-
-.ban-table th:nth-child(3),
-.ban-table td:nth-child(3) { 
-    width: 39%;
-    min-width: 150px;
-}
-
-/* 表头样式 */
 .ban-table th {
     background-color: var(--primary-color);
     color: white;
     font-weight: bold;
-    position: sticky;
-    top: 0;
 }
 
-/* 悬停效果 */
 .ban-table tr:hover {
     background-color: var(--hover-bg);
 }
 
-/* 移动端特殊处理 */
-@media (max-width: 767px) {
-    .ban-table-wrapper {
-        overflow-x: auto;
-        -webkit-overflow-scrolling: touch;
-    }
-    
-    .ban-table {
-        width: auto; /* 在小屏幕取消100%宽度 */
-        min-width: 100%; /* 但至少与容器同宽 */
-    }
-    
-    /* 保持列宽比例但允许滚动 */
-    .ban-table th:nth-child(1),
-    .ban-table td:nth-child(1) { width: 27%; }
-    
-    .ban-table th:nth-child(2),
-    .ban-table td:nth-child(2) { width: 34%; }
-    
-    .ban-table th:nth-child(3),
-    .ban-table td:nth-child(3) { width: 39%; }
-    
-    /* 调整文字大小和间距 */
-    .ban-table th,
-    .ban-table td {
-        padding: 8px 10px;
-        font-size: 13px;
-        white-space: nowrap; /* 防止自动换行 */
-    }
-}
-
-/* sp表格专用样式 - 强制固定布局 */
+/* sp表格基础样式 */
 .sp-table {
     width: 100%;
     max-width: 100%;
-    table-layout: fixed; /* 关键属性：强制使用固定布局 */
     border-collapse: collapse;
     margin: 0 auto;
 }
 
-/* 表头和单元格基础样式 */
 .sp-table th,
 .sp-table td {
     padding: 10px 12px;
     text-align: left;
     border-bottom: 1px solid var(--border-color);
-    overflow: hidden;
-    text-overflow: ellipsis; /* 文字过长时显示省略号 */
     word-break: break-word;
 }
 
-/* 严格的列宽控制 */
-.sp-table th:nth-child(1),
-.sp-table td:nth-child(1) { 
-    width: 27%;
-    min-width: 100px; /* 设置最小宽度防止过窄 */
-}
-
-.sp-table th:nth-child(2),
-.sp-table td:nth-child(2) { 
-    width: 53%;
-    min-width: 120px;
-}
-
-.sp-table th:nth-child(3),
-.sp-table td:nth-child(3) { 
-    width: 20%;
-    min-width: 150px;
-}
-
-/* 表头样式 */
 .sp-table th {
     background-color: var(--primary-color);
     color: white;
     font-weight: bold;
-    position: sticky;
-    top: 0;
 }
 
-/* 悬停效果 */
 .sp-table tr:hover {
     background-color: var(--hover-bg);
 }
 
 /* 移动端特殊处理 */
 @media (max-width: 767px) {
+    .ban-table-wrapper,
     .sp-table-wrapper {
         overflow-x: auto;
         -webkit-overflow-scrolling: touch;
     }
     
+    .ban-table,
     .sp-table {
-        width: auto; /* 在小屏幕取消100%宽度 */
-        min-width: 100%; /* 但至少与容器同宽 */
+        width: auto;
+        min-width: 100%;
     }
     
-    /* 保持列宽比例但允许滚动 */
-    .sp-table th:nth-child(1),
-    .sp-table td:nth-child(1) { width: 27%; }
-    
-    .sp-table th:nth-child(2),
-    .sp-table td:nth-child(2) { width: 53%; }
-    
-    .sp-table th:nth-child(3),
-    .sp-table td:nth-child(3) { width: 20%; }
-    
-    /* 调整文字大小和间距 */
+    .ban-table th,
+    .ban-table td,
     .sp-table th,
     .sp-table td {
         padding: 8px 10px;
         font-size: 13px;
-        white-space: nowrap; /* 防止自动换行 */
     }
 }
-
-
 
 /* 响应式设计 - 桌面优先 */
 @media (min-width: 1024px) {
