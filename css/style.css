@@ -301,7 +301,7 @@ body {
 }
 
 .command-desc {
-    color: #666;
+    color: 666;
     font-size: 13px;
     line-height: 1.4;
 }
@@ -316,54 +316,68 @@ body {
     color: #555;
 }
 
-/* Ban表格基础样式 */
+/* Ban表格专用样式 - 强制固定布局 */
 .ban-table {
     width: 100%;
     max-width: 100%;
+    table-layout: fixed; /* 关键属性：强制使用固定布局 */
     border-collapse: collapse;
     margin: 0 auto;
 }
 
+/* 表头和单元格基础样式 */
 .ban-table th,
 .ban-table td {
     padding: 10px 12px;
     text-align: left;
     border-bottom: 1px solid var(--border-color);
-    word-break: break-word;
+    overflow: hidden;
+    white-space: nowrap; /* 禁止自动换行 */
 }
 
+/* 表头样式 */
 .ban-table th {
     background-color: var(--primary-color);
     color: white;
     font-weight: bold;
+    position: sticky;
+    top: 0;
 }
 
+/* 悬停效果 */
 .ban-table tr:hover {
     background-color: var(--hover-bg);
 }
 
-/* sp表格基础样式 */
+/* sp表格专用样式 - 强制固定布局 */
 .sp-table {
     width: 100%;
     max-width: 100%;
+    table-layout: fixed; /* 关键属性：强制使用固定布局 */
     border-collapse: collapse;
     margin: 0 auto;
 }
 
+/* 表头和单元格基础样式 */
 .sp-table th,
 .sp-table td {
     padding: 10px 12px;
     text-align: left;
     border-bottom: 1px solid var(--border-color);
-    word-break: break-word;
+    overflow: hidden;
+    white-space: nowrap; /* 禁止自动换行 */
 }
 
+/* 表头样式 */
 .sp-table th {
     background-color: var(--primary-color);
     color: white;
     font-weight: bold;
+    position: sticky;
+    top: 0;
 }
 
+/* 悬停效果 */
 .sp-table tr:hover {
     background-color: var(--hover-bg);
 }
@@ -378,16 +392,18 @@ body {
     
     .ban-table,
     .sp-table {
-        width: auto;
-        min-width: 100%;
+        width: auto; /* 在小屏幕取消100%宽度 */
+        min-width: 100%; /* 但至少与容器同宽 */
     }
     
+    /* 调整文字大小和间距 */
     .ban-table th,
     .ban-table td,
     .sp-table th,
     .sp-table td {
         padding: 8px 10px;
         font-size: 13px;
+        white-space: nowrap; /* 防止自动换行 */
     }
 }
 
