@@ -1,11 +1,175 @@
 <div id="bb">
- 
-   
-
     <div class="card active">
-        <h1>该页面制作中</h1>
+        <h1>小小素API文档 <span class="version-badge">2025.9.3</span></h1>
         <div class="command-section">
-            <p></p>
+            <p>【公开本API提供的数据需标注来源：小小素API或azsu.top】</p>
+            <p>BaseURL: https://api.azsu.top</p>
+            <p>请求方式: GET</p>
+            <p>示例: https://api.azsu.top/mcping/image?ip=azsu.top</p>
+            <p>第三方数据说明：</p>
+            <p>❶ 包含来自2b2t.vc的数据，基于其进行二次处理</p>
+            <p>❷ 部分数据来自Mojang</p>
+        </div>
+    </div>
+
+    <div class="card">
+        <h1>MC服务器查询</h1>
+        <div class="cmd-container">
+            <div class="cmd-section">
+                <div class="cmd-section-header query">
+                    <i class="fas fa-server"></i>
+                    <span>服务器状态查询</span>
+                </div>
+                <div class="cmd-grid">
+                    <div class="command-card">
+                        <div class="command-name">/mcping/json?ip=&lt;地址&gt;</div>
+                        <div class="command-desc">返回指定MC服务器的Ping信息</div>
+                        <div class="command-example">示例: /mcping/json?ip=mc.hypixel.net</div>
+                    </div>
+                    <div class="command-card">
+                        <div class="command-name">/mcping/image?ip=&lt;地址&gt;&watermark=&lt;水印&gt;</div>
+                        <div class="command-desc">返回指定MC服务器的Ping信息(图片)</div>
+                        <div class="command-example">示例: /mcping/image?ip=azsu.top&watermark=小小素API</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="card">
+        <h1>玩家皮肤相关</h1>
+        <div class="cmd-container">
+            <div class="cmd-section">
+                <div class="cmd-section-header">
+                    <i class="fas fa-user"></i>
+                    <span>皮肤获取</span>
+                </div>
+                <div class="cmd-grid">
+                    <div class="command-card">
+                        <div class="command-name">/skin/skin/&lt;玩家&gt;</div>
+                        <div class="command-desc">返回指定玩家上传的皮肤图片，用于阿素服设置皮肤功能❷</div>
+                        <div class="command-example">示例: /skin/skin/Steve</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="card">
+        <h1>2b2t.org 数据查询</h1>
+        <div class="cmd-container">
+            <div class="cmd-section">
+                <div class="cmd-section-header admin">
+                    <i class="fas fa-crown"></i>
+                    <span>玩家排名数据 (JSON格式)</span>
+                </div>
+                <div class="cmd-grid">
+                    <div class="command-card">
+                        <div class="command-name">/org/rank/json/playtime/&lt;玩家&gt;</div>
+                        <div class="command-desc">返回指定玩家在2b2t.org近一个月游玩时长的排名信息❶</div>
+                    </div>
+                    <div class="command-card">
+                        <div class="command-name">/org/rank/json/kills/&lt;玩家&gt;</div>
+                        <div class="command-desc">返回指定玩家在2b2t.org近一个月击杀数的排名信息❶</div>
+                    </div>
+                    <div class="command-card">
+                        <div class="command-name">/org/rank/json/deaths/&lt;玩家&gt;</div>
+                        <div class="command-desc">返回指定玩家在2b2t.org近一个月死亡数的排名信息❶</div>
+                    </div>
+                    <div class="command-card">
+                        <div class="command-name">/org/rank/json/all/&lt;玩家&gt;</div>
+                        <div class="command-desc">返回指定玩家在2b2t.org近一个月的全部排名信息❶</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="cmd-section">
+                <div class="cmd-section-header admin">
+                    <i class="fas fa-image"></i>
+                    <span>排行榜数据 (图片格式)</span>
+                </div>
+                <div class="cmd-grid">
+                    <div class="command-card">
+                        <div class="command-name">/org/rank/image/playtime</div>
+                        <div class="command-desc">返回2b2t.org近一个月在线时长排行榜前20名(图片)❶</div>
+                    </div>
+                    <div class="command-card">
+                        <div class="command-name">/org/rank/image/kills</div>
+                        <div class="command-desc">返回2b2t.org近一个月击杀数排行榜前20名(图片)❶</div>
+                    </div>
+                    <div class="command-card">
+                        <div class="command-name">/org/rank/image/deaths</div>
+                        <div class="command-desc">返回2b2t.org近一个月死亡数排行榜前20名(图片)❶</div>
+                    </div>
+                    <div class="command-card">
+                        <div class="command-name">/org/tablist/image/</div>
+                        <div class="command-desc">返回2b2t.org当前在线玩家列表(图片)❶</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="card">
+        <h1>2b2t.gg 数据查询 (已停止更新)</h1>
+        <div class="command-section">
+            <p>【以下2b2t.gg相关数据于2025.5.17停止更新】</p>
+        </div>
+        <div class="cmd-container">
+            <div class="cmd-section">
+                <div class="cmd-section-header super-admin">
+                    <i class="fas fa-exclamation-triangle"></i>
+                    <span>在线玩家查询</span>
+                </div>
+                <div class="cmd-grid">
+                    <div class="command-card">
+                        <div class="command-name">/gg/tablist/json</div>
+                        <div class="command-desc">返回2b2t.gg当前在线玩家列表</div>
+                    </div>
+                    <div class="command-card">
+                        <div class="command-name">/gg/tablist/image</div>
+                        <div class="command-desc">返回2b2t.gg当前在线玩家列表(图片)</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="cmd-section">
+                <div class="cmd-section-header super-admin">
+                    <i class="fas fa-exclamation-triangle"></i>
+                    <span>玩家数据查询</span>
+                </div>
+                <div class="cmd-grid">
+                    <div class="command-card">
+                        <div class="command-name">/gg/stat/&lt;玩家&gt;</div>
+                        <div class="command-desc">返回指定玩家在2b2t.gg的信息</div>
+                    </div>
+                    <div class="command-card">
+                        <div class="command-name">/gg/rank/player/&lt;玩家&gt;</div>
+                        <div class="command-desc">返回指定玩家在2b2t.gg的排名信息</div>
+                    </div>
+                    <div class="command-card">
+                        <div class="command-name">/gg/rank/json/&lt;类型:joins,kills,deaths,kd,playtime&gt;/&lt;玩家&gt;</div>
+                        <div class="command-desc">返回指定玩家在2b2t.gg中指定类型的排名信息</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="cmd-section">
+                <div class="cmd-section-header super-admin">
+                    <i class="fas fa-exclamation-triangle"></i>
+                    <span>排行榜查询</span>
+                </div>
+                <div class="cmd-grid">
+                    <div class="command-card">
+                        <div class="command-name">/gg/rank/json/&lt;类型:joins,kills,deaths,kd,playtime&gt;</div>
+                        <div class="command-desc">返回2b2t.gg中指定类型的排行榜前1000名</div>
+                    </div>
+                    <div class="command-card">
+                        <div class="command-name">/gg/rank/image/&lt;类型:joins,kills,deaths,kd,playtime&gt;</div>
+                        <div class="command-desc">返回2b2t.gg中指定类型的排行榜前20名(图片)</div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>
