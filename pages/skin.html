@@ -1,164 +1,198 @@
-<div id="skin">
-    <div class="card active">
-        <h1>上传皮肤到服务器</h1>
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>素素の生存服 - 上传皮肤</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            max-width: 500px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #E5EDFF;
+        }
+        h1 {
+            color: #333;
+            text-align: center;
+        }
+        .skin-upload-container {
+            background-color: white;
+            border-radius: 8px;
+            padding: 25px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        .skin-drop-area {
+            border: 2px dashed #6c757d;
+            border-radius: 6px;
+            padding: 30px;
+            text-align: center;
+            margin-bottom: 20px;
+            transition: all 0.3s;
+            background-color: #f8f9fa;
+        }
+        .skin-drop-area.highlight {
+            border-color: #28a745;
+            background-color: #e8f5e9;
+        }
+        #skin-fileInput {
+            display: none;
+        }
+        .skin-btn {
+            background-color: #A1BDFF;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            margin: 10px 5px;
+            transition: background-color 0.3s;
+        }
+        .skin-btn:hover {
+            background-color: #8CAEFF;
+        }
+        .skin-progress-container {
+            margin-top: 20px;
+            display: none;
+        }
+        .skin-progress {
+            width: 100%;
+            height: 20px;
+            border-radius: 4px;
+        }
+        #skin-fileList {
+            margin-top: 20px;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+        .skin-file-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px;
+            border-bottom: 1px solid #eee;
+            align-items: center;
+        }
+        .skin-file-info {
+            display: flex;
+            align-items: center;
+        }
+        .skin-file-icon {
+            margin-right: 10px;
+            color: #6c757d;
+        }
+        .skin-file-status {
+            font-weight: bold;
+        }
+        .skin-status-pending {
+            color: #ffc107;
+        }
+        .skin-status-success {
+            color: #28a745;
+        }
+        .skin-status-error {
+            color: #dc3545;
+        }
+        .skin-form-group {
+            margin-bottom: 15px;
+        }
+        .skin-label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
         
-        <div class="form-group">
-            <label for="playerId">玩家ID:</label>
-            <input type="text" id="playerId" placeholder="请输入你的游戏ID" required>
+        .skin-input[type="text"] {
+            width: calc(100% - 2px);
+            padding: 10px;
+            border: 1px solid #ced4da;
+            border-radius: 4px;
+            font-size: 14px;
+            box-sizing: border-box;
+        }
+        .skin-file-size-limit {
+            color: #6c757d;
+            font-size: 14px;
+            margin-top: 5px;
+        }
+        .skin-preview-link {
+            color: #007bff;
+            text-decoration: none;
+        }
+        .skin-preview-link:hover {
+            text-decoration: underline;
+        }
+        .skin-server-info {
+            background-color: #f8f9fa;
+            padding: 10px;
+            border-radius: 4px;
+            margin-bottom: 15px;
+            font-family: monospace;
+        }
+        /* 新增的主页按钮样式 */
+        .skin-home-button-container {
+            position: fixed;
+            right: 20px;
+            bottom: 20px;
+            z-index: 1000;
+        }
+        .skin-home-button {
+            background-color: #A1BDFF;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            text-decoration: none;
+            display: inline-block;
+            transition: background-color 0.3s;
+        }
+        .skin-home-button:hover {
+            background-color: #8CAEFF;
+        }
+    </style>
+</head>
+<body>
+    <h1>上传皮肤到服务器</h1>
+    
+    <div class="skin-upload-container">
+
+        
+        <div class="skin-form-group">
+            <label class="skin-label" for="skin-playerId">玩家ID:</label>
+            <input class="skin-input" type="text" id="skin-playerId" placeholder="请输入你的游戏ID" required>
         </div>
         
-        <div class="drop-area" id="dropArea">
+        <div class="skin-drop-area" id="skin-dropArea">
             <p>可拖放文件到此处</p>
-            <button class="btn" id="selectBtn">选择文件</button>
-            <input type="file" id="fileInput" accept="image/png">
-            <div class="file-size-limit">仅支持原版皮肤(png格式)</div>
+            <button class="skin-btn" id="skin-selectBtn">选择文件</button>
+            <input type="file" id="skin-fileInput" accept="image/png">
+            <div class="skin-file-size-limit">仅支持原版皮肤(png格式)</div>
         </div>
-        <div class="progress-container" id="progressContainer">
+        <div class="skin-progress-container" id="skin-progressContainer">
             <p>上传进度:</p>
-            <progress id="uploadProgress" value="0" max="100"></progress>
-            <p id="statusText"></p>
+            <progress class="skin-progress" id="skin-uploadProgress" value="0" max="100"></progress>
+            <p id="skin-statusText"></p>
         </div>
         
-        <div id="fileList"></div>
+        <div id="skin-fileList"></div>
     </div>
-</div>
 
-<style>
-    #skin .card {
-        padding: 20px;
-    }
-    
-    #skin .drop-area {
-        border: 2px dashed #6c757d;
-        border-radius: 6px;
-        padding: 30px;
-        text-align: center;
-        margin-bottom: 20px;
-        transition: all 0.3s;
-        background-color: #f8f9fa;
-    }
-    
-    #skin .drop-area.highlight {
-        border-color: #28a745;
-        background-color: #e8f5e9;
-    }
-    
-    #skin #fileInput {
-        display: none;
-    }
-    
-    #skin .btn {
-        background-color: var(--primary-color);
-        color: white;
-        padding: 10px 20px;
-        border: none;
-        border-radius: 4px;
-        cursor: pointer;
-        font-size: 16px;
-        margin: 10px 5px;
-        transition: background-color 0.3s;
-    }
-    
-    #skin .btn:hover {
-        background-color: var(--hover-blue);
-    }
-    
-    #skin .progress-container {
-        margin-top: 20px;
-        display: none;
-    }
-    
-    #skin progress {
-        width: 100%;
-        height: 20px;
-        border-radius: 4px;
-    }
-    
-    #skin #fileList {
-        margin-top: 20px;
-        max-height: 300px;
-        overflow-y: auto;
-    }
-    
-    #skin .file-item {
-        display: flex;
-        justify-content: space-between;
-        padding: 10px;
-        border-bottom: 1px solid #eee;
-        align-items: center;
-    }
-    
-    #skin .file-info {
-        display: flex;
-        align-items: center;
-    }
-    
-    #skin .file-icon {
-        margin-right: 10px;
-        color: #6c757d;
-    }
-    
-    #skin .file-status {
-        font-weight: bold;
-    }
-    
-    #skin .status-pending {
-        color: #ffc107;
-    }
-    
-    #skin .status-success {
-        color: #28a745;
-    }
-    
-    #skin .status-error {
-        color: #dc3545;
-    }
-    
-    #skin .form-group {
-        margin-bottom: 15px;
-    }
-    
-    #skin label {
-        display: block;
-        margin-bottom: 5px;
-        font-weight: bold;
-    }
-    
-    #skin input[type="text"] {
-        width: calc(100% - 2px);
-        padding: 10px;
-        border: 1px solid #ced4da;
-        border-radius: 4px;
-        font-size: 14px;
-        box-sizing: border-box;
-    }
-    
-    #skin .file-size-limit {
-        color: #6c757d;
-        font-size: 14px;
-        margin-top: 5px;
-    }
-    
-    #skin .preview-link {
-        color: #007bff;
-        text-decoration: none;
-    }
-    
-    #skin .preview-link:hover {
-        text-decoration: underline;
-    }
-</style>
+    <!-- 新增的主页按钮 -->
+    <div class="skin-home-button-container">
+        <a href="https://azsu.top" class="skin-home-button">主页</a>
+    </div>
 
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-        const dropArea = document.getElementById('dropArea');
-        const fileInput = document.getElementById('fileInput');
-        const selectBtn = document.getElementById('selectBtn');
-        const progressContainer = document.getElementById('progressContainer');
-        const uploadProgress = document.getElementById('uploadProgress');
-        const statusText = document.getElementById('statusText');
-        const fileList = document.getElementById('fileList');
-        const playerIdInput = document.getElementById('playerId');
+    <script>
+        const dropArea = document.getElementById('skin-dropArea');
+        const fileInput = document.getElementById('skin-fileInput');
+        const selectBtn = document.getElementById('skin-selectBtn');
+        const progressContainer = document.getElementById('skin-progressContainer');
+        const uploadProgress = document.getElementById('skin-uploadProgress');
+        const statusText = document.getElementById('skin-statusText');
+        const fileList = document.getElementById('skin-fileList');
+        const playerIdInput = document.getElementById('skin-playerId');
         
         // 固定服务器地址
         const serverUrl = 'https://api.azsu.top/skin/upload';
@@ -237,13 +271,13 @@
             
             // 显示文件列表
             const fileItem = document.createElement('div');
-            fileItem.className = 'file-item';
+            fileItem.className = 'skin-file-item';
             fileItem.innerHTML = `
-                <div class="file-info">
-                    <span class="file-icon">📄</span>
+                <div class="skin-file-info">
+                    <span class="skin-file-icon">📄</span>
                     <span>${pngFiles[0].name} (${formatFileSize(pngFiles[0].size)})</span>
                 </div>
-                <span class="file-status status-pending">等待上传</span>
+                <span class="skin-file-status skin-status-pending">等待上传</span>
             `;
             fileList.appendChild(fileItem);
             
@@ -271,7 +305,7 @@
                     statusText.textContent = `上传中: ${percent}%`;
                     
                     // 更新文件状态
-                    fileItem.querySelector('.file-status').textContent = `${percent}%`;
+                    fileItem.querySelector('.skin-file-status').textContent = `${percent}%`;
                 }
             };
             
@@ -283,15 +317,15 @@
                         uploadProgress.value = 100;
                         
                         // 更新文件状态
-                        const statusSpan = fileItem.querySelector('.file-status');
+                        const statusSpan = fileItem.querySelector('.skin-file-status');
                         statusSpan.textContent = '上传成功';
-                        statusSpan.className = 'file-status status-success';
+                        statusSpan.className = 'skin-file-status skin-status-success';
                         
                         // 显示皮肤预览链接
                         const previewLink = document.createElement('a');
                         previewLink.href = skinPreviewBaseUrl + playerId;
                         previewLink.textContent = '查看皮肤';
-                        previewLink.className = 'preview-link';
+                        previewLink.className = 'skin-preview-link';
                         previewLink.target = '_blank';
                         previewLink.style.marginLeft = '10px';
                         fileItem.appendChild(previewLink);
@@ -299,17 +333,17 @@
                         showError(response.message || '上传失败');
                         
                         // 更新文件状态
-                        const statusSpan = fileItem.querySelector('.file-status');
+                        const statusSpan = fileItem.querySelector('.skin-file-status');
                         statusSpan.textContent = response.message || '上传失败';
-                        statusSpan.className = 'file-status status-error';
+                        statusSpan.className = 'skin-file-status skin-status-error';
                     }
                 } else {
                     showError('上传失败: ' + xhr.statusText);
                     
                     // 更新文件状态
-                    const statusSpan = fileItem.querySelector('.file-status');
+                    const statusSpan = fileItem.querySelector('.skin-file-status');
                     statusSpan.textContent = '上传失败';
-                    statusSpan.className = 'file-status status-error';
+                    statusSpan.className = 'skin-file-status skin-status-error';
                 }
             };
             
@@ -317,9 +351,9 @@
                 showError('上传过程中发生错误');
                 
                 // 更新文件状态
-                const statusSpan = fileItem.querySelector('.file-status');
+                const statusSpan = fileItem.querySelector('.skin-file-status');
                 statusSpan.textContent = '上传错误';
-                statusSpan.className = 'file-status status-error';
+                statusSpan.className = 'skin-file-status skin-status-error';
             };
             
             xhr.send(formData);
@@ -340,5 +374,6 @@
             const i = Math.floor(Math.log(bytes) / Math.log(k));
             return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
         }
-    });
-</script>
+    </script>
+</body>
+</html>
