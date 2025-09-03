@@ -381,6 +381,65 @@ body {
 .sp-table tr:hover {
     background-color: var(--hover-bg);
 }
+/* API文档样式 - 添加到现有CSS文件中 */
+.api-endpoint {
+    background: #f8f9ff;
+    padding: 12px;
+    border-radius: 6px;
+    margin-bottom: 15px;
+}
+
+.method {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 3px;
+    font-weight: bold;
+    margin-right: 8px;
+    color: white;
+    background: #4285f4;
+    font-size: 13px;
+}
+
+.path {
+    font-family: monospace;
+    font-size: 14px;
+    color: #c0392b;
+    word-break: break-all;
+}
+
+.param {
+    font-weight: bold;
+    color: #8e44ad;
+}
+
+.param-list {
+    margin: 10px 0;
+    padding-left: 0;
+    list-style-position: inside;
+}
+
+.example {
+    background: #f0f5ff;
+    padding: 8px;
+    border-radius: 4px;
+    margin: 8px 0;
+    font-family: monospace;
+    font-size: 13px;
+    word-break: break-all;
+}
+
+.api-source-note {
+    background: #e8f5e9;
+    padding: 8px;
+    border-radius: 4px;
+    margin: 8px 0;
+    font-size: 13px;
+    color: #2e7d32;
+}
+
+.deprecated {
+    opacity: 0.7;
+}
 
 /* 移动端特殊处理 */
 @media (max-width: 767px) {
