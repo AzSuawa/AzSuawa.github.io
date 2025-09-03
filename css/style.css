@@ -126,6 +126,9 @@ body {
 
 .card.active {
     display: block;
+    max-width: 300px; /* 限制最大宽度 */
+    margin-left: auto; /* 自动左外边距 */
+    margin-right: auto; /* 自动右外边距 */
 }
 
 .card h1 {
