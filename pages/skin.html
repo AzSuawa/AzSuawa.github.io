@@ -1,6 +1,7 @@
-<div class="card active">
-    <h1>上传皮肤到服务器</h1>
-    <div class="command-section">
+<div id="skin">
+    <div class="card active">
+        <h1>上传皮肤到服务器</h1>
+        
         <div class="form-group">
             <label for="playerId">玩家ID:</label>
             <input type="text" id="playerId" placeholder="请输入你的游戏ID" required>
@@ -21,3 +22,323 @@
         <div id="fileList"></div>
     </div>
 </div>
+
+<style>
+    #skin .card {
+        padding: 20px;
+    }
+    
+    #skin .drop-area {
+        border: 2px dashed #6c757d;
+        border-radius: 6px;
+        padding: 30px;
+        text-align: center;
+        margin-bottom: 20px;
+        transition: all 0.3s;
+        background-color: #f8f9fa;
+    }
+    
+    #skin .drop-area.highlight {
+        border-color: #28a745;
+        background-color: #e8f5e9;
+    }
+    
+    #skin #fileInput {
+        display: none;
+    }
+    
+    #skin .btn {
+        background-color: var(--primary-color);
+        color: white;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 16px;
+        margin: 10px 5px;
+        transition: background-color 0.3s;
+    }
+    
+    #skin .btn:hover {
+        background-color: var(--hover-blue);
+    }
+    
+    #skin .progress-container {
+        margin-top: 20px;
+        display: none;
+    }
+    
+    #skin progress {
+        width: 100%;
+        height: 20px;
+        border-radius: 4px;
+    }
+    
+    #skin #fileList {
+        margin-top: 20px;
+        max-height: 300px;
+        overflow-y: auto;
+    }
+    
+    #skin .file-item {
+        display: flex;
+        justify-content: space-between;
+        padding: 10px;
+        border-bottom: 1px solid #eee;
+        align-items: center;
+    }
+    
+    #skin .file-info {
+        display: flex;
+        align-items: center;
+    }
+    
+    #skin .file-icon {
+        margin-right: 10px;
+        color: #6c757d;
+    }
+    
+    #skin .file-status {
+        font-weight: bold;
+    }
+    
+    #skin .status-pending {
+        color: #ffc107;
+    }
+    
+    #skin .status-success {
+        color: #28a745;
+    }
+    
+    #skin .status-error {
+        color: #dc3545;
+    }
+    
+    #skin .form-group {
+        margin-bottom: 15px;
+    }
+    
+    #skin label {
+        display: block;
+        margin-bottom: 5px;
+        font-weight: bold;
+    }
+    
+    #skin input[type="text"] {
+        width: calc(100% - 2px);
+        padding: 10px;
+        border: 1px solid #ced4da;
+        border-radius: 4px;
+        font-size: 14px;
+        box-sizing: border-box;
+    }
+    
+    #skin .file-size-limit {
+        color: #6c757d;
+        font-size: 14px;
+        margin-top: 5px;
+    }
+    
+    #skin .preview-link {
+        color: #007bff;
+        text-decoration: none;
+    }
+    
+    #skin .preview-link:hover {
+        text-decoration: underline;
+    }
+</style>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const dropArea = document.getElementById('dropArea');
+        const fileInput = document.getElementById('fileInput');
+        const selectBtn = document.getElementById('selectBtn');
+        const progressContainer = document.getElementById('progressContainer');
+        const uploadProgress = document.getElementById('uploadProgress');
+        const statusText = document.getElementById('statusText');
+        const fileList = document.getElementById('fileList');
+        const playerIdInput = document.getElementById('playerId');
+        
+        // 固定服务器地址
+        const serverUrl = 'https://api.azsu.top/skin/upload';
+        const skinPreviewBaseUrl = 'https://api.azsu.top/skin/skin/';
+        
+        // 阻止默认拖放行为
+        ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+            dropArea.addEventListener(eventName, preventDefaults, false);
+            document.body.addEventListener(eventName, preventDefaults, false);
+        });
+        
+        function preventDefaults(e) {
+            e.preventDefault();
+            e.stopPropagation();
+        }
+        
+        // 高亮拖放区域
+        ['dragenter', 'dragover'].forEach(eventName => {
+            dropArea.addEventListener(eventName, highlight, false);
+        });
+        
+        ['dragleave', 'drop'].forEach(eventName => {
+            dropArea.addEventListener(eventName, unhighlight, false);
+        });
+        
+        function highlight() {
+            dropArea.classList.add('highlight');
+        }
+        
+        function unhighlight() {
+            dropArea.classList.remove('highlight');
+        }
+        
+        // 处理拖放文件
+        dropArea.addEventListener('drop', handleDrop, false);
+        
+        function handleDrop(e) {
+            const dt = e.dataTransfer;
+            const files = dt.files;
+            handleFiles(files);
+        }
+        
+        // 点击选择文件按钮
+        selectBtn.addEventListener('click', () => {
+            fileInput.click();
+        });
+        
+        // 处理选择的文件
+        fileInput.addEventListener('change', () => {
+            handleFiles(fileInput.files);
+        });
+        
+        // 处理文件
+        function handleFiles(files) {
+            fileList.innerHTML = '';
+            
+            const playerId = playerIdInput.value.trim();
+            if (!playerId) {
+                showError('请先输入玩家ID');
+                return;
+            }
+            
+            const pngFiles = Array.from(files).filter(file => file.type === 'image/png');
+            
+            if (pngFiles.length === 0) {
+                showError('请选择PNG格式的皮肤文件');
+                return;
+            }
+            
+            // 检查文件大小
+            const oversizedFiles = pngFiles.filter(file => file.size > 10 * 1024);
+            if (oversizedFiles.length > 0) {
+                showError(`文件 "${oversizedFiles[0].name}" 超过10KB限制`);
+                return;
+            }
+            
+            // 显示文件列表
+            const fileItem = document.createElement('div');
+            fileItem.className = 'file-item';
+            fileItem.innerHTML = `
+                <div class="file-info">
+                    <span class="file-icon">📄</span>
+                    <span>${pngFiles[0].name} (${formatFileSize(pngFiles[0].size)})</span>
+                </div>
+                <span class="file-status status-pending">等待上传</span>
+            `;
+            fileList.appendChild(fileItem);
+            
+            // 开始上传
+            uploadFile(pngFiles[0], playerId, fileItem);
+        }
+        
+        // 上传文件
+        function uploadFile(file, playerId, fileItem) {
+            progressContainer.style.display = 'block';
+            statusText.textContent = '准备上传...';
+            
+            const formData = new FormData();
+            formData.append('file', file);
+            formData.append('player_id', playerId);
+            
+            const xhr = new XMLHttpRequest();
+            xhr.open('POST', serverUrl, true);
+            
+            // 更新进度条
+            xhr.upload.onprogress = function(e) {
+                if (e.lengthComputable) {
+                    const percent = Math.round((e.loaded / e.total) * 100);
+                    uploadProgress.value = percent;
+                    statusText.textContent = `上传中: ${percent}%`;
+                    
+                    // 更新文件状态
+                    fileItem.querySelector('.file-status').textContent = `${percent}%`;
+                }
+            };
+            
+            xhr.onload = function() {
+                if (xhr.status === 200) {
+                    const response = JSON.parse(xhr.responseText);
+                    if (response.status === 'success') {
+                        statusText.textContent = '上传成功!';
+                        uploadProgress.value = 100;
+                        
+                        // 更新文件状态
+                        const statusSpan = fileItem.querySelector('.file-status');
+                        statusSpan.textContent = '上传成功';
+                        statusSpan.className = 'file-status status-success';
+                        
+                        // 显示皮肤预览链接
+                        const previewLink = document.createElement('a');
+                        previewLink.href = skinPreviewBaseUrl + playerId;
+                        previewLink.textContent = '查看皮肤';
+                        previewLink.className = 'preview-link';
+                        previewLink.target = '_blank';
+                        previewLink.style.marginLeft = '10px';
+                        fileItem.appendChild(previewLink);
+                    } else {
+                        showError(response.message || '上传失败');
+                        
+                        // 更新文件状态
+                        const statusSpan = fileItem.querySelector('.file-status');
+                        statusSpan.textContent = response.message || '上传失败';
+                        statusSpan.className = 'file-status status-error';
+                    }
+                } else {
+                    showError('上传失败: ' + xhr.statusText);
+                    
+                    // 更新文件状态
+                    const statusSpan = fileItem.querySelector('.file-status');
+                    statusSpan.textContent = '上传失败';
+                    statusSpan.className = 'file-status status-error';
+                }
+            };
+            
+            xhr.onerror = function() {
+                showError('上传过程中发生错误');
+                
+                // 更新文件状态
+                const statusSpan = fileItem.querySelector('.file-status');
+                statusSpan.textContent = '上传错误';
+                statusSpan.className = 'file-status status-error';
+            };
+            
+            xhr.send(formData);
+        }
+        
+        // 显示错误信息
+        function showError(message) {
+            statusText.textContent = message;
+            statusText.style.color = '#dc3545';
+            progressContainer.style.display = 'block';
+        }
+        
+        // 格式化文件大小
+        function formatFileSize(bytes) {
+            if (bytes === 0) return '0 Bytes';
+            const k = 1024;
+            const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+            const i = Math.floor(Math.log(bytes) / Math.log(k));
+            return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+        }
+    });
+</script>
