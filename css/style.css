@@ -431,7 +431,7 @@ body {
 .api-source-note {
     background: #DADAFC;
     padding: 8px;
-    border-radius: 4px;
+    border-radius: 2px;
     margin: 8px 0;
     font-size: 13px;
     color: #9999FF;
@@ -439,7 +439,7 @@ body {
 .api-source-note-yellow {
     background: #FFE5CC;
     padding: 8px;
-    border-radius: 4px;
+    border-radius: 2px;
     margin: 8px 0;
     font-size: 13px;
     color: #FFB266;
