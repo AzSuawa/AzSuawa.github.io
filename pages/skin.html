@@ -1,23 +1,38 @@
-<div class="card active">
-    <h1>上传皮肤到服务器</h1>
-    <div class="command-section">
-        <div class="form-group">
-            <label for="playerId">玩家ID:</label>
-            <input type="text" id="playerId" placeholder="请输入你的游戏ID" required>
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>皮肤上传</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/skin.css">
+</head>
+<body>
+    <div class="card">
+        <h1>上传皮肤到服务器</h1>
+        <div class="command-section">
+            <div class="form-group">
+                <label for="playerId">玩家ID:</label>
+                <input type="text" id="playerId" placeholder="请输入你的游戏ID" required>
+            </div>
+            
+            <div class="drop-area" id="dropArea">
+                <p>可拖放文件到此处</p>
+                <button class="btn" id="selectBtn">选择文件</button>
+                <input type="file" id="fileInput" accept="image/png">
+                <div class="file-size-limit">仅支持原版皮肤(png格式)</div>
+            </div>
+            
+            <div class="progress-container" id="progressContainer">
+                <p>上传进度:</p>
+                <progress id="uploadProgress" value="0" max="100"></progress>
+                <p id="statusText"></p>
+            </div>
+            
+            <div id="fileList"></div>
+            <div class="error" id="error"></div>
         </div>
-        
-        <div class="drop-area" id="dropArea">
-            <p>可拖放文件到此处</p>
-            <button class="btn" id="selectBtn">选择文件</button>
-            <input type="file" id="fileInput" accept="image/png">
-            <div class="file-size-limit">仅支持原版皮肤(png格式)</div>
-        </div>
-        <div class="progress-container" id="progressContainer">
-            <p>上传进度:</p>
-            <progress id="uploadProgress" value="0" max="100"></progress>
-            <p id="statusText"></p>
-        </div>
-        
-        <div id="fileList"></div>
     </div>
-</div>
+    <script src="js/skin.js"></script>
+</body>
+</html>
