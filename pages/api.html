@@ -20,9 +20,9 @@
                 <div class="api-source-note">数据来源: Mojang服务器状态API</div>
                 
                 <p><strong>参数说明</strong></p>
-                <ul class="param-list">
-                    <i class="fas fa-circle"></i><span class="param">ip</span> - 服务器地址(必需)
-                </ul>
+                
+                <p> <i class="fas fa-circle"></i><span class="param">ip</span> - 服务器地址(必需)</p>
+                
                 
                 <p><strong>示例URL</strong></p>
                 <div class="example">
@@ -254,4 +254,19 @@
             
             <div class="api-endpoint">
                 <span class="method">GET</span>
-                <span class="path">/gg/rank/image/&lt;类型
+                <span class="path">/gg/rank/image/&lt;类型:joins,kills,deaths,kd,playtime&gt;</span>
+                <p>返回2b2t.gg中指定类型的排行榜前20名(图片)</p>
+                
+                <p><strong>参数说明</strong></p>
+                <ul class="param-list">
+                    <li><span class="param">类型</span> - joins/kills/deaths/kd/playtime(必需)</li>
+                </ul>
+                
+                <p><strong>示例URL</strong></p>
+                <div class="example">
+                    https://api.azsu.top/gg/rank/image/playtime
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
