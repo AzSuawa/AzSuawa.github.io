@@ -21,15 +21,12 @@
         <div class="command-section">
             <div class="api-endpoint">
                 <p><span class="method">GET</span><span class="path">/mcping/json?ip=&lt;ip&gt;</span></p>
-                <p>返回指定MC服务器的Ping信息(JSON格式)</p>
-                
-                <div class="api-source-note">数据来源: Mojang服务器状态API</div>
+                <p>返回指定MC服务器的Ping信息(JSON)</p>
                 
                 <p><strong>参数说明</strong></p>
                 
                 <ul class="param-list">
-                    ‎ <i class="fas fa-circle"></i><span class="param">ip</span> - 服务器地址(必需)<br>
-                    ‎ <i class="fas fa-circle"></i><span class="param">ip</span> - 服务器地址(必需)
+                    ‎ <i class="fas fa-circle"></i><span class="param">ip</span> - 服务器地址
                 </ul>
                 
                 
@@ -40,14 +37,12 @@
             </div>
             
             <div class="api-endpoint">
-                <p><span class="method">GET</span><span class="path">/mcping/image?ip=&lt;ip&gt;&amp;watermark=&lt;水印&gt;</span></p>
+                <p><span class="method">GET</span><span class="path">/mcping/image?ip=&lt;ip&gt;&amp;watermark=&lt;watermark&gt;</span></p>
                 <p>返回指定MC服务器的Ping信息(图片格式)</p>
-                
-                <div class="api-source-note">数据来源: Mojang服务器状态API</div>
                 
                 <p><strong>参数说明</strong></p>
                 <ul class="param-list">
-                    ‎ <i class="fas fa-circle"></i><span class="param">ip</span> - 服务器地址(必需)<br>
+                    ‎ <i class="fas fa-circle"></i><span class="param">ip</span> - 服务器地址<br>
                     ‎ <i class="fas fa-circle"></i><span class="param">watermark</span> - 自定义水印文字(可选)
                 </ul>
                 
@@ -63,14 +58,14 @@
         <h1>皮肤服务</h1>
         <div class="command-section">
             <div class="api-endpoint">
-                <p><span class="method">GET</span><span class="path">/skin/skin/&lt;玩家&gt;</span></p>
-                <p>返回指定玩家上传的皮肤图片，用于阿素服设置皮肤功能</p>
+                <p><span class="method">GET</span><span class="path">/skin/skin/&lt;player_name&gt;</span></p>
+                <p>返回指定ID由玩家上传的皮肤文件，若没有上传皮肤，正版ID返回正版皮肤，非正版ID返回菜鸟皮肤，用于azsu.top服务器设置皮肤功能</p>
                 
-                <div class="api-source-note">数据来源: Mojang皮肤API</div>
+                <div class="api-source-note">正版玩家皮肤来自Mojang API</div>
                 
                 <p><strong>参数说明</strong></p>
                 <ul class="param-list">
-                    ‎ <i class="fas fa-circle"></i><span class="param">玩家</span> - 玩家ID(必需)
+                    ‎ <i class="fas fa-circle"></i><span class="param">player_name</span> - 玩家ID
                 </ul>
                 
                 <p><strong>示例URL</strong></p>
@@ -85,14 +80,14 @@
         <h1>2B2T.ORG数据</h1>
         <div class="command-section">
             <div class="api-endpoint">
-                <p><span class="method">GET</span><span class="path">/org/rank/json/playtime/&lt;玩家&gt;</span></p>
+                <p><span class="method">GET</span><span class="path">/org/rank/json/playtime/&lt;player_name&gt;</span></p>
                 <p>返回指定玩家在2b2t.org近一个月游玩时长的排名信息</p>
                 
-                <div class="api-source-note">数据来源: 2b2t.vc API二次处理</div>
+                <div class="api-source-note">基于2b2t.vc数据进行二次处理</div>
                 
                 <p><strong>参数说明</strong></p>
                 <ul class="param-list">
-                    ‎ <i class="fas fa-circle"></i><span class="param">玩家</span> - 玩家ID(必需)
+                    ‎ <i class="fas fa-circle"></i><span class="param">player_name</span> - 玩家ID
                 </ul>
                 
                 <p><strong>示例URL</strong></p>
@@ -102,14 +97,14 @@
             </div>
             
             <div class="api-endpoint">
-                <p><span class="method">GET</span><span class="path">/org/rank/json/kills/&lt;玩家&gt;</span></p>
+                <p><span class="method">GET</span><span class="path">/org/rank/json/kills/&lt;player_name&gt;</span></p>
                 <p>返回指定玩家在2b2t.org近一个月击杀数的排名信息</p>
                 
-                <div class="api-source-note">数据来源: 2b2t.vc API二次处理</div>
+                <div class="api-source-note">基于2b2t.vc数据进行二次处理</div>
                 
                 <p><strong>参数说明</strong></p>
                 <ul class="param-list">
-                    ‎ <i class="fas fa-circle"></i><span class="param">玩家</span> - 玩家ID(必需)
+                    ‎ <i class="fas fa-circle"></i><span class="param">player_name</span> - 玩家ID
                 </ul>
                 
                 <p><strong>示例URL</strong></p>
@@ -119,14 +114,14 @@
             </div>
             
             <div class="api-endpoint">
-                <p><span class="method">GET</span><span class="path">/org/rank/json/deaths/&lt;玩家&gt;</span></p>
+                <p><span class="method">GET</span><span class="path">/org/rank/json/deaths/&lt;player_name&gt;</span></p>
                 <p>返回指定玩家在2b2t.org近一个月死亡数的排名信息</p>
                 
-                <div class="api-source-note">数据来源: 2b2t.vc API二次处理</div>
+                <div class="api-source-note">基于2b2t.vc数据进行二次处理</div>
                 
                 <p><strong>参数说明</strong></p>
                 <ul class="param-list">
-                    ‎ <i class="fas fa-circle"></i><span class="param">玩家</span> - 玩家ID(必需)
+                    ‎ <i class="fas fa-circle"></i><span class="param">player_name</span> - 玩家ID
                 </ul>
                 
                 <p><strong>示例URL</strong></p>
@@ -136,14 +131,14 @@
             </div>
             
             <div class="api-endpoint">
-                <p><span class="method">GET</span><span class="path">/org/rank/json/all/&lt;玩家&gt;</span></p>
+                <p><span class="method">GET</span><span class="path">/org/rank/json/all/&lt;player_name&gt;</span></p>
                 <p>返回指定玩家在2b2t.org近一个月的全部排名信息</p>
                 
-                <div class="api-source-note">数据来源: 2b2t.vc API二次处理</div>
+                <div class="api-source-note">基于2b2t.vc数据进行二次处理</div>
                 
                 <p><strong>参数说明</strong></p>
                 <ul class="param-list">
-                    ‎ <i class="fas fa-circle"></i><span class="param">玩家</span> - 玩家ID(必需)
+                    ‎ <i class="fas fa-circle"></i><span class="param">player_name</span> - 玩家ID
                 </ul>
                 
                 <p><strong>示例URL</strong></p>
@@ -160,8 +155,8 @@
             
             <div class="api-endpoint">
                 <p><span class="method">GET</span><span class="path">/gg/tablist/json</span></p>
-                <p>返回2b2t.gg当前在线玩家列表(JSON格式)</p>
-                <div class="api-source-note-yellow">不再更新</div>
+                <p>返回2b2t.gg当前在线玩家列表(JSON)</p>
+                <div class="api-source-note-yellow">该数据自2025.5.17起不再更新</div>
                 <p><strong>参数说明</strong></p>
                 <ul class="param-list">
                     ‎ <i class="fas fa-circle"></i><无参数
@@ -176,6 +171,7 @@
             <div class="api-endpoint">
                 <p><span class="method">GET</span><span class="path">/gg/tablist/image</span></p>
                 <p>返回2b2t.gg当前在线玩家列表(图片)</p>
+                <div class="api-source-note-yellow">该数据自2025.5.17起不再更新</div>
                 
                 <p><strong>参数说明</strong></p>
                 <ul class="param-list">
@@ -189,12 +185,13 @@
             </div>
             
             <div class="api-endpoint">
-                <p><span class="method">GET</span><span class="path">/gg/stat/&lt;玩家&gt;</span></p>
+                <p><span class="method">GET</span><span class="path">/gg/stat/&lt;player_name&gt;</span></p>
                 <p>返回指定玩家在2b2t.gg的信息</p>
+                <div class="api-source-note-yellow">该数据自2025.5.17起不再更新</div>
                 
                 <p><strong>参数说明</strong></p>
                 <ul class="param-list">
-                    ‎ <i class="fas fa-circle"></i><span class="param">玩家</span> - 玩家ID(必需)
+                    ‎ <i class="fas fa-circle"></i><span class="param">player_name</span> - 玩家ID
                 </ul>
                 
                 <p><strong>示例URL</strong></p>
@@ -204,12 +201,13 @@
             </div>
             
             <div class="api-endpoint">
-                <p><span class="method">GET</span><span class="path">/gg/rank/player/&lt;玩家&gt;</span></p>
+                <p><span class="method">GET</span><span class="path">/gg/rank/player/&lt;player_name&gt;</span></p>
                 <p>返回指定玩家在2b2t.gg的排名信息</p>
+                <div class="api-source-note-yellow">该数据自2025.5.17起不再更新</div>
                 
                 <p><strong>参数说明</strong></p>
                 <ul class="param-list">
-                    ‎ <i class="fas fa-circle"></i><span class="param">玩家</span> - 玩家ID(必需)
+                    ‎ <i class="fas fa-circle"></i><span class="param">player_name</span> - 玩家ID
                 </ul>
                 
                 <p><strong>示例URL</strong></p>
@@ -219,13 +217,14 @@
             </div>
             
             <div class="api-endpoint">
-                <p><span class="method">GET</span><span class="path">/gg/rank/json/&lt;类型:joins,kills,deaths,kd,playtime&gt;/&lt;玩家&gt;</span></p>
+                <p><span class="method">GET</span><span class="path">/gg/rank/json/&lt;type&gt;/&lt;player_name&gt;</span></p>
                 <p>返回指定玩家在2b2t.gg中指定类型的排名信息</p>
+                <div class="api-source-note-yellow">该数据自2025.5.17起不再更新</div>
                 
                 <p><strong>参数说明</strong></p>
                 <ul class="param-list">
-                    ‎ <i class="fas fa-circle"></i><span class="param">类型</span> - joins/kills/deaths/kd/playtime(必需)<br>
-                    ‎ <i class="fas fa-circle"></i><span class="param">玩家</span> - 玩家ID(必需)
+                    ‎ <i class="fas fa-circle"></i><span class="param">type</span> - 类型：joins/kills/deaths/kd/playtime<br>
+                    ‎ <i class="fas fa-circle"></i><span class="param">player_name</span> - 玩家ID
                 </ul>
                 
                 <p><strong>示例URL</strong></p>
@@ -235,12 +234,13 @@
             </div>
             
             <div class="api-endpoint">
-                <p><span class="method">GET</span><span class="path">/gg/rank/json/&lt;类型:joins,kills,deaths,kd,playtime&gt;</span></p>
+                <p><span class="method">GET</span><span class="path">/gg/rank/json/&lt;type&gt;</span></p>
                 <p>返回2b2t.gg中指定类型的排行榜前1000名</p>
+                <div class="api-source-note-yellow">该数据自2025.5.17起不再更新</div>
                 
                 <p><strong>参数说明</strong></p>
                 <ul class="param-list">
-                    ‎ <i class="fas fa-circle"></i><span class="param">类型</span> - joins/kills/deaths/kd/playtime(必需)
+                    ‎ <i class="fas fa-circle"></i><span class="param">type</span> - 类型：joins/kills/deaths/kd/playtime
                 </ul>
                 
                 <p><strong>示例URL</strong></p>
@@ -250,12 +250,13 @@
             </div>
             
             <div class="api-endpoint">
-                <p><span class="method">GET</span><span class="path">/gg/rank/image/&lt;类型:joins,kills,deaths,kd,playtime&gt;</span></p>
+                <p><span class="method">GET</span><span class="path">/gg/rank/image/&lt;type&gt;</span></p>
                 <p>返回2b2t.gg中指定类型的排行榜前20名(图片)</p>
+                <div class="api-source-note-yellow">该数据自2025.5.17起不再更新</div>
                 
                 <p><strong>参数说明</strong></p>
                 <ul class="param-list">
-                    ‎ <i class="fas fa-circle"></i><span class="param">类型</span> - joins/kills/deaths/kd/playtime(必需)
+                    ‎ <i class="fas fa-circle"></i><span class="param">type</span> - 类型：joins/kills/deaths/kd/playtime
                 </ul>
                 
                 <p><strong>示例URL</strong></p>
