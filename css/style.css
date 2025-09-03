@@ -430,19 +430,17 @@ body {
 
 .api-source-note {
     background: #DADAFC;
-    padding: 4px;
+    padding: 5px;
     border-radius: 4px;
     margin: 8px 0;
     font-size: 13px;
-    color: #0000FF;
 }
 .api-source-note-yellow {
     background: #FFE5CC;
-    padding: 4px;
+    padding: 5px;
     border-radius: 4px;
     margin: 8px 0;
     font-size: 13px;
-    color: #FF8000;
 }
 
 .deprecated {
