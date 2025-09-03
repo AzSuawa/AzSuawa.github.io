@@ -1,3 +1,12 @@
+// 页面CSS映射
+const pageCssMap = {
+    'mcp': 'css/mcp.css',
+    'skin': 'css/skin.css'
+};
+
+// 当前加载的CSS文件
+let currentLoadedCss = null;
+
 document.addEventListener('DOMContentLoaded', function() {
     // 初始化页面hash
     if (!window.location.hash) {
@@ -54,8 +63,8 @@ const pageContentMap = {
     'bb': 'pages/bb.html',
     'ban': 'pages/ban.html',
     'g': 'pages/g.html',
-    'mcp': 'pages/mcp.html',  // 修改为页面内加载
-    'skin': 'pages/skin.html',  // 修改为页面内加载
+    'mcp': 'pages/mcp.html',
+    'skin': 'pages/skin.html',
     'api': 'pages/api.html',
     'sp': 'pages/sp.html',
     'ban-qwqwcllwww': 'pages/ban/qwqwcllwww.html',
@@ -63,6 +72,25 @@ const pageContentMap = {
     'ban-iuhiuhne': 'pages/ban/iuhiuhne.html',
     'ban-sudpkkkk': 'pages/ban/sudpkkkk.html'
 };
+
+// 动态加载CSS文件
+function loadCssForPage(pageId) {
+    // 移除之前加载的CSS
+    if (currentLoadedCss) {
+        document.head.removeChild(currentLoadedCss);
+        currentLoadedCss = null;
+    }
+    
+    // 检查是否需要加载新的CSS
+    if (pageCssMap[pageId]) {
+        const link = document.createElement('link');
+        link.rel = 'stylesheet';
+        link.href = pageCssMap[pageId];
+        link.id = 'dynamic-css';
+        document.head.appendChild(link);
+        currentLoadedCss = link;
+    }
+}
 
 // 初始化页面内容功能
 function initPageContent() {
@@ -73,7 +101,7 @@ function initPageContent() {
             if (this.getAttribute('href').startsWith('http') || 
                 this.getAttribute('href').startsWith('./') || 
                 this.getAttribute('href').startsWith('/')) {
-                return; // 允许默认行为，跳转到外部页面
+                return;
             }
             
             e.preventDefault();
@@ -129,6 +157,9 @@ function updateActiveMenuItem(clickedItem) {
 
 // 加载页面内容
 async function loadPageContent(pageId) {
+    // 加载对应CSS
+    loadCssForPage(pageId);
+    
     // 隐藏所有卡片
     document.querySelectorAll('.card').forEach(card => {
         card.classList.remove('active');
@@ -144,35 +175,10 @@ async function loadPageContent(pageId) {
         // 加载动态内容
         const container = document.getElementById('dynamic-content');
         try {
-            let response;
-            let html;
-            
-            // 特殊处理mcp和skin页面
-            if (pageId === 'mcp' || pageId === 'skin') {
-                // 使用fetch获取页面内容
-                response = await fetch(pageContentMap[pageId]);
-                if (!response.ok) throw new Error('Network response was not ok');
-                html = await response.text();
-                
-                // 提取body中的内容
-                const parser = new DOMParser();
-                const doc = parser.parseFromString(html, 'text/html');
-                const bodyContent = doc.body.innerHTML;
-                
-                // 创建卡片容器
-                const cardHtml = `
-                    <div class="card active">
-                        ${bodyContent}
-                    </div>
-                `;
-                container.innerHTML = cardHtml;
-            } else {
-                // 其他页面正常加载
-                response = await fetch(pageContentMap[pageId]);
-                if (!response.ok) throw new Error('Network response was not ok');
-                html = await response.text();
-                container.innerHTML = html;
-            }
+            const response = await fetch(pageContentMap[pageId]);
+            if (!response.ok) throw new Error('Network response was not ok');
+            const html = await response.text();
+            container.innerHTML = html;
 
             // 激活所有卡片
             const cards = container.querySelectorAll('.card');
