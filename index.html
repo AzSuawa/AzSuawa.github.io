@@ -101,56 +101,6 @@
         
         <div id="dynamic-content"></div>
     </div>
-
-    <script>
-        // 菜单按钮点击事件
-        document.getElementById('menu-btn').addEventListener('click', function() {
-            document.getElementById('sidebar').classList.toggle('active');
-            document.getElementById('content').classList.toggle('shifted');
-        });
-
-        // 菜单组折叠功能
-        document.querySelectorAll('.group-header').forEach(header => {
-            header.addEventListener('click', function() {
-                const group = this.parentElement;
-                group.classList.toggle('active');
-                
-                const toggleIcon = this.querySelector('.toggle');
-                const submenu = group.querySelector('.submenu');
-                
-                if (group.classList.contains('active')) {
-                    toggleIcon.classList.remove('fa-chevron-right');
-                    toggleIcon.classList.add('fa-chevron-down');
-                    submenu.style.display = 'block';
-                } else {
-                    toggleIcon.classList.remove('fa-chevron-down');
-                    toggleIcon.classList.add('fa-chevron-right');
-                    submenu.style.display = 'none';
-                }
-            });
-        });
-
-        // 页面切换功能
-        document.querySelectorAll('#sidebar a').forEach(link => {
-            link.addEventListener('click', function(e) {
-                if (this.getAttribute('href').startsWith('#')) {
-                    e.preventDefault();
-                    const pageId = this.getAttribute('data-page');
-                    
-                    // 更新活动菜单项
-                    document.querySelectorAll('#sidebar li').forEach(item => {
-                        item.classList.remove('active');
-                    });
-                    this.parentElement.classList.add('active');
-                    
-                    // 切换显示对应的卡片
-                    document.querySelectorAll('.card').forEach(card => {
-                        card.classList.remove('active');
-                    });
-                    document.getElementById(pageId).classList.add('active');
-                }
-            });
-        });
-    </script>
+    <script src="js/main.js"></script>
 </body>
 </html>
