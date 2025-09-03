@@ -1,10 +1,14 @@
 <div id="bb">
     <div class="card active">
-        <h1>小小素API文档</h1>
+        <h1>小小素API文档 <span class="version-badge">2025.9.3</span></h1>
         <div class="command-section">
             <p><strong>BaseURL:</strong> https://api.azsu.top</p>
             <p><strong>请求方式:</strong> GET</p>
             <p><strong>示例:</strong> https://api.azsu.top/mcping/image?ip=azsu.top</p>
+            <p><strong>数据来源说明:</strong></p>
+            <p>❶ 包含来自2b2t.vc的数据，基于其进行二次处理</p>
+            <p>❷ 部分数据来自Mojang</p>
+            <p><strong>注意:</strong> 公开本API提供的数据需标注来源：小小素API或azsu.top</p>
         </div>
     </div>
     
@@ -111,18 +115,54 @@
                     GET https://api.azsu.top/org/rank/json/kills/Player1
                 </div>
             </div>
+            
+            <div class="api-endpoint">
+                <span class="method">GET</span>
+                <span class="path">/org/rank/json/deaths/&lt;玩家&gt;</span>
+                <p>返回指定玩家在2b2t.org近一个月死亡数的排名信息</p>
+                
+                <div class="api-source-note">数据来源: 2b2t.vc API二次处理</div>
+                
+                <p><strong>参数说明</strong></p>
+                <ul class="param-list">
+                    <li><span class="param">玩家</span> - 玩家ID(必需)</li>
+                </ul>
+                
+                <p><strong>示例请求</strong></p>
+                <div class="example">
+                    GET https://api.azsu.top/org/rank/json/deaths/Player1
+                </div>
+            </div>
+            
+            <div class="api-endpoint">
+                <span class="method">GET</span>
+                <span class="path">/org/rank/json/all/&lt;玩家&gt;</span>
+                <p>返回指定玩家在2b2t.org近一个月的全部排名信息</p>
+                
+                <div class="api-source-note">数据来源: 2b2t.vc API二次处理</div>
+                
+                <p><strong>参数说明</strong></p>
+                <ul class="param-list">
+                    <li><span class="param">玩家</span> - 玩家ID(必需)</li>
+                </ul>
+                
+                <p><strong>示例请求</strong></p>
+                <div class="example">
+                    GET https://api.azsu.top/org/rank/json/all/Player1
+                </div>
+            </div>
         </div>
     </div>
     
     <div class="card active">
         <h1>2B2T.GG数据</h1>
         <div class="command-section">
+            <div class="api-source-note">数据来源: 2b2t.gg API (2025.5.17停止更新)</div>
+            
             <div class="api-endpoint deprecated">
                 <span class="method">GET</span>
                 <span class="path">/gg/tablist/json</span>
                 <p>返回2b2t.gg当前在线玩家列表(JSON格式)</p>
-                
-                <div class="api-source-note">数据来源: 2b2t.gg API (2025.5.17停止更新)</div>
                 
                 <p><strong>参数说明</strong></p>
                 <ul class="param-list">
@@ -140,8 +180,6 @@
                 <span class="path">/gg/tablist/image</span>
                 <p>返回2b2t.gg当前在线玩家列表(图片)</p>
                 
-                <div class="api-source-note">数据来源: 2b2t.gg API (2025.5.17停止更新)</div>
-                
                 <p><strong>参数说明</strong></p>
                 <ul class="param-list">
                     <li>无参数</li>
@@ -158,8 +196,6 @@
                 <span class="path">/gg/stat/&lt;玩家&gt;</span>
                 <p>返回指定玩家在2b2t.gg的信息</p>
                 
-                <div class="api-source-note">数据来源: 2b2t.gg API (2025.5.17停止更新)</div>
-                
                 <p><strong>参数说明</strong></p>
                 <ul class="param-list">
                     <li><span class="param">玩家</span> - 玩家ID(必需)</li>
@@ -168,6 +204,71 @@
                 <p><strong>示例请求</strong></p>
                 <div class="example">
                     GET https://api.azsu.top/gg/stat/Player1
+                </div>
+            </div>
+            
+            <div class="api-endpoint deprecated">
+                <span class="method">GET</span>
+                <span class="path">/gg/rank/player/&lt;玩家&gt;</span>
+                <p>返回指定玩家在2b2t.gg的排名信息</p>
+                
+                <p><strong>参数说明</strong></p>
+                <ul class="param-list">
+                    <li><span class="param">玩家</span> - 玩家ID(必需)</li>
+                </ul>
+                
+                <p><strong>示例请求</strong></p>
+                <div class="example">
+                    GET https://api.azsu.top/gg/rank/player/Player1
+                </div>
+            </div>
+            
+            <div class="api-endpoint deprecated">
+                <span class="method">GET</span>
+                <span class="path">/gg/rank/json/&lt;类型:joins,kills,deaths,kd,playtime&gt;/&lt;玩家&gt;</span>
+                <p>返回指定玩家在2b2t.gg中指定类型的排名信息</p>
+                
+                <p><strong>参数说明</strong></p>
+                <ul class="param-list">
+                    <li><span class="param">类型</span> - joins/kills/deaths/kd/playtime(必需)</li>
+                    <li><span class="param">玩家</span> - 玩家ID(必需)</li>
+                </ul>
+                
+                <p><strong>示例请求</strong></p>
+                <div class="example">
+                    GET https://api.azsu.top/gg/rank/json/playtime/Player1
+                </div>
+            </div>
+            
+            <div class="api-endpoint deprecated">
+                <span class="method">GET</span>
+                <span class="path">/gg/rank/json/&lt;类型:joins,kills,deaths,kd,playtime&gt;</span>
+                <p>返回2b2t.gg中指定类型的排行榜前1000名</p>
+                
+                <p><strong>参数说明</strong></p>
+                <ul class="param-list">
+                    <li><span class="param">类型</span> - joins/kills/deaths/kd/playtime(必需)</li>
+                </ul>
+                
+                <p><strong>示例请求</strong></p>
+                <div class="example">
+                    GET https://api.azsu.top/gg/rank/json/playtime
+                </div>
+            </div>
+            
+            <div class="api-endpoint deprecated">
+                <span class="method">GET</span>
+                <span class="path">/gg/rank/image/&lt;类型:joins,kills,deaths,kd,playtime&gt;</span>
+                <p>返回2b2t.gg中指定类型的排行榜前20名(图片)</p>
+                
+                <p><strong>参数说明</strong></p>
+                <ul class="param-list">
+                    <li><span class="param">类型</span> - joins/kills/deaths/kd/playtime(必需)</li>
+                </ul>
+                
+                <p><strong>示例请求</strong></p>
+                <div class="example">
+                    GET https://api.azsu.top/gg/rank/image/playtime
                 </div>
             </div>
         </div>
