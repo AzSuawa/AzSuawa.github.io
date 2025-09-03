@@ -54,8 +54,8 @@ const pageContentMap = {
     'bb': 'pages/bb.html',
     'ban': 'pages/ban.html',
     'g': 'pages/g.html',
-    'mcp': 'mcp.html',
-    'skin': 'skin.html',
+    'mcp': 'pages/mcp.html',  // 修改为页面内加载
+    'skin': 'pages/skin.html',  // 修改为页面内加载
     'api': 'pages/api.html',
     'sp': 'pages/sp.html',
     'ban-qwqwcllwww': 'pages/ban/qwqwcllwww.html',
@@ -67,8 +67,15 @@ const pageContentMap = {
 // 初始化页面内容功能
 function initPageContent() {
     // 侧边栏菜单项点击事件
-    document.querySelectorAll('#sidebar a[href^="#"]').forEach(link => {
+    document.querySelectorAll('#sidebar a').forEach(link => {
         link.addEventListener('click', async function(e) {
+            // 处理外部链接
+            if (this.getAttribute('href').startsWith('http') || 
+                this.getAttribute('href').startsWith('./') || 
+                this.getAttribute('href').startsWith('/')) {
+                return; // 允许默认行为，跳转到外部页面
+            }
+            
             e.preventDefault();
             e.stopImmediatePropagation();
             
@@ -137,15 +144,48 @@ async function loadPageContent(pageId) {
         // 加载动态内容
         const container = document.getElementById('dynamic-content');
         try {
-            const response = await fetch(pageContentMap[pageId]);
-            if (!response.ok) throw new Error('Network response was not ok');
-            const html = await response.text();
-            container.innerHTML = html;
+            let response;
+            let html;
+            
+            // 特殊处理mcp和skin页面
+            if (pageId === 'mcp' || pageId === 'skin') {
+                // 使用fetch获取页面内容
+                response = await fetch(pageContentMap[pageId]);
+                if (!response.ok) throw new Error('Network response was not ok');
+                html = await response.text();
+                
+                // 提取body中的内容
+                const parser = new DOMParser();
+                const doc = parser.parseFromString(html, 'text/html');
+                const bodyContent = doc.body.innerHTML;
+                
+                // 创建卡片容器
+                const cardHtml = `
+                    <div class="card active">
+                        ${bodyContent}
+                    </div>
+                `;
+                container.innerHTML = cardHtml;
+            } else {
+                // 其他页面正常加载
+                response = await fetch(pageContentMap[pageId]);
+                if (!response.ok) throw new Error('Network response was not ok');
+                html = await response.text();
+                container.innerHTML = html;
+            }
 
             // 激活所有卡片
             const cards = container.querySelectorAll('.card');
             if (cards.length > 0) {
                 cards.forEach(card => card.classList.add('active'));
+            }
+
+            // 特殊处理mcp页面的自动ping
+            if (pageId === 'mcp') {
+                const submitBtn = container.querySelector('#submit-btn');
+                if (submitBtn) {
+                    submitBtn.click();
+                }
             }
 
             window.scrollTo(0, 0);
