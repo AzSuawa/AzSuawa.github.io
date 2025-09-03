@@ -250,149 +250,199 @@ function initMcpPage() {
 }
 
 // Skin页面初始化
+// 增强版皮肤上传功能
 function initSkinPage() {
     const dropArea = document.getElementById('dropArea');
     const fileInput = document.getElementById('fileInput');
     const selectBtn = document.getElementById('selectBtn');
-    
-    if (dropArea && fileInput && selectBtn) {
-        // 拖放功能
-        ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
-            dropArea.addEventListener(eventName, preventDefaults, false);
-        });
-        
-        ['dragenter', 'dragover'].forEach(eventName => {
-            dropArea.addEventListener(eventName, highlight, false);
-        });
-        
-        ['dragleave', 'drop'].forEach(eventName => {
-            dropArea.addEventListener(eventName, unhighlight, false);
-        });
-        
-        dropArea.addEventListener('drop', handleDrop, false);
-
-        // 文件选择
-        selectBtn.addEventListener('click', () => fileInput.click());
-        fileInput.addEventListener('change', () => handleFiles(fileInput.files));
-    }
-}
-
-// 辅助函数
-function preventDefaults(e) {
-    e.preventDefault();
-    e.stopPropagation();
-}
-
-function highlight(e) {
-    e.target.classList.add('highlight');
-}
-
-function unhighlight(e) {
-    e.target.classList.remove('highlight');
-}
-
-function handleDrop(e) {
-    const dt = e.dataTransfer;
-    const files = dt.files;
-    handleFiles(files);
-}
-
-function handleFiles(files) {
-    const fileList = document.getElementById('fileList');
-    fileList.innerHTML = '';
-    
-    const playerId = document.getElementById('playerId').value.trim();
-    if (!playerId) {
-        showError('请先输入玩家ID');
-        return;
-    }
-
-    const pngFiles = Array.from(files).filter(file => file.type === 'image/png');
-    if (pngFiles.length === 0) {
-        showError('请选择PNG格式的皮肤文件');
-        return;
-    }
-
-    const fileItem = document.createElement('div');
-    fileItem.className = 'file-item';
-    fileItem.innerHTML = `
-        <div class="file-info">
-            <span class="file-icon">📄</span>
-            <span>${pngFiles[0].name}</span>
-        </div>
-        <span class="file-status status-pending">等待上传</span>
-    `;
-    fileList.appendChild(fileItem);
-    
-    uploadFile(pngFiles[0], playerId, fileItem);
-}
-
-function uploadFile(file, playerId, fileItem) {
+    const playerIdInput = document.getElementById('playerId');
     const progressContainer = document.getElementById('progressContainer');
     const uploadProgress = document.getElementById('uploadProgress');
     const statusText = document.getElementById('statusText');
+    const fileList = document.getElementById('fileList');
+    const errorDiv = document.getElementById('error');
     
-    progressContainer.style.display = 'block';
-    statusText.textContent = '准备上传...';
-
-    const formData = new FormData();
-    formData.append('file', file);
-    formData.append('player_id', playerId);
-
-    const xhr = new XMLHttpRequest();
-    xhr.open('POST', 'https://api.azsu.top/skin/upload', true);
+    // 服务器配置
+    const serverUrl = 'https://api.azsu.top/skin/upload';
+    const skinPreviewBaseUrl = 'https://api.azsu.top/skin/skin/';
     
-    xhr.upload.onprogress = function(e) {
-        if (e.lengthComputable) {
-            const percent = Math.round((e.loaded / e.total) * 100);
-            uploadProgress.value = percent;
-            statusText.textContent = `上传中: ${percent}%`;
-            fileItem.querySelector('.file-status').textContent = `${percent}%`;
+    // 阻止默认拖放行为
+    ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+        dropArea.addEventListener(eventName, preventDefaults, false);
+        document.body.addEventListener(eventName, preventDefaults, false);
+    });
+    
+    function preventDefaults(e) {
+        e.preventDefault();
+        e.stopPropagation();
+    }
+    
+    // 高亮拖放区域
+    ['dragenter', 'dragover'].forEach(eventName => {
+        dropArea.addEventListener(eventName, highlight, false);
+    });
+    
+    ['dragleave', 'drop'].forEach(eventName => {
+        dropArea.addEventListener(eventName, unhighlight, false);
+    });
+    
+    function highlight() {
+        dropArea.classList.add('highlight');
+    }
+    
+    function unhighlight() {
+        dropArea.classList.remove('highlight');
+    }
+    
+    // 处理拖放文件
+    dropArea.addEventListener('drop', handleDrop, false);
+    
+    function handleDrop(e) {
+        const dt = e.dataTransfer;
+        const files = dt.files;
+        handleFiles(files);
+    }
+    
+    // 点击选择文件按钮
+    selectBtn.addEventListener('click', () => {
+        fileInput.click();
+    });
+    
+    // 处理选择的文件
+    fileInput.addEventListener('change', () => {
+        handleFiles(fileInput.files);
+    });
+    
+    // 处理文件
+    function handleFiles(files) {
+        fileList.innerHTML = '';
+        errorDiv.textContent = '';
+        
+        const playerId = playerIdInput.value.trim();
+        if (!playerId) {
+            showError('请先输入玩家ID');
+            return;
         }
-    };
+        
+        const pngFiles = Array.from(files).filter(file => file.type === 'image/png');
+        
+        if (pngFiles.length === 0) {
+            showError('请选择PNG格式的皮肤文件');
+            return;
+        }
+        
+        // 检查文件大小
+        const oversizedFiles = pngFiles.filter(file => file.size > 10 * 1024);
+        if (oversizedFiles.length > 0) {
+            showError(`文件 "${oversizedFiles[0].name}" 超过10KB限制`);
+            return;
+        }
+        
+        // 显示文件列表
+        const fileItem = document.createElement('div');
+        fileItem.className = 'file-item';
+        fileItem.innerHTML = `
+            <div class="file-info">
+                <span class="file-icon">📄</span>
+                <span>${pngFiles[0].name}</span>
+            </div>
+            <span class="file-status status-pending">等待上传</span>
+        `;
+        fileList.appendChild(fileItem);
+        
+        // 开始上传
+        uploadFile(pngFiles[0], playerId, fileItem);
+    }
     
-    xhr.onload = function() {
-        if (xhr.status === 200) {
-            const response = JSON.parse(xhr.responseText);
-            if (response.status === 'success') {
-                statusText.textContent = '上传成功!';
-                const statusSpan = fileItem.querySelector('.file-status');
-                statusSpan.textContent = '上传成功';
-                statusSpan.className = 'file-status status-success';
+    // 上传文件
+    function uploadFile(file, playerId, fileItem) {
+        progressContainer.style.display = 'block';
+        statusText.textContent = '准备上传...';
+        
+        const formData = new FormData();
+        formData.append('file', file);
+        formData.append('player_id', playerId);
+        
+        const xhr = new XMLHttpRequest();
+        xhr.open('POST', serverUrl, true);
+        
+        // 更新进度条
+        xhr.upload.onprogress = function(e) {
+            if (e.lengthComputable) {
+                const percent = Math.round((e.loaded / e.total) * 100);
+                uploadProgress.value = percent;
+                statusText.textContent = `上传中: ${percent}%`;
                 
-                const previewLink = document.createElement('a');
-                previewLink.href = `https://api.azsu.top/skin/skin/${playerId}`;
-                previewLink.textContent = '查看皮肤';
-                previewLink.className = 'preview-link';
-                previewLink.target = '_blank';
-                fileItem.appendChild(previewLink);
-            } else {
-                showError(response.message || '上传失败');
-                fileItem.querySelector('.file-status').textContent = response.message || '上传失败';
+                // 更新文件状态
+                fileItem.querySelector('.file-status').textContent = `${percent}%`;
             }
-        } else {
-            showError('上传失败: ' + xhr.statusText);
-            fileItem.querySelector('.file-status').textContent = '上传失败';
-        }
-    };
+        };
+        
+        xhr.onload = function() {
+            if (xhr.status === 200) {
+                try {
+                    const response = JSON.parse(xhr.responseText);
+                    if (response.status === 'success') {
+                        statusText.textContent = '上传成功!';
+                        uploadProgress.value = 100;
+                        
+                        // 更新文件状态
+                        const statusSpan = fileItem.querySelector('.file-status');
+                        statusSpan.textContent = '上传成功';
+                        statusSpan.className = 'file-status status-success';
+                        
+                        // 显示皮肤预览链接
+                        const previewLink = document.createElement('a');
+                        previewLink.href = skinPreviewBaseUrl + playerId;
+                        previewLink.textContent = '查看皮肤';
+                        previewLink.className = 'preview-link';
+                        previewLink.target = '_blank';
+                        previewLink.style.marginLeft = '10px';
+                        fileItem.appendChild(previewLink);
+                    } else {
+                        showError(response.message || '上传失败');
+                        
+                        // 更新文件状态
+                        const statusSpan = fileItem.querySelector('.file-status');
+                        statusSpan.textContent = response.message || '上传失败';
+                        statusSpan.className = 'file-status status-error';
+                    }
+                } catch (e) {
+                    showError('解析服务器响应失败');
+                    
+                    // 更新文件状态
+                    const statusSpan = fileItem.querySelector('.file-status');
+                    statusSpan.textContent = '解析失败';
+                    statusSpan.className = 'file-status status-error';
+                }
+            } else {
+                showError('上传失败: ' + xhr.statusText);
+                
+                // 更新文件状态
+                const statusSpan = fileItem.querySelector('.file-status');
+                statusSpan.textContent = '上传失败';
+                statusSpan.className = 'file-status status-error';
+            }
+        };
+        
+        xhr.onerror = function() {
+            showError('上传过程中发生错误');
+            
+            // 更新文件状态
+            const statusSpan = fileItem.querySelector('.file-status');
+            statusSpan.textContent = '上传错误';
+            statusSpan.className = 'file-status status-error';
+        };
+        
+        xhr.send(formData);
+    }
     
-    xhr.onerror = function() {
-        showError('上传过程中发生错误');
-        fileItem.querySelector('.file-status').textContent = '上传错误';
-    };
-    
-    xhr.send(formData);
-}
-
-function showError(message) {
-    const errorDiv = document.getElementById('error') || document.createElement('div');
-    errorDiv.textContent = message;
-    errorDiv.style.color = '#dc3545';
-    if (!document.getElementById('error')) {
-        errorDiv.id = 'error';
-        document.querySelector('.card').appendChild(errorDiv);
+    // 显示错误信息
+    function showError(message) {
+        errorDiv.textContent = message;
     }
 }
+
 
 // 显示首页
 function showHomePage() {
