@@ -23,15 +23,83 @@
                 <li class="active"><a href="#ba" data-page="ba"><i class="fas fa-home"></i> 首页</a></li>
             </ul>
         </div>
+
+        <div class="menu-group active">
+            <div class="group-header">
+                <i class="fas fa-star"></i>
+                <span>素素の生存服</span>
+                <i class="fas fa-chevron-down toggle"></i>
+            </div>
+            <ul class="submenu">
+                <li><a href="#ba" data-page="ba"><i class="fas fa-home"></i> 首页</a></li>
+                <li><a href="#bb" data-page="bb"><i class="fas fa-list-alt"></i> 机制修改</a></li>
+                <li><a href="#sp" data-page="sp"><i class="fas fa-heart"></i> 赞助列表</a></li>
+                <li><a href="#ban" data-page="ban"><i class="fas fa-ban"></i> 封禁列表</a></li>
+                <li class="active"><a href="./skin.html" data-page="skin"><i class="fas fa-star"></i> 上传皮肤</a></li>
+            </ul>
+        </div>
+
+        <div class="menu-group active">
+            <div class="group-header">
+                <i class="fas fa-star"></i>
+                <span>小小素BOT</span>
+                <i class="fas fa-chevron-down toggle"></i>
+            </div>
+            <ul class="submenu">
+                <li class="active"><a href="#aa" data-page="aa"><i class="fas fa-home"></i> 首页</a></li>
+                <li><a href="#ab" data-page="ab"><i class="fas fa-star"></i> 常见问题</a></li>
+                <li><a href="#ac" data-page="ac"><i class="fas fa-star"></i> 鸣谢</a></li>
+                <li><a href="#cmds" data-page="cmds"><i class="fas fa-list-alt"></i> 指令列表</a></li>
+                <li class="active"><a href="./mcp.html" data-page="mcp"><i class="fas fa-star"></i> MCPing</a></li>
+            </ul>
+        </div>
+
+        <div class="menu-group">
+            <div class="group-header">
+                <i class="fas fa-star"></i>
+                <span>其他</span>
+                <i class="fas fa-chevron-right toggle"></i>
+            </div>
+            <ul class="submenu" style="display: none;">
+                <li><a href="#g" data-page="g"><i class="fas fa-book"></i> 小故事</a></li>
+                <li><a href="#api" data-page="api"><i class="fas fa-star"></i> API</a></li>
+                <li><a href="#ban-qwqwcllwww" data-page="ban-qwqwcllwww"><i class="fas fa-star"></i> ban-qwqwcllwww</a></li>
+                <li><a href="#ban-mam1145" data-page="ban-mam1145"><i class="fas fa-star"></i> ban-man1145</a></li>
+                <li><a href="#ban-iuhiuhne" data-page="ban-iuhiuhne"><i class="fas fa-star"></i> ban-iuhiuhne</a></li>
+                <li><a href="#ban-sudpkkkk" data-page="ban-sudpkkkk"><i class="fas fa-star"></i> ban-sudpkkkk</a></li>
+            </ul>
+        </div>
     </div>
     
     <div id="content">
-        <div class="card active">
-            <h1>欢迎页面</h1>
+        <div class="card active" id="a-0">
+            <h1>这里是主页(p≧w≦q) - 网页施工中</h1>
             <div class="command-section">
-                <p>这里是您的内容区域</p>
+                <p>小小素是一只由阿素开发的野生QQ机器人，使用JavaScript和Python编写。</p>
+                <div class="command-example">小小素交流群: 199755660</div>
             </div>
         </div>
+        
+        <div class="card active" id="a-1">
+            <h1>使用须知</h1>
+            <div class="command-section">
+                <p><i class="fas fa-circle"></i>请勿引导小小素发表违规言论</p>
+                <p><i class="fas fa-circle"></i>请勿将小小素拉入不适宜的群聊</p>
+                <p><i class="fas fa-circle"></i>请勿长期禁言小小素</p>
+                <p><i class="fas fa-circle"></i>你应当知道开发者可以查看小小素所在群聊的内容</p>
+                <p><i class="fas fa-circle"></i><a href="#c" style="color: #4285f4; text-decoration: none;">常见问题</a></p>
+                <p><i class="fas fa-circle"></i><a href="#e" style="color: #4285f4; text-decoration: none;">指令列表</a></p>
+            </div>
+        </div>
+        
+        <div class="card active" id="a-2">
+            <h1></h1>
+            <div class="command-section">
+                <p></p>
+            </div>
+        </div>
+        
+        <div id="dynamic-content"></div>
     </div>
 
     <script>
@@ -39,6 +107,49 @@
         document.getElementById('menu-btn').addEventListener('click', function() {
             document.getElementById('sidebar').classList.toggle('active');
             document.getElementById('content').classList.toggle('shifted');
+        });
+
+        // 菜单组折叠功能
+        document.querySelectorAll('.group-header').forEach(header => {
+            header.addEventListener('click', function() {
+                const group = this.parentElement;
+                group.classList.toggle('active');
+                
+                const toggleIcon = this.querySelector('.toggle');
+                const submenu = group.querySelector('.submenu');
+                
+                if (group.classList.contains('active')) {
+                    toggleIcon.classList.remove('fa-chevron-right');
+                    toggleIcon.classList.add('fa-chevron-down');
+                    submenu.style.display = 'block';
+                } else {
+                    toggleIcon.classList.remove('fa-chevron-down');
+                    toggleIcon.classList.add('fa-chevron-right');
+                    submenu.style.display = 'none';
+                }
+            });
+        });
+
+        // 页面切换功能
+        document.querySelectorAll('#sidebar a').forEach(link => {
+            link.addEventListener('click', function(e) {
+                if (this.getAttribute('href').startsWith('#')) {
+                    e.preventDefault();
+                    const pageId = this.getAttribute('data-page');
+                    
+                    // 更新活动菜单项
+                    document.querySelectorAll('#sidebar li').forEach(item => {
+                        item.classList.remove('active');
+                    });
+                    this.parentElement.classList.add('active');
+                    
+                    // 切换显示对应的卡片
+                    document.querySelectorAll('.card').forEach(card => {
+                        card.classList.remove('active');
+                    });
+                    document.getElementById(pageId).classList.add('active');
+                }
+            });
         });
     </script>
 </body>
