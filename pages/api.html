@@ -1,57 +1,175 @@
 <div id="bb">
     <div class="card active">
-        <h1>小小素API文档 <span class="version-badge">2025.9.3</span></h1>
+        <h1>小小素API文档</h1>
         <div class="command-section">
-            <p>【公开本API提供的数据需标注来源：小小素API或azsu.top】</p>
-            <p>BaseURL: https://api.azsu.top</p>
-            <p>请求方式: GET</p>
-            <p>示例: https://api.azsu.top/mcping/image?ip=azsu.top</p>
-            <p>第三方数据说明：</p>
-            <p>❶ 包含来自2b2t.vc的数据，基于其进行二次处理</p>
-            <p>❷ 部分数据来自Mojang</p>
+            <p><strong>BaseURL:</strong> https://api.azsu.top</p>
+            <p><strong>请求方式:</strong> GET</p>
+            <p><strong>示例:</strong> https://api.azsu.top/mcping/image?ip=azsu.top</p>
         </div>
     </div>
-
-    <div class="card active"> 
-        <h1>API列表</h1>
+    
+    <div class="card active">
+        <h1>服务器状态查询</h1>
         <div class="command-section">
-            <p><i class="fas fa-circle"></i><strong>GET</strong> 返回指定MC服务器的Ping信息<div class="command-example">/mcping/json?ip=&lt;地址&gt;</div></p>
+            <div class="api-endpoint">
+                <span class="method">GET</span>
+                <span class="path">/mcping/json?ip=&lt;地址&gt;</span>
+                <p>返回指定MC服务器的Ping信息(JSON格式)</p>
+                
+                <div class="api-source-note">数据来源: Mojang服务器状态API</div>
+                
+                <p><strong>参数说明</strong></p>
+                <ul class="param-list">
+                    <li><span class="param">ip</span> - 服务器地址(必需)</li>
+                </ul>
+                
+                <p><strong>示例请求</strong></p>
+                <div class="example">
+                    GET https://api.azsu.top/mcping/json?ip=azsu.top
+                </div>
+            </div>
             
-            <p><i class="fas fa-circle"></i><strong>GET</strong> 返回指定MC服务器的Ping信息(图片)<div class="command-example">/mcping/image?ip=&lt;地址&gt;&watermark=&lt;水印&gt;</div></p>
+            <div class="api-endpoint">
+                <span class="method">GET</span>
+                <span class="path">/mcping/image?ip=&lt;地址&gt;&amp;watermark=&lt;水印&gt;</span>
+                <p>返回指定MC服务器的Ping信息(图片格式)</p>
+                
+                <div class="api-source-note">数据来源: Mojang服务器状态API</div>
+                
+                <p><strong>参数说明</strong></p>
+                <ul class="param-list">
+                    <li><span class="param">ip</span> - 服务器地址(必需)</li>
+                    <li><span class="param">watermark</span> - 自定义水印文字(可选)</li>
+                </ul>
+                
+                <p><strong>示例请求</strong></p>
+                <div class="example">
+                    GET https://api.azsu.top/mcping/image?ip=azsu.top&amp;watermark=小小素API
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="card active">
+        <h1>皮肤服务</h1>
+        <div class="command-section">
+            <div class="api-endpoint">
+                <span class="method">GET</span>
+                <span class="path">/skin/skin/&lt;玩家&gt;</span>
+                <p>返回指定玩家上传的皮肤图片，用于阿素服设置皮肤功能</p>
+                
+                <div class="api-source-note">数据来源: Mojang皮肤API</div>
+                
+                <p><strong>参数说明</strong></p>
+                <ul class="param-list">
+                    <li><span class="param">玩家</span> - 玩家ID(必需)</li>
+                </ul>
+                
+                <p><strong>示例请求</strong></p>
+                <div class="example">
+                    GET https://api.azsu.top/skin/skin/Steve
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="card active">
+        <h1>2B2T.ORG数据</h1>
+        <div class="command-section">
+            <div class="api-endpoint">
+                <span class="method">GET</span>
+                <span class="path">/org/rank/json/playtime/&lt;玩家&gt;</span>
+                <p>返回指定玩家在2b2t.org近一个月游玩时长的排名信息</p>
+                
+                <div class="api-source-note">数据来源: 2b2t.vc API二次处理</div>
+                
+                <p><strong>参数说明</strong></p>
+                <ul class="param-list">
+                    <li><span class="param">玩家</span> - 玩家ID(必需)</li>
+                </ul>
+                
+                <p><strong>示例请求</strong></p>
+                <div class="example">
+                    GET https://api.azsu.top/org/rank/json/playtime/Player1
+                </div>
+            </div>
             
-            <p><i class="fas fa-circle"></i><strong>GET</strong> 返回指定玩家上传的皮肤图片，用于阿素服设置皮肤功能❷<div class="command-example">/skin/skin/&lt;玩家&gt;</div></p>
+            <div class="api-endpoint">
+                <span class="method">GET</span>
+                <span class="path">/org/rank/json/kills/&lt;玩家&gt;</span>
+                <p>返回指定玩家在2b2t.org近一个月击杀数的排名信息</p>
+                
+                <div class="api-source-note">数据来源: 2b2t.vc API二次处理</div>
+                
+                <p><strong>参数说明</strong></p>
+                <ul class="param-list">
+                    <li><span class="param">玩家</span> - 玩家ID(必需)</li>
+                </ul>
+                
+                <p><strong>示例请求</strong></p>
+                <div class="example">
+                    GET https://api.azsu.top/org/rank/json/kills/Player1
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="card active">
+        <h1>2B2T.GG数据</h1>
+        <div class="command-section">
+            <div class="api-endpoint deprecated">
+                <span class="method">GET</span>
+                <span class="path">/gg/tablist/json</span>
+                <p>返回2b2t.gg当前在线玩家列表(JSON格式)</p>
+                
+                <div class="api-source-note">数据来源: 2b2t.gg API (2025.5.17停止更新)</div>
+                
+                <p><strong>参数说明</strong></p>
+                <ul class="param-list">
+                    <li>无参数</li>
+                </ul>
+                
+                <p><strong>示例请求</strong></p>
+                <div class="example">
+                    GET https://api.azsu.top/gg/tablist/json
+                </div>
+            </div>
             
-            <p><i class="fas fa-circle"></i><strong>GET</strong> 返回指定玩家在2b2t.org近一个月游玩时长的排名信息❶<div class="command-example">/org/rank/json/playtime/&lt;玩家&gt;</div></p>
+            <div class="api-endpoint deprecated">
+                <span class="method">GET</span>
+                <span class="path">/gg/tablist/image</span>
+                <p>返回2b2t.gg当前在线玩家列表(图片)</p>
+                
+                <div class="api-source-note">数据来源: 2b2t.gg API (2025.5.17停止更新)</div>
+                
+                <p><strong>参数说明</strong></p>
+                <ul class="param-list">
+                    <li>无参数</li>
+                </ul>
+                
+                <p><strong>示例请求</strong></p>
+                <div class="example">
+                    GET https://api.azsu.top/gg/tablist/image
+                </div>
+            </div>
             
-            <p><i class="fas fa-circle"></i><strong>GET</strong> 返回指定玩家在2b2t.org近一个月击杀数的排名信息❶<div class="command-example">/org/rank/json/kills/&lt;玩家&gt;</div></p>
-            
-            <p><i class="fas fa-circle"></i><strong>GET</strong> 返回指定玩家在2b2t.org近一个月死亡数的排名信息❶<div class="command-example">/org/rank/json/deaths/&lt;玩家&gt;</div></p>
-            
-            <p><i class="fas fa-circle"></i><strong>GET</strong> 返回指定玩家在2b2t.org近一个月的全部排名信息❶<div class="command-example">/org/rank/json/all/&lt;玩家&gt;</div></p>
-            
-            <p><i class="fas fa-circle"></i><strong>GET</strong> 返回2b2t.org近一个月在线时长排行榜前20名(图片)❶<div class="command-example">/org/rank/image/playtime</div></p>
-            
-            <p><i class="fas fa-circle"></i><strong>GET</strong> 返回2b2t.org近一个月击杀数排行榜前20名(图片)❶<div class="command-example">/org/rank/image/kills</div></p>
-            
-            <p><i class="fas fa-circle"></i><strong>GET</strong> 返回2b2t.org近一个月死亡数排行榜前20名(图片)❶<div class="command-example">/org/rank/image/deaths</div></p>
-            
-            <p><i class="fas fa-circle"></i><strong>GET</strong> 返回2b2t.org当前在线玩家列表(图片)❶<div class="command-example">/org/tablist/image/</div></p>
-            
-            <p style="margin-top: 15px;"><strong>【以下2b2t.gg相关数据于2025.5.17停止更新】</strong></p>
-            
-            <p><i class="fas fa-circle"></i><strong>GET</strong> 返回2b2t.gg当前在线玩家列表<div class="command-example">/gg/tablist/json</div></p>
-            
-            <p><i class="fas fa-circle"></i><strong>GET</strong> 返回2b2t.gg当前在线玩家列表(图片)<div class="command-example">/gg/tablist/image</div></p>
-            
-            <p><i class="fas fa-circle"></i><strong>GET</strong> 返回指定玩家在2b2t.gg的信息<div class="command-example">/gg/stat/&lt;玩家&gt;</div></p>
-            
-            <p><i class="fas fa-circle"></i><strong>GET</strong> 返回指定玩家在2b2t.gg的排名信息<div class="command-example">/gg/rank/player/&lt;玩家&gt;</div></p>
-            
-            <p><i class="fas fa-circle"></i><strong>GET</strong> 返回指定玩家在2b2t.gg中指定类型的排名信息<div class="command-example">/gg/rank/json/&lt;类型:joins,kills,deaths,kd,playtime&gt;/&lt;玩家&gt;</div></p>
-            
-            <p><i class="fas fa-circle"></i><strong>GET</strong> 返回2b2t.gg中指定类型的排行榜前1000名<div class="command-example">/gg/rank/json/&lt;类型:joins,kills,deaths,kd,playtime&gt;</div></p>
-            
-            <p><i class="fas fa-circle"></i><strong>GET</strong> 返回2b2t.gg中指定类型的排行榜前20名(图片)<div class="command-example">/gg/rank/image/&lt;类型:joins,kills,deaths,kd,playtime&gt;</div></p>
+            <div class="api-endpoint deprecated">
+                <span class="method">GET</span>
+                <span class="path">/gg/stat/&lt;玩家&gt;</span>
+                <p>返回指定玩家在2b2t.gg的信息</p>
+                
+                <div class="api-source-note">数据来源: 2b2t.gg API (2025.5.17停止更新)</div>
+                
+                <p><strong>参数说明</strong></p>
+                <ul class="param-list">
+                    <li><span class="param">玩家</span> - 玩家ID(必需)</li>
+                </ul>
+                
+                <p><strong>示例请求</strong></p>
+                <div class="example">
+                    GET https://api.azsu.top/gg/stat/Player1
+                </div>
+            </div>
         </div>
     </div>
 </div>
