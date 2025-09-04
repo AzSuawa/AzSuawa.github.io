@@ -1,12 +1,11 @@
 <div id="bb">
     <div class="card active">
-        <h1>小小素API文档 <span class="version-badge">2025.9.3</span></h1>
+        <h1>小小素API文档 <div class="command-example">更新时间: 2025-9-5</div></h1>
         <div class="command-section">
-            <p><strong>公开本API提供的数据应标注来源：azsu.top</strong></p>
+            <p><strong>API仍在施工中...公开本API提供的数据应标注来源：azsu.top</strong></p>
             <p><strong>BaseURL:</strong> https://api.azsu.top</p>
             <div class="api-endpoint">
                 <p><strong>状态码</strong></p>
-                
                 <ul class="param-list">
                     ‎ <i class="fas fa-circle"></i><span class="param">302</span> - API路径错误<br>
                     ‎ <i class="fas fa-circle"></i><span class="param">403</span> - 没有访问权限<br>
@@ -18,7 +17,7 @@
     </div>
     
     <div class="card active">
-        <h1>服务器状态查询</h1>
+        <h1>MCPing</h1>
         <div class="command-section">
             <div class="api-endpoint">
                 <p><span class="method">GET</span><span class="path">/mcping/json?ip=&lt;ip&gt;</span></p>
@@ -62,7 +61,7 @@
     </div>
     
     <div class="card active">
-        <h1>皮肤服务</h1>
+        <h1>Skin</h1>
         <div class="command-section">
             <div class="api-endpoint">
                 <p><span class="method">GET</span><span class="path">/skin/skin/&lt;player_name&gt;</span></p>
@@ -89,11 +88,74 @@
     </div>
     
     <div class="card active">
-        <h1>2B2T.ORG数据</h1>
+        <h1>2B2T.ORG</h1>
         <div class="command-section">
             <div class="api-endpoint">
+                <p><span class="method">GET</span><span class="path">/org/tablist/image</span></p>
+                <p>返回2b2t.org当前在线玩家列表(图片)</p>
+                <div class="api-source-note">基于2b2t.vc数据进行二次处理</div>
+                
+                <p><strong>示例URL</strong></p>
+                <div class="example">
+                    https://api.azsu.top/org/tablist/image
+                </div>
+                <p><strong>状态码</strong></p>
+                <ul class="param-list">
+                    ‎ <i class="fas fa-circle"></i><span class="param">xxx</span> - 正在制作ing...
+                </ul>
+            </div>
+            <div class="api-endpoint">
+                <p><span class="method">GET</span><span class="path">/org/rank/image/playtime</span></p>
+                <p>返回2b2t.org近一个月在线时长排行榜前20名(图片)</p>
+                
+                <div class="api-source-note">基于2b2t.vc数据进行二次处理</div>
+                
+                
+                <p><strong>示例URL</strong></p>
+                <div class="example">
+                    https://api.azsu.top/org/rank/image/playtime
+                </div>
+                <p><strong>状态码</strong></p>
+                <ul class="param-list">
+                    ‎ <i class="fas fa-circle"></i><span class="param">xxx</span> - 正在制作ing...
+                </ul>
+            </div>
+            <div class="api-endpoint">
+                <p><span class="method">GET</span><span class="path">/org/rank/image/kills</span></p>
+                <p>返回2b2t.org近一个月击杀数排行榜前20名(图片)</p>
+                
+                <div class="api-source-note">基于2b2t.vc数据进行二次处理</div>
+                <p><strong>示例URL</strong></p>
+                <div class="example">
+                    https://api.azsu.top/org/rank/image/kills
+                </div>
+                <p><strong>状态码</strong></p>
+                <ul class="param-list">
+                    ‎ <i class="fas fa-circle"></i><span class="param">xxx</span> - 正在制作ing...
+                </ul>
+            </div>
+            <div class="api-endpoint">
+                <p><span class="method">GET</span><span class="path">/org/rank/image/deaths</span></p>
+                <p>返回2b2t.org近一个月死亡数排行榜前20名(图片)</p>
+                
+                <div class="api-source-note">基于2b2t.vc数据进行二次处理</div>
+                <p><strong>示例URL</strong></p>
+                <div class="example">
+                    https://api.azsu.top/org/rank/image/deaths
+                </div>
+                <p><strong>状态码</strong></p>
+                <ul class="param-list">
+                    ‎ <i class="fas fa-circle"></i><span class="param">xxx</span> - 正在制作ing...
+                </ul>
+            </div>
+
+
+
+
+
+            <div class="api-endpoint">
                 <p><span class="method">GET</span><span class="path">/org/rank/json/playtime/&lt;player_name&gt;</span></p>
-                <p>返回指定玩家在2b2t.org近一个月游玩时长的排名信息</p>
+                <p>返回指定玩家在2b2t.org近一个月在线时长的排名信息</p>
                 
                 <div class="api-source-note">基于2b2t.vc数据进行二次处理</div>
                 
@@ -106,6 +168,10 @@
                 <div class="example">
                     https://api.azsu.top/org/rank/json/playtime/_Xiaozhen_
                 </div>
+                <p><strong>状态码</strong></p>
+                <ul class="param-list">
+                    ‎ <i class="fas fa-circle"></i><span class="param">xxx</span> - 正在制作ing...
+                </ul>
             </div>
             
             <div class="api-endpoint">
@@ -123,6 +189,10 @@
                 <div class="example">
                     https://api.azsu.top/org/rank/json/kills/_Xiaozhen_
                 </div>
+                <p><strong>状态码</strong></p>
+                <ul class="param-list">
+                    ‎ <i class="fas fa-circle"></i><span class="param">xxx</span> - 正在制作ing...
+                </ul>
             </div>
             
             <div class="api-endpoint">
@@ -140,6 +210,10 @@
                 <div class="example">
                     https://api.azsu.top/org/rank/json/deaths/_Xiaozhen_
                 </div>
+                <p><strong>状态码</strong></p>
+                <ul class="param-list">
+                    ‎ <i class="fas fa-circle"></i><span class="param">xxx</span> - 正在制作ing...
+                </ul>
             </div>
             
             <div class="api-endpoint">
@@ -157,22 +231,22 @@
                 <div class="example">
                     https://api.azsu.top/org/rank/json/all/_Xiaozhen_
                 </div>
+                <p><strong>状态码</strong></p>
+                <ul class="param-list">
+                    ‎ <i class="fas fa-circle"></i><span class="param">xxx</span> - 正在制作ing...
+                </ul>
             </div>
         </div>
     </div>
     
     <div class="card active">
-        <h1>2B2T.GG数据</h1>
+        <h1>2B2T.GG</h1>
         <div class="command-section">
             
             <div class="api-endpoint">
                 <p><span class="method">GET</span><span class="path">/gg/tablist/json</span></p>
                 <p>返回2b2t.gg当前在线玩家列表(JSON)</p>
                 <div class="api-source-note-yellow">该数据自2025.5.17起不再更新</div>
-                <p><strong>参数说明</strong></p>
-                <ul class="param-list">
-                    ‎ <i class="fas fa-circle"></i><无参数
-                </ul>
                 
                 <p><strong>示例URL</strong></p>
                 <div class="example">
@@ -184,11 +258,6 @@
                 <p><span class="method">GET</span><span class="path">/gg/tablist/image</span></p>
                 <p>返回2b2t.gg当前在线玩家列表(图片)</p>
                 <div class="api-source-note-yellow">该数据自2025.5.17起不再更新</div>
-                
-                <p><strong>参数说明</strong></p>
-                <ul class="param-list">
-                    ‎ <i class="fas fa-circle"></i><无参数
-                </ul>
                 
                 <p><strong>示例URL</strong></p>
                 <div class="example">
