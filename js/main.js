@@ -64,36 +64,30 @@ const pageContentMap = {
     'ban-sudpkkkk': 'pages/ban/sudpkkkk.html'
 };
 
-// 侧边栏菜单项点击事件
-document.querySelectorAll('#sidebar a[href^="#"], #sidebar a[data-page]').forEach(link => {
-    link.addEventListener('click', async function(e) {
-        e.preventDefault();
-        e.stopImmediatePropagation();
-        
-        const pageId = this.getAttribute('data-page');
-        
-        // 特殊处理皮肤上传页面
-        if (pageId === 'skin') {
-            // 直接跳转到皮肤上传页面
-            window.location.href = 'pages/skin.html';
-            return;
-        }
-        
-        // 更新活动菜单项
-        updateActiveMenuItem(this);
-        
-        await loadPageContent(pageId);
-        
-        // 移动端点击后自动关闭侧边栏
-        if(window.innerWidth <= 1023) {
-            document.getElementById('sidebar').classList.remove('active');
-            document.getElementById('content').classList.remove('shifted');
-        }
-        
-        // 更新URL
-        history.replaceState(null, null, `#${pageId}`);
+// 初始化页面内容功能
+function initPageContent() {
+    // 侧边栏菜单项点击事件
+    document.querySelectorAll('#sidebar a[href^="#"]').forEach(link => {
+        link.addEventListener('click', async function(e) {
+            e.preventDefault();
+            e.stopImmediatePropagation();
+            
+            // 更新活动菜单项
+            updateActiveMenuItem(this);
+            
+            const pageId = this.getAttribute('data-page');
+            await loadPageContent(pageId);
+            
+            // 移动端点击后自动关闭侧边栏
+            if(window.innerWidth <= 1023) {
+                document.getElementById('sidebar').classList.remove('active');
+                document.getElementById('content').classList.remove('shifted');
+            }
+            
+            // 更新URL
+            history.replaceState(null, null, `#${pageId}`);
+        });
     });
-});
 
     // 处理浏览器前进/后退
     window.addEventListener('popstate', function() {
