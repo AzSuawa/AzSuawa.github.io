@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MCPing...(p≧w≦q)</title>
+    <title>素素の生存服 - 上传皮肤</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <link rel="icon" href="./images/favicon.ico" type="image/x-icon">
     <meta name="theme-color" content="#A1BDFF">
@@ -51,6 +51,9 @@
           border: none; 
           color: white; 
           margin-right: 20px; 
+        }
+        #fileInput {
+          display: none;
         }
 
         #title { 
@@ -202,70 +205,6 @@
           display: none; 
         }
 
-        /* MCPing页面特定样式 */
-        .mcp-container {
-          max-width: 500px;
-          margin: 0 auto;
-        }
-
-        .mcp-form-group {
-          margin-bottom: 15px;
-        }
-
-        .mcp-form-group label {
-          display: block;
-          margin-bottom: 5px;
-          font-weight: bold;
-        }
-
-        .mcp-form-group input[type="text"] {
-          width: calc(100% - 2px);
-          padding: 10px;
-          border: 1px solid #ced4da;
-          border-radius: 4px;
-          font-size: 14px;
-          box-sizing: border-box;
-        }
-
-        .mcp-btn {
-          background-color: var(--primary-color);
-          color: white;
-          padding: 10px 20px;
-          border: none;
-          border-radius: 4px;
-          cursor: pointer;
-          font-size: 16px;
-          margin: 10px 5px;
-          transition: background-color 0.3s;
-        }
-
-        .mcp-btn:hover {
-          background-color: #8CAEFF;
-        }
-
-        .mcp-loading {
-          display: none;
-          text-align: center;
-          margin: 20px 0;
-        }
-
-        .mcp-result {
-          margin-top: 20px;
-          text-align: center;
-        }
-
-        .mcp-image {
-          max-width: 100%;
-          border-radius: 4px;
-          box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-        }
-
-        .mcp-error {
-          color: #dc3545;
-          margin-top: 10px;
-          text-align: center;
-        }
-
         /* 响应式设计 */
         @media(max-width: 1023px) {
           #sidebar {
@@ -279,6 +218,134 @@
           .card {
             width: 95%;
           }
+        }
+
+        /* 皮肤上传页面特定样式 */
+        .skin-upload-container {
+          max-width: 500px;
+          margin: 0 auto;
+        }
+
+        .skin-drop-area {
+          border: 2px dashed #6c757d;
+          border-radius: 6px;
+          padding: 30px;
+          text-align: center;
+          margin-bottom: 20px;
+          transition: all 0.3s;
+          background-color: #f8f9fa;
+        }
+
+        .skin-drop-area.highlight {
+          border-color: #28a745;
+          background-color: #e8f5e9;
+        }
+
+        .skin-btn {
+          background-color: var(--primary-color);
+          color: white;
+          padding: 10px 20px;
+          border: none;
+          border-radius: 4px;
+          cursor: pointer;
+          font-size: 16px;
+          margin: 10px 5px;
+          transition: background-color 0.3s;
+        }
+
+        .skin-btn:hover {
+          background-color: #8CAEFF;
+        }
+
+        .skin-progress-container {
+          margin-top: 20px;
+          display: none;
+        }
+
+        .skin-progress {
+          width: 100%;
+          height: 20px;
+          border-radius: 4px;
+        }
+
+        .skin-file-list {
+          margin-top: 20px;
+          max-height: 300px;
+          overflow-y: auto;
+        }
+
+        .skin-file-item {
+          display: flex;
+          justify-content: space-between;
+          padding: 10px;
+          border-bottom: 1px solid #eee;
+          align-items: center;
+        }
+
+        .skin-file-info {
+          display: flex;
+          align-items: center;
+        }
+
+        .skin-file-icon {
+          margin-right: 10px;
+          color: #6c757d;
+        }
+
+        .skin-file-status {
+          font-weight: bold;
+        }
+
+        .skin-status-pending {
+          color: #ffc107;
+        }
+
+        .skin-status-success {
+          color: #28a745;
+        }
+
+        .skin-status-error {
+          color: #dc3545;
+        }
+
+        .skin-form-group {
+          margin-bottom: 15px;
+        }
+
+        .skin-form-group label {
+          display: block;
+          margin-bottom: 5px;
+          font-weight: bold;
+        }
+
+        .skin-form-group input[type="text"] {
+          width: calc(100% - 2px);
+          padding: 10px;
+          border: 1px solid #ced4da;
+          border-radius: 4px;
+          font-size: 14px;
+          box-sizing: border-box;
+        }
+
+        .skin-file-size-limit {
+          color: #6c757d;
+          font-size: 14px;
+          margin-top: 5px;
+        }
+
+        .skin-preview-link {
+          color: #007bff;
+          text-decoration: none;
+          margin-left: 10px;
+        }
+
+        .skin-preview-link:hover {
+          text-decoration: underline;
+        }
+
+        .skin-home-button-container {
+          text-align: center;
+          margin-top: 20px;
         }
     </style>
 </head>
@@ -295,7 +362,7 @@
     <div id="sidebar">
         <div class="menu-group active">
             <ul class="submenu">
-                <li class="active"><a href="./#ba" data-page="ba"><i class="fas fa-home"></i> 首页</a></li>
+                <li class="active"><a href="#ba" data-page="ba"><i class="fas fa-home"></i> 首页</a></li>
             </ul>
         </div>
 
@@ -306,11 +373,11 @@
                 <i class="fas fa-chevron-down toggle"></i>
             </div>
             <ul class="submenu">
-                <li><a href="./#ba" data-page="ba"><i class="fas fa-home"></i> 首页</a></li>
-                <li><a href="./#bb" data-page="bb"><i class="fas fa-list-alt"></i> 机制修改</a></li>
-                <li><a href="./#sp" data-page="sp"><i class="fas fa-heart"></i> 赞助列表</a></li>
-                <li><a href="./#ban" data-page="ban"><i class="fas fa-ban"></i> 封禁列表</a></li>
-                <li><a href="./skin.html" data-page="skin"><i class="fas fa-star"></i> 上传皮肤</a></li>
+                <li><a href="#ba" data-page="ba"><i class="fas fa-home"></i> 首页</a></li>
+                <li><a href="#bb" data-page="bb"><i class="fas fa-list-alt"></i> 机制修改</a></li>
+                <li><a href="#sp" data-page="sp"><i class="fas fa-heart"></i> 赞助列表</a></li>
+                <li><a href="#ban" data-page="ban"><i class="fas fa-ban"></i> 封禁列表</a></li>
+                <li class="active"><a href="./skin.html" data-page="skin"><i class="fas fa-star"></i> 上传皮肤</a></li>
             </ul>
         </div>
 
@@ -321,12 +388,11 @@
                 <i class="fas fa-chevron-down toggle"></i>
             </div>
             <ul class="submenu">
-                <li><a href="./#aa" data-page="aa"><i class="fas fa-home"></i> 首页</a></li>
-                <li><a href="./#ab" data-page="ab"><i class="fas fa-star"></i> 常见问题</a></li>
-                <li><a href="./#ac" data-page="ac"><i class="fas fa-star"></i> 鸣谢</a></li>
-                <li><a href="./#cmds" data-page="cmds"><i class="fas fa-list-alt"></i> 指令列表</a></li>
-                <li><a href="./mcp.html" data-page="mcp"><i class="fas fa-star"></i> MCPing</a></li>
-            </ul>
+                <li><a href="#aa" data-page="aa"><i class="fas fa-home"></i> 首页</a></li>
+                <li><a href="#ab" data-page="ab"><i class="fas fa-star"></i> 常见问题</a></li>
+                <li><a href="#ac" data-page="ac"><i class="fas fa-star"></i> 鸣谢</a></li>
+                <li><a href="#cmds" data-page="cmds"><i class="fas fa-list-alt"></i> 指令列表</a></li>
+                <li class="active"><a href="./mcp.html" data-page="mcp"><i class="fas fa-star"></i> MCPing</a></li>
         </div>
 
         <div class="menu-group">
@@ -336,12 +402,12 @@
                 <i class="fas fa-chevron-right toggle"></i>
             </div>
             <ul class="submenu" style="display: none;">
-                <li><a href="./#g" data-page="g"><i class="fas fa-book"></i> 小故事</a></li>
-                <li><a href="./#api" data-page="api"><i class="fas fa-star"></i> API</a></li>
-                <li><a href="./#ban-qwqwcllwww" data-page="ban-qwqwcllwww"><i class="fas fa-star"></i> ban-qwqwcllwww</a></li>
-                <li><a href="./#ban-mam1145" data-page="ban-mam1145"><i class="fas fa-star"></i> ban-man1145</a></li>
-                <li><a href="./#ban-iuhiuhne" data-page="ban-iuhiuhne"><i class="fas fa-star"></i> ban-iuhiuhne</a></li>
-                <li><a href="./#ban-sudpkkkk" data-page="ban-sudpkkkk"><i class="fas fa-star"></i> ban-sudpkkkk</a></li>
+                <li><a href="#g" data-page="g"><i class="fas fa-book"></i> 小故事</a></li>
+                <li><a href="#api" data-page="api"><i class="fas fa-star"></i> API</a></li>
+                <li><a href="#ban-qwqwcllwww" data-page="ban-qwqwcllwww"><i class="fas fa-star"></i> ban-qwqwcllwww</a></li>
+                <li><a href="#ban-mam1145" data-page="ban-mam1145"><i class="fas fa-star"></i> ban-man1145</a></li>
+                <li><a href="#ban-iuhiuhne" data-page="ban-iuhiuhne"><i class="fas fa-star"></i> ban-iuhiuhne</a></li>
+                <li><a href="#ban-sudpkkkk" data-page="ban-sudpkkkk"><i class="fas fa-star"></i> ban-sudpkkkk</a></li>
             </ul>
         </div>
     </div>
@@ -349,24 +415,26 @@
     <!-- 内容区域 -->
     <div id="content">
         <div class="card">
-            <h1>小小素MCPing</h1>
-            <div class="command-section mcp-container">
-                <div class="mcp-form-group">
-                    <label for="mcp-ip">服务器地址</label>
-                    <input type="text" id="mcp-ip" placeholder="示例: azsu.top" value="azsu.top">
+            <h1>上传皮肤到服务器</h1>
+            <div class="command-section skin-upload-container">
+                <div class="skin-form-group">
+                    <label for="playerId">玩家ID:</label>
+                    <input type="text" id="playerId" placeholder="请输入你的游戏ID" required>
                 </div>
-                <div class="mcp-form-group">
-                    <label for="mcp-watermark">水印</label>
-                    <input type="text" id="mcp-watermark" placeholder="示例: §2awa" value="§c延迟仅供参考§7｜§e小小素交流群:§6199755660§7｜§b制作:§b阿素本素§3(Az_Su)">
+                
+                <div class="skin-drop-area" id="dropArea">
+                    <p>可拖放文件到此处</p>
+                    <button class="skin-btn" id="selectBtn">选择文件</button>
+                    <input type="file" id="fileInput" accept="image/png">
+                    <div class="skin-file-size-limit">仅支持原版皮肤(png格式)</div>
                 </div>
-                <button class="mcp-btn" id="mcp-submit-btn">/mcp</button>
-                <button class="mcp-btn" id="mcp-link-btn">主页</button>
-                <div class="mcp-loading">
-                    <p>Ping...</p>
+                <div class="skin-progress-container" id="progressContainer">
+                    <p>上传进度:</p>
+                    <progress class="skin-progress" id="uploadProgress" value="0" max="100"></progress>
+                    <p id="statusText"></p>
                 </div>
-
-                <div class="mcp-result" id="mcp-result"></div>
-                <div class="mcp-error" id="mcp-error"></div>
+                
+                <div class="skin-file-list" id="fileList"></div>
             </div>
         </div>
     </div>
@@ -414,58 +482,198 @@
                     content.classList.remove('shifted');
                 }
             });
-
-            // MCPing功能
-            document.getElementById('mcp-submit-btn').addEventListener('click', function() {
-                const ip = document.getElementById('mcp-ip').value.trim();
-                const watermark = document.getElementById('mcp-watermark').value.trim();
-                const resultDiv = document.getElementById('mcp-result');
-                const errorDiv = document.getElementById('mcp-error');
-                const loadingDiv = document.querySelector('.mcp-loading');
-
-                // 验证输入
-                if (!ip) {
-                    errorDiv.textContent = '请输入服务器地址';
-                    return;
-                }
-
-                // 清空之前的结果和错误
-                resultDiv.innerHTML = '';
-                errorDiv.textContent = '';
-                
-                // 显示加载动画
-                loadingDiv.style.display = 'block';
-
-                // 构建API URL，添加时间戳防止缓存
-                let apiUrl = `https://api.azsu.top/mcping/image?ip=${encodeURIComponent(ip)}&t=${Date.now()}`;
-                if (watermark) {
-                    apiUrl += `&watermark=${encodeURIComponent(watermark)}`;
-                }
-
-                // 创建图片元素
-                const img = new Image();
-                img.onload = function() {
-                    loadingDiv.style.display = 'none';
-                    // 先清空结果再添加新图片
-                    resultDiv.innerHTML = '';
-                    resultDiv.appendChild(img);
-                };
-                img.onerror = function() {
-                    loadingDiv.style.display = 'none';
-                    errorDiv.textContent = 'Ping失败(p≧w≦q)';
-                };
-                img.src = apiUrl;
-                img.className = 'mcp-image';
-            });
-
-            // 主页按钮
-            document.getElementById('mcp-link-btn').addEventListener('click', function() {
-                location.href = 'https://azsu.top';
-            });
-
-            // 页面加载完成后自动执行ping
-            document.getElementById('mcp-submit-btn').click();
         });
+
+        // 皮肤上传功能
+        const dropArea = document.getElementById('dropArea');
+        const fileInput = document.getElementById('fileInput');
+        const selectBtn = document.getElementById('selectBtn');
+        const progressContainer = document.getElementById('progressContainer');
+        const uploadProgress = document.getElementById('uploadProgress');
+        const statusText = document.getElementById('statusText');
+        const fileList = document.getElementById('fileList');
+        const playerIdInput = document.getElementById('playerId');
+        
+        // 固定服务器地址
+        const serverUrl = 'https://skin.api.azsu.top/upload';
+        const skinPreviewBaseUrl = 'https://api.azsu.top/skin/skin/';
+        
+        // 阻止默认拖放行为
+        ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+            dropArea.addEventListener(eventName, preventDefaults, false);
+            document.body.addEventListener(eventName, preventDefaults, false);
+        });
+        
+        function preventDefaults(e) {
+            e.preventDefault();
+            e.stopPropagation();
+        }
+        
+        // 高亮拖放区域
+        ['dragenter', 'dragover'].forEach(eventName => {
+            dropArea.addEventListener(eventName, highlight, false);
+        });
+        
+        ['dragleave', 'drop'].forEach(eventName => {
+            dropArea.addEventListener(eventName, unhighlight, false);
+        });
+        
+        function highlight() {
+            dropArea.classList.add('highlight');
+        }
+        
+        function unhighlight() {
+            dropArea.classList.remove('highlight');
+        }
+        
+        // 处理拖放文件
+        dropArea.addEventListener('drop', handleDrop, false);
+        
+        function handleDrop(e) {
+            const dt = e.dataTransfer;
+            const files = dt.files;
+            handleFiles(files);
+        }
+        
+        // 点击选择文件按钮
+        selectBtn.addEventListener('click', () => {
+            fileInput.click();
+        });
+        
+        // 处理选择的文件
+        fileInput.addEventListener('change', () => {
+            handleFiles(fileInput.files);
+        });
+        
+        // 处理文件
+        function handleFiles(files) {
+            fileList.innerHTML = '';
+            
+            const playerId = playerIdInput.value.trim();
+            if (!playerId) {
+                showError('请先输入玩家ID');
+                return;
+            }
+            
+            const pngFiles = Array.from(files).filter(file => file.type === 'image/png');
+            
+            if (pngFiles.length === 0) {
+                showError('请选择PNG格式的皮肤文件');
+                return;
+            }
+            
+            // 检查文件大小
+            const oversizedFiles = pngFiles.filter(file => file.size > 10 * 1024);
+            if (oversizedFiles.length > 0) {
+                showError(`文件 "${oversizedFiles[0].name}" 超过10KB限制`);
+                return;
+            }
+            
+            // 显示文件列表
+            const fileItem = document.createElement('div');
+            fileItem.className = 'skin-file-item';
+            fileItem.innerHTML = `
+                <div class="skin-file-info">
+                    <span class="skin-file-icon">📄</span>
+                    <span>${pngFiles[0].name} (${formatFileSize(pngFiles[0].size)})</span>
+                </div>
+                <span class="skin-file-status skin-status-pending">等待上传</span>
+            `;
+            fileList.appendChild(fileItem);
+            
+            // 开始上传
+            uploadFile(pngFiles[0], playerId, fileItem);
+        }
+        
+        // 上传文件
+        function uploadFile(file, playerId, fileItem) {
+            progressContainer.style.display = 'block';
+            statusText.textContent = '准备上传...';
+            
+            const formData = new FormData();
+            formData.append('file', file);
+            formData.append('player_id', playerId);
+            
+            const xhr = new XMLHttpRequest();
+            xhr.open('POST', serverUrl, true);
+            
+            // 更新进度条
+            xhr.upload.onprogress = function(e) {
+                if (e.lengthComputable) {
+                    const percent = Math.round((e.loaded / e.total) * 100);
+                    uploadProgress.value = percent;
+                    statusText.textContent = `上传中: ${percent}%`;
+                    
+                    // 更新文件状态
+                    fileItem.querySelector('.skin-file-status').textContent = `${percent}%`;
+                }
+            };
+            
+            xhr.onload = function() {
+                if (xhr.status === 200) {
+                    const response = JSON.parse(xhr.responseText);
+                    if (response.status === 'success') {
+                        statusText.textContent = '上传成功!';
+                        uploadProgress.value = 100;
+                        
+                        // 更新文件状态
+                        const statusSpan = fileItem.querySelector('.skin-file-status');
+                        statusSpan.textContent = '上传成功';
+                        statusSpan.className = 'skin-file-status skin-status-success';
+                        
+                        // 显示皮肤预览链接
+                        const previewLink = document.createElement('a');
+                        previewLink.href = skinPreviewBaseUrl + playerId;
+                        previewLink.textContent = '查看皮肤';
+                        previewLink.className = 'skin-preview-link';
+                        previewLink.target = '_blank';
+                        previewLink.style.marginLeft = '10px';
+                        fileItem.appendChild(previewLink);
+                    } else {
+                        showError(response.message || '上传失败');
+                        
+                        // 更新文件状态
+                        const statusSpan = fileItem.querySelector('.skin-file-status');
+                        statusSpan.textContent = response.message || '上传失败';
+                        statusSpan.className = 'skin-file-status skin-status-error';
+                    }
+                } else {
+                    showError('上传失败: ' + xhr.statusText);
+                    
+                    // 更新文件状态
+                    const statusSpan = fileItem.querySelector('.skin-file-status');
+                    statusSpan.textContent = '上传失败';
+                    statusSpan.className = 'skin-file-status skin-status-error';
+                }
+            };
+            
+            xhr.onerror = function() {
+                showError('上传过程中发生错误');
+                
+                // 更新文件状态
+                const statusSpan = fileItem.querySelector('.skin-file-status');
+                statusSpan.textContent = '上传错误';
+                statusSpan.className = 'skin-file-status skin-status-error';
+            };
+            
+            xhr.send(formData);
+        }
+        
+        // 显示错误信息
+        function showError(message) {
+            statusText.textContent = message;
+            statusText.style.color = '#dc3545';
+            progressContainer.style.display = 'block';
+        }
+        
+        // 格式化文件大小
+        function formatFileSize(bytes) {
+            if (bytes === 0) return '0 Bytes';
+            const k = 1024;
+            const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+            const i = Math.floor(Math.log(bytes) / Math.log(k));
+            return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+        }
     </script>
 </body>
 </html>
