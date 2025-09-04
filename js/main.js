@@ -1,7 +1,7 @@
 document.addEventListener('DOMContentLoaded', function() {
     // 初始化页面hash
     if (!window.location.hash) {
-        window.location.hash = '#ba';
+        window.location.hash = '#api';
     }
     
     // 初始化菜单状态
