@@ -344,14 +344,6 @@
           text-align: center;
           margin-top: 20px;
         }
-        
-        /* 活动菜单项样式 */
-        .active-menu-item {
-          background-color: var(--hover-bg);
-        }
-        .active-menu-item a {
-          color: var(--hover-blue) !important;
-        }
     </style>
 </head>
 <body>
@@ -360,14 +352,14 @@
         <button id="menu-btn">
             <i class="fas fa-bars"></i>
         </button>
-        <div id="title">素素の生存服 - 上传皮肤</div>
+        <div id="title">素素の生存服</div>
     </div>
     
     <!-- 侧边栏菜单 -->
     <div id="sidebar">
         <div class="menu-group active">
             <ul class="submenu">
-                <li><a href="https://azsu.top/#ba" data-page="ba"><i class="fas fa-home"></i> 首页</a></li>
+                <li class="active"><a href="https://azsu.top/#ba" data-page="ba"><i class="fas fa-home"></i> 首页</a></li>
             </ul>
         </div>
 
@@ -382,7 +374,7 @@
                 <li><a href="https://azsu.top/#bb" data-page="bb"><i class="fas fa-list-alt"></i> 机制修改</a></li>
                 <li><a href="https://azsu.top/#sp" data-page="sp"><i class="fas fa-heart"></i> 赞助列表</a></li>
                 <li><a href="https://azsu.top/#ban" data-page="ban"><i class="fas fa-ban"></i> 封禁列表</a></li>
-                <li class="active-menu-item"><a href="https://azsu.top/#skin" data-page="skin"><i class="fas fa-star"></i> 上传皮肤</a></li>
+                <li class="active"><a href="./skin.html" data-page="skin"><i class="fas fa-star"></i> 上传皮肤</a></li>
             </ul>
         </div>
 
@@ -444,18 +436,10 @@
             </div>
         </div>
     </div>
-    
+
     <script>
-        // 页面加载时设置URL - 修正后的代码
+        // 菜单功能
         document.addEventListener('DOMContentLoaded', function() {
-            // 设置URL为azsu.top/#skin
-            if (window.location.hash !== '#skin') {
-                window.history.replaceState(null, null, '#skin');
-            }
-            
-            // 添加返回主站按钮
-            addBackToHomeButton();
-            
             // 菜单按钮点击事件
             document.getElementById('menu-btn').addEventListener('click', function() {
                 const sidebar = document.getElementById('sidebar');
@@ -498,30 +482,7 @@
             });
         });
 
-        // 添加返回主站按钮功能
-        function addBackToHomeButton() {
-            // 创建返回按钮
-            const backButton = document.createElement('button');
-            backButton.id = 'back-to-home';
-            backButton.className = 'skin-btn';
-            backButton.innerHTML = '<i class="fas fa-arrow-left"></i> 返回主站';
-            backButton.style.marginTop = '20px';
-            backButton.style.display = 'block';
-            backButton.style.width = '100%';
-            
-            // 添加到页面中
-            const container = document.querySelector('.skin-upload-container');
-            if (container) {
-                container.appendChild(backButton);
-            }
-            
-            // 添加点击事件
-            backButton.addEventListener('click', function() {
-                window.location.href = '../index.html#ba';
-            });
-        }
-
-        // 皮肤上传功能 - 保持不变
+        // 皮肤上传功能
         const dropArea = document.getElementById('dropArea');
         const fileInput = document.getElementById('fileInput');
         const selectBtn = document.getElementById('selectBtn');
