@@ -640,8 +640,8 @@
                 try {
                     const response = JSON.parse(xhr.responseText);
                     
-                    if (response.status === 'success') {
-                        statusText.textContent = '上传成功!';
+                    if (response.success === True) {
+                        statusText.textContent = '文件上传成功(p≧w≦q)';
                         uploadProgress.value = 100;
                         
                         updateFileStatus(
