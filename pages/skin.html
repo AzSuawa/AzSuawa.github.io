@@ -444,14 +444,17 @@
             </div>
         </div>
     </div>
-
+    
     <script>
-        // 页面加载时设置URL
+        // 页面加载时设置URL - 修正后的代码
         document.addEventListener('DOMContentLoaded', function() {
             // 设置URL为azsu.top/#skin
-            if (!window.location.hash || window.location.hash !== '#skin') {
+            if (window.location.hash !== '#skin') {
                 window.history.replaceState(null, null, '#skin');
             }
+            
+            // 添加返回主站按钮
+            addBackToHomeButton();
             
             // 菜单按钮点击事件
             document.getElementById('menu-btn').addEventListener('click', function() {
@@ -495,7 +498,30 @@
             });
         });
 
-        // 皮肤上传功能
+        // 添加返回主站按钮功能
+        function addBackToHomeButton() {
+            // 创建返回按钮
+            const backButton = document.createElement('button');
+            backButton.id = 'back-to-home';
+            backButton.className = 'skin-btn';
+            backButton.innerHTML = '<i class="fas fa-arrow-left"></i> 返回主站';
+            backButton.style.marginTop = '20px';
+            backButton.style.display = 'block';
+            backButton.style.width = '100%';
+            
+            // 添加到页面中
+            const container = document.querySelector('.skin-upload-container');
+            if (container) {
+                container.appendChild(backButton);
+            }
+            
+            // 添加点击事件
+            backButton.addEventListener('click', function() {
+                window.location.href = '../index.html#ba';
+            });
+        }
+
+        // 皮肤上传功能 - 保持不变
         const dropArea = document.getElementById('dropArea');
         const fileInput = document.getElementById('fileInput');
         const selectBtn = document.getElementById('selectBtn');
