@@ -494,9 +494,9 @@
         const fileList = document.getElementById('fileList');
         const playerIdInput = document.getElementById('playerId');
         
-        // 固定服务器地址
+        // 服务器地址
         const serverUrl = 'https://skin.api.azsu.top/upload';
-        const skinPreviewBaseUrl = 'https://api.azsu.top/skin/skin/';
+        const skinPreviewBaseUrl = 'https://skin.api.azsu.top/skin/';
         
         // 阻止默认拖放行为
         ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
@@ -551,21 +551,21 @@
             
             const playerId = playerIdInput.value.trim();
             if (!playerId) {
-                showError('请先输入玩家ID');
+                showError('请先输入玩家ID(p≧w≦q)');
                 return;
             }
             
             const pngFiles = Array.from(files).filter(file => file.type === 'image/png');
             
             if (pngFiles.length === 0) {
-                showError('请选择PNG格式的皮肤文件');
+                showError('请选择PNG格式的皮肤文件(p≧w≦q)');
                 return;
             }
             
-            // 检查文件大小
+            // 检查文件大小 (10KB限制)
             const oversizedFiles = pngFiles.filter(file => file.size > 10 * 1024);
             if (oversizedFiles.length > 0) {
-                showError(`文件 "${oversizedFiles[0].name}" 超过10KB限制`);
+                showError(`文件 "${oversizedFiles[0].name}" 超过10KB限制(p≧w≦q)`);
                 return;
             }
             
@@ -589,6 +589,7 @@
         function uploadFile(file, playerId, fileItem) {
             progressContainer.style.display = 'block';
             statusText.textContent = '准备上传...';
+            statusText.style.color = '';
             
             const formData = new FormData();
             formData.append('file', file);
@@ -610,53 +611,83 @@
             };
             
             xhr.onload = function() {
-                if (xhr.status === 200) {
+                // 先处理HTTP错误状态
+                if (xhr.status === 429) {
+                    const errorMsg = '服务器正在遭受攻击！';
+                    showError(errorMsg);
+                    updateFileStatus(fileItem, errorMsg, 'error');
+                    return;
+                }
+
+                if (xhr.status === 400) {
+                    let errorMsg = '无效请求';
+                    try {
+                        const res = JSON.parse(xhr.responseText);
+                        errorMsg = res.message || errorMsg;
+                    } catch(e) {}
+                    showError(errorMsg);
+                    updateFileStatus(fileItem, errorMsg, 'error');
+                    return;
+                }
+
+                if (xhr.status >= 500) {
+                    showError('服务器内部错误 (5xx)');
+                    updateFileStatus(fileItem, '服务器错误', 'error');
+                    return;
+                }
+
+                // 处理成功响应
+                try {
                     const response = JSON.parse(xhr.responseText);
+                    
                     if (response.status === 'success') {
                         statusText.textContent = '上传成功!';
                         uploadProgress.value = 100;
                         
-                        // 更新文件状态
-                        const statusSpan = fileItem.querySelector('.skin-file-status');
-                        statusSpan.textContent = '上传成功';
-                        statusSpan.className = 'skin-file-status skin-status-success';
+                        updateFileStatus(
+                            fileItem, 
+                            '上传成功(p≧w≦q)', // 您的自定义成功消息
+                            'success'
+                        );
                         
-                        // 显示皮肤预览链接
-                        const previewLink = document.createElement('a');
-                        previewLink.href = skinPreviewBaseUrl + playerId;
-                        previewLink.textContent = '查看皮肤';
-                        previewLink.className = 'skin-preview-link';
-                        previewLink.target = '_blank';
-                        previewLink.style.marginLeft = '10px';
-                        fileItem.appendChild(previewLink);
+                        // 添加皮肤预览链接
+                        addPreviewLink(fileItem, playerId);
                     } else {
-                        showError(response.message || '上传失败');
-                        
-                        // 更新文件状态
-                        const statusSpan = fileItem.querySelector('.skin-file-status');
-                        statusSpan.textContent = response.message || '上传失败';
-                        statusSpan.className = 'skin-file-status skin-status-error';
+                        const errorMsg = response.message || '未知错误';
+                        showError(errorMsg);
+                        updateFileStatus(fileItem, errorMsg, 'error');
                     }
-                } else {
-                    showError('上传失败: ' + xhr.statusText);
-                    
-                    // 更新文件状态
-                    const statusSpan = fileItem.querySelector('.skin-file-status');
-                    statusSpan.textContent = '上传失败';
-                    statusSpan.className = 'skin-file-status skin-status-error';
+                } catch (e) {
+                    const errorMsg = '响应解析失败: ' + e.message;
+                    showError(errorMsg);
+                    updateFileStatus(fileItem, errorMsg, 'error');
                 }
             };
-            
+
             xhr.onerror = function() {
-                showError('上传过程中发生错误');
-                
-                // 更新文件状态
-                const statusSpan = fileItem.querySelector('.skin-file-status');
-                statusSpan.textContent = '上传错误';
-                statusSpan.className = 'skin-file-status skin-status-error';
+                const errorMsg = '网络错误(p≧w≦q)';
+                showError(errorMsg);
+                updateFileStatus(fileItem, errorMsg, 'error');
             };
-            
+
             xhr.send(formData);
+        }
+        
+        // 辅助函数：更新文件状态
+        function updateFileStatus(fileItem, text, type) {
+            const statusSpan = fileItem.querySelector('.skin-file-status');
+            statusSpan.textContent = text;
+            statusSpan.className = `skin-file-status skin-status-${type}`;
+        }
+        
+        // 辅助函数：添加预览链接
+        function addPreviewLink(fileItem, playerId) {
+            const previewLink = document.createElement('a');
+            previewLink.href = skinPreviewBaseUrl + playerId;
+            previewLink.textContent = '查看皮肤';
+            previewLink.className = 'skin-preview-link';
+            previewLink.target = '_blank';
+            fileItem.appendChild(previewLink);
         }
         
         // 显示错误信息
