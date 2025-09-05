@@ -30,7 +30,8 @@
                 <div class="example">
                     https://api.azsu.top/mcping/json?ip=azsu.top
                 </div>
-                <p><strong>状态码</strong></p>
+                <p><strong>返回参数</strong></p>
+                <p><strong>返回结果</strong></p>
                 <table class="sponsor-table ban-table">
                     <thead>
                         <tr>
@@ -41,14 +42,19 @@
                     </thead>
                     <tbody>
                         <tr>
-                            <td>400</td>
-                            <td>MP41</td>
-                            <td>缺少IP参数</td>
+                            <td>200</td>
+                            <td>NULL</td>
+                            <td>查询成功</td>
                         </tr>
                         <tr>
                             <td>200</td>
                             <td>MP61</td>
                             <td>Ping查询失败</td>
+                        </tr>
+                        <tr>
+                            <td>400</td>
+                            <td>MP41</td>
+                            <td>缺少IP参数</td>
                         </tr>
                     </tbody>
                 </table>
