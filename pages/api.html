@@ -22,40 +22,52 @@
             <div class="api-endpoint">
                 <p><span class="method">GET</span><span class="path">/mcping/json?ip=&lt;ip&gt;</span></p>
                 <p>返回指定MC服务器的Ping信息(JSON)</p>
-                
-                <p><strong>参数说明</strong></p>
-                
+                <p><strong>请求参数</strong></p>
                 <ul class="param-list">
                     ‎ <i class="fas fa-circle"></i><span class="param">ip</span> - 服务器地址
                 </ul>
-                
-                
-                <p><strong>示例URL</strong></p>
+                <p><strong>请求示例</strong></p>
                 <div class="example">
                     https://api.azsu.top/mcping/json?ip=azsu.top
                 </div>
             </div>
+
+                <p><strong>状态码</strong></p>
+                <table class="sponsor-table ban-table">
+                    <thead>
+                        <tr>
+                            <th>http状态码</th>
+                            <th>code字段</th>
+                            <th>描述</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>400</td>
+                            <td>MP41</td>
+                            <td>缺少IP参数</td>
+                        </tr>
+                        <tr>
+                            <td>200</td>
+                            <td>MP61</td>
+                            <td>Ping查询失败</td>
+                        </tr>
+                    </tbody>
+                </table>
+            
             
             <div class="api-endpoint">
                 <p><span class="method">GET</span><span class="path">/mcping/image?ip=&lt;ip&gt;&amp;watermark=&lt;watermark&gt;</span></p>
                 <p>返回指定MC服务器的Ping信息(图片)</p>
-                
-                <p><strong>参数说明</strong></p>
+                <p><strong>请求参数</strong></p>
                 <ul class="param-list">
                     ‎ <i class="fas fa-circle"></i><span class="param">ip</span> - 服务器地址<br>
                     ‎ <i class="fas fa-circle"></i><span class="param">watermark</span> - 自定义水印文字(可选)
                 </ul>
-                
-                <p><strong>示例URL</strong></p>
+                <p><strong>请求示例</strong></p>
                 <div class="example">
                     https://api.azsu.top/mcping/image?ip=azsu.top&amp;watermark=§c延迟仅供参考§7｜§e小小素交流群:§6199755660§7｜§b制作:阿素本素§3(Az_Su)
                 </div>
-                <p><strong>状态码</strong></p>
-                
-                <ul class="param-list">
-                    ‎ <i class="fas fa-circle"></i><span class="param">400</span> - 缺少IP参数<br>
-                    ‎ <i class="fas fa-circle"></i><span class="param">500</span> - 查询失败
-                </ul>
             </div>
         </div>
     </div>
@@ -69,12 +81,12 @@
                 
                 <div class="api-source-note">正版玩家皮肤来自Mojang API</div>
                 
-                <p><strong>参数说明</strong></p>
+                <p><strong>请求参数</strong></p>
                 <ul class="param-list">
                     ‎ <i class="fas fa-circle"></i><span class="param">player_name</span> - 玩家ID
                 </ul>
                 
-                <p><strong>示例URL</strong></p>
+                <p><strong>请求示例</strong></p>
                 <div class="example">
                     https://api.azsu.top/skin/skin/Az_Su
                 </div>
@@ -95,7 +107,7 @@
                 <p>返回2b2t.org当前在线玩家列表(图片)</p>
                 <div class="api-source-note">基于2b2t.vc数据进行二次处理</div>
                 
-                <p><strong>示例URL</strong></p>
+                <p><strong>请求示例</strong></p>
                 <div class="example">
                     https://api.azsu.top/org/tablist/image
                 </div>
@@ -111,7 +123,7 @@
                 <div class="api-source-note">基于2b2t.vc数据进行二次处理</div>
                 
                 
-                <p><strong>示例URL</strong></p>
+                <p><strong>请求示例</strong></p>
                 <div class="example">
                     https://api.azsu.top/org/rank/image/playtime
                 </div>
@@ -125,7 +137,7 @@
                 <p>返回2b2t.org近一个月击杀数排行榜前20名(图片)</p>
                 
                 <div class="api-source-note">基于2b2t.vc数据进行二次处理</div>
-                <p><strong>示例URL</strong></p>
+                <p><strong>请求示例</strong></p>
                 <div class="example">
                     https://api.azsu.top/org/rank/image/kills
                 </div>
@@ -139,7 +151,7 @@
                 <p>返回2b2t.org近一个月死亡数排行榜前20名(图片)</p>
                 
                 <div class="api-source-note">基于2b2t.vc数据进行二次处理</div>
-                <p><strong>示例URL</strong></p>
+                <p><strong>请求示例</strong></p>
                 <div class="example">
                     https://api.azsu.top/org/rank/image/deaths
                 </div>
@@ -159,12 +171,12 @@
                 
                 <div class="api-source-note">基于2b2t.vc数据进行二次处理</div>
                 
-                <p><strong>参数说明</strong></p>
+                <p><strong>请求参数</strong></p>
                 <ul class="param-list">
                     ‎ <i class="fas fa-circle"></i><span class="param">player_name</span> - 玩家ID
                 </ul>
                 
-                <p><strong>示例URL</strong></p>
+                <p><strong>请求示例</strong></p>
                 <div class="example">
                     https://api.azsu.top/org/rank/json/playtime/_Xiaozhen_
                 </div>
@@ -180,12 +192,12 @@
                 
                 <div class="api-source-note">基于2b2t.vc数据进行二次处理</div>
                 
-                <p><strong>参数说明</strong></p>
+                <p><strong>请求参数</strong></p>
                 <ul class="param-list">
                     ‎ <i class="fas fa-circle"></i><span class="param">player_name</span> - 玩家ID
                 </ul>
                 
-                <p><strong>示例URL</strong></p>
+                <p><strong>请求示例</strong></p>
                 <div class="example">
                     https://api.azsu.top/org/rank/json/kills/_Xiaozhen_
                 </div>
@@ -201,12 +213,12 @@
                 
                 <div class="api-source-note">基于2b2t.vc数据进行二次处理</div>
                 
-                <p><strong>参数说明</strong></p>
+                <p><strong>请求参数</strong></p>
                 <ul class="param-list">
                     ‎ <i class="fas fa-circle"></i><span class="param">player_name</span> - 玩家ID
                 </ul>
                 
-                <p><strong>示例URL</strong></p>
+                <p><strong>请求示例</strong></p>
                 <div class="example">
                     https://api.azsu.top/org/rank/json/deaths/_Xiaozhen_
                 </div>
@@ -222,12 +234,12 @@
                 
                 <div class="api-source-note">基于2b2t.vc数据进行二次处理</div>
                 
-                <p><strong>参数说明</strong></p>
+                <p><strong>请求参数</strong></p>
                 <ul class="param-list">
                     ‎ <i class="fas fa-circle"></i><span class="param">player_name</span> - 玩家ID
                 </ul>
                 
-                <p><strong>示例URL</strong></p>
+                <p><strong>请求示例</strong></p>
                 <div class="example">
                     https://api.azsu.top/org/rank/json/all/_Xiaozhen_
                 </div>
@@ -248,7 +260,7 @@
                 <p>返回2b2t.gg当前在线玩家列表(JSON)</p>
                 <div class="api-source-note-yellow">该数据自2025.5.17起不再更新</div>
                 
-                <p><strong>示例URL</strong></p>
+                <p><strong>请求示例</strong></p>
                 <div class="example">
                     https://api.azsu.top/gg/tablist/json
                 </div>
@@ -259,7 +271,7 @@
                 <p>返回2b2t.gg当前在线玩家列表(图片)</p>
                 <div class="api-source-note-yellow">该数据自2025.5.17起不再更新</div>
                 
-                <p><strong>示例URL</strong></p>
+                <p><strong>请求示例</strong></p>
                 <div class="example">
                     https://api.azsu.top/gg/tablist/image
                 </div>
@@ -270,12 +282,12 @@
                 <p>返回指定玩家在2b2t.gg的信息</p>
                 <div class="api-source-note-yellow">该数据自2025.5.17起不再更新</div>
                 
-                <p><strong>参数说明</strong></p>
+                <p><strong>请求参数</strong></p>
                 <ul class="param-list">
                     ‎ <i class="fas fa-circle"></i><span class="param">player_name</span> - 玩家ID
                 </ul>
                 
-                <p><strong>示例URL</strong></p>
+                <p><strong>请求示例</strong></p>
                 <div class="example">
                     https://api.azsu.top/gg/stats/Az_Su
                 </div>
@@ -286,12 +298,12 @@
                 <p>返回指定玩家在2b2t.gg的排名信息</p>
                 <div class="api-source-note-yellow">该数据自2025.5.17起不再更新</div>
                 
-                <p><strong>参数说明</strong></p>
+                <p><strong>请求参数</strong></p>
                 <ul class="param-list">
                     ‎ <i class="fas fa-circle"></i><span class="param">player_name</span> - 玩家ID
                 </ul>
                 
-                <p><strong>示例URL</strong></p>
+                <p><strong>请求示例</strong></p>
                 <div class="example">
                     https://api.azsu.top/gg/rank/player/Az_Su
                 </div>
@@ -302,13 +314,13 @@
                 <p>返回指定玩家在2b2t.gg中指定类型的排名信息</p>
                 <div class="api-source-note-yellow">该数据自2025.5.17起不再更新</div>
                 
-                <p><strong>参数说明</strong></p>
+                <p><strong>请求参数</strong></p>
                 <ul class="param-list">
                     ‎ <i class="fas fa-circle"></i><span class="param">type</span> - 类型：joins/kills/deaths/kd/playtime<br>
                     ‎ <i class="fas fa-circle"></i><span class="param">player_name</span> - 玩家ID
                 </ul>
                 
-                <p><strong>示例URL</strong></p>
+                <p><strong>请求示例</strong></p>
                 <div class="example">
                     https://api.azsu.top/gg/rank/json/playtime/Az_Su
                 </div>
@@ -319,12 +331,12 @@
                 <p>返回2b2t.gg中指定类型的排行榜前1000名</p>
                 <div class="api-source-note-yellow">该数据自2025.5.17起不再更新</div>
                 
-                <p><strong>参数说明</strong></p>
+                <p><strong>请求参数</strong></p>
                 <ul class="param-list">
                     ‎ <i class="fas fa-circle"></i><span class="param">type</span> - 类型：joins/kills/deaths/kd/playtime
                 </ul>
                 
-                <p><strong>示例URL</strong></p>
+                <p><strong>请求示例</strong></p>
                 <div class="example">
                     https://api.azsu.top/gg/rank/json/playtime
                 </div>
@@ -335,12 +347,12 @@
                 <p>返回2b2t.gg中指定类型的排行榜前20名(图片)</p>
                 <div class="api-source-note-yellow">该数据自2025.5.17起不再更新</div>
                 
-                <p><strong>参数说明</strong></p>
+                <p><strong>请求参数</strong></p>
                 <ul class="param-list">
                     ‎ <i class="fas fa-circle"></i><span class="param">type</span> - 类型：joins/kills/deaths/kd/playtime
                 </ul>
                 
-                <p><strong>示例URL</strong></p>
+                <p><strong>请求示例</strong></p>
                 <div class="example">
                     https://api.azsu.top/gg/rank/image/playtime
                 </div>
