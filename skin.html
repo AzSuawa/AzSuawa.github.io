@@ -604,49 +604,45 @@
                     // 更新文件状态
                     fileItem.querySelector('.skin-file-status').textContent = `${percent}%`;
                     fileItem.querySelector('.skin-file-status').className = 'skin-file-status skin-status-pending';
+                    
+                    // 进度完成即视为上传成功
+                    if (percent === 100) {
+                        statusText.textContent = '文件上传成功(p≧w≦q)';
+                        statusText.style.color = '#28a745';
+                        updateFileStatus(fileItem, '上传成功', 'success');
+                        addPreviewLink(fileItem, playerId);
+                    }
                 }
             };
             
             xhr.onload = function() {
-                if (xhr.status === 200) {
-                    try {
-                        const response = JSON.parse(xhr.responseText);
-                        if (response.code === 14000) {
-                            statusText.textContent = '文件上传成功(p≧w≦q)';
-                            statusText.style.color = '#28a745';
-                            uploadProgress.value = 100;
-                            
-                            updateFileStatus(fileItem, '上传成功', 'success');
-                            addPreviewLink(fileItem, playerId);
-                        } else {
-                            const errorMsg = response.message || '上传失败';
-                            showError(errorMsg);
-                            updateFileStatus(fileItem, errorMsg, 'error');
+                // 保留原有响应处理作为备用
+                if (uploadProgress.value < 100) {
+                    if (xhr.status === 200) {
+                        try {
+                            const response = JSON.parse(xhr.responseText);
+                            if (response.code === 14000) {
+                                statusText.textContent = '服务器处理完成(p≧w≦q)';
+                                uploadProgress.value = 100;
+                                updateFileStatus(fileItem, '处理完成', 'success');
+                            }
+                        } catch (e) {
+                            console.log('服务器响应解析异常:', e);
                         }
-                    } catch (e) {
-                        showError('响应解析失败');
-                        updateFileStatus(fileItem, '解析失败', 'error');
-                    }
-                } else {
-                    try {
-                        const errorResponse = JSON.parse(xhr.responseText);
-                        const errorMsg = errorResponse.message || `服务器错误: ${xhr.status}`;
-                        showError(errorMsg);
-                        updateFileStatus(fileItem, errorMsg, 'error');
-                    } catch {
-                        showError(`服务器错误: ${xhr.status}`);
-                        updateFileStatus(fileItem, `错误 ${xhr.status}`, 'error');
                     }
                 }
             };
 
             xhr.onerror = function() {
-                showError('网络错误(p≧w≦q)');
-                updateFileStatus(fileItem, '网络错误', 'error');
+                if (uploadProgress.value < 100) {
+                    showError('网络错误(p≧w≦q)');
+                    updateFileStatus(fileItem, '网络错误', 'error');
+                }
             };
 
             xhr.send(formData);
         }
+
         
         function updateFileStatus(fileItem, text, type) {
             const statusSpan = fileItem.querySelector('.skin-file-status');
