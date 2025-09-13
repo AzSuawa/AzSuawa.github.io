@@ -52,20 +52,10 @@
           color: white; 
           margin-right: 20px; 
         }
-        #fileInput {
-          display: none;
-        }
 
         #title { 
           font-size: 18px; 
           font-weight: bold; 
-        }
-
-        #cmd-title { 
-          font-size: 26px;
-          font-weight: bold;
-          text-align: center;
-          flex-grow: 1;
         }
 
         #sidebar { 
@@ -347,6 +337,10 @@
           text-align: center;
           margin-top: 20px;
         }
+
+        #fileInput {
+          display: none;
+        }
     </style>
 </head>
 <body>
@@ -394,6 +388,7 @@
                 <li><a href="./#ac" data-page="ac"><i class="fas fa-star"></i> 鸣谢</a></li>
                 <li><a href="./#cmds" data-page="cmds"><i class="fas fa-list-alt"></i> 指令列表</a></li>
                 <li class="active"><a href="./mcp.html" data-page="mcp"><i class="fas fa-star"></i> MCPing</a></li>
+            </ul>
         </div>
 
         <div class="menu-group">
@@ -426,12 +421,11 @@
                     <p>可拖放文件到此处</p>
                     <button class="skin-btn" id="selectBtn">选择文件</button>
                     <input type="file" id="fileInput" accept="image/png">
-                    <div class="skin-file-size-limit">仅支持原版皮肤(png格式)</div>
+                    <div class="skin-file-size-limit">仅支持原版皮肤(png格式，最大10KB)</div>
                 </div>
                 <div class="skin-progress-container" id="progressContainer">
-                    <p>上传进度:</p>
+                    <p id="statusText">准备上传...</p>
                     <progress class="skin-progress" id="uploadProgress" value="0" max="100"></progress>
-                    <p id="statusText"></p>
                 </div>
                 
                 <div class="skin-file-list" id="fileList"></div>
@@ -590,6 +584,7 @@
             progressContainer.style.display = 'block';
             statusText.textContent = '准备上传...';
             statusText.style.color = '';
+            uploadProgress.value = 0;
             
             const formData = new FormData();
             formData.append('file', file);
@@ -597,6 +592,7 @@
             
             const xhr = new XMLHttpRequest();
             xhr.open('POST', serverUrl, true);
+            xhr.setRequestHeader('Accept', 'application/json');
             
             // 更新进度条
             xhr.upload.onprogress = function(e) {
@@ -607,80 +603,57 @@
                     
                     // 更新文件状态
                     fileItem.querySelector('.skin-file-status').textContent = `${percent}%`;
+                    fileItem.querySelector('.skin-file-status').className = 'skin-file-status skin-status-pending';
                 }
             };
             
             xhr.onload = function() {
-                // 先处理HTTP错误状态
-                if (xhr.status === 429) {
-                    const errorMsg = '服务器正在遭受攻击！';
-                    showError(errorMsg);
-                    updateFileStatus(fileItem, errorMsg, 'error');
-                    return;
-                }
-
-                if (xhr.status === 400) {
-                    let errorMsg = '无效请求';
+                if (xhr.status === 200) {
                     try {
-                        const res = JSON.parse(xhr.responseText);
-                        errorMsg = res.message || errorMsg;
-                    } catch(e) {}
-                    showError(errorMsg);
-                    updateFileStatus(fileItem, errorMsg, 'error');
-                    return;
-                }
-
-                if (xhr.status >= 500) {
-                    showError('服务器内部错误 (5xx)');
-                    updateFileStatus(fileItem, '服务器错误', 'error');
-                    return;
-                }
-
-                // 处理成功响应
-                try {
-                    const response = JSON.parse(xhr.responseText);
-                    
-                    if (response.success === true) {
-                        statusText.textContent = '文件上传成功(p≧w≦q)';
-                        uploadProgress.value = 100;
-                        
-                        updateFileStatus(
-                            fileItem, 
-                            '上传成功', // 您的自定义成功消息
-                            'success'
-                        );
-                        
-                        // 添加皮肤预览链接
-                        addPreviewLink(fileItem, playerId);
-                    } else {
-                        const errorMsg = response.message || '未知错误';
+                        const response = JSON.parse(xhr.responseText);
+                        if (response.code === 14000) {
+                            statusText.textContent = '文件上传成功(p≧w≦q)';
+                            statusText.style.color = '#28a745';
+                            uploadProgress.value = 100;
+                            
+                            updateFileStatus(fileItem, '上传成功', 'success');
+                            addPreviewLink(fileItem, playerId);
+                        } else {
+                            const errorMsg = response.message || '上传失败';
+                            showError(errorMsg);
+                            updateFileStatus(fileItem, errorMsg, 'error');
+                        }
+                    } catch (e) {
+                        showError('响应解析失败');
+                        updateFileStatus(fileItem, '解析失败', 'error');
+                    }
+                } else {
+                    try {
+                        const errorResponse = JSON.parse(xhr.responseText);
+                        const errorMsg = errorResponse.message || `服务器错误: ${xhr.status}`;
                         showError(errorMsg);
                         updateFileStatus(fileItem, errorMsg, 'error');
+                    } catch {
+                        showError(`服务器错误: ${xhr.status}`);
+                        updateFileStatus(fileItem, `错误 ${xhr.status}`, 'error');
                     }
-                } catch (e) {
-                    const errorMsg = '响应解析失败: ' + e.message;
-                    showError(errorMsg);
-                    updateFileStatus(fileItem, errorMsg, 'error');
                 }
             };
 
             xhr.onerror = function() {
-                const errorMsg = '网络错误(p≧w≦q)';
-                showError(errorMsg);
-                updateFileStatus(fileItem, errorMsg, 'error');
+                showError('网络错误(p≧w≦q)');
+                updateFileStatus(fileItem, '网络错误', 'error');
             };
 
             xhr.send(formData);
         }
         
-        // 辅助函数：更新文件状态
         function updateFileStatus(fileItem, text, type) {
             const statusSpan = fileItem.querySelector('.skin-file-status');
             statusSpan.textContent = text;
             statusSpan.className = `skin-file-status skin-status-${type}`;
         }
         
-        // 辅助函数：添加预览链接
         function addPreviewLink(fileItem, playerId) {
             const previewLink = document.createElement('a');
             previewLink.href = skinPreviewBaseUrl + playerId;
@@ -690,14 +663,12 @@
             fileItem.appendChild(previewLink);
         }
         
-        // 显示错误信息
         function showError(message) {
             statusText.textContent = message;
             statusText.style.color = '#dc3545';
             progressContainer.style.display = 'block';
         }
         
-        // 格式化文件大小
         function formatFileSize(bytes) {
             if (bytes === 0) return '0 Bytes';
             const k = 1024;
