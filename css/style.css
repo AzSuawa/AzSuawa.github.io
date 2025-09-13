@@ -380,6 +380,7 @@ body {
 .method { 
   display: inline-block; 
   padding: 2px 8px; 
+  font-size: 14px;
   border-radius: 3px; 
   font-weight: bold; 
   margin-right: 8px; 
