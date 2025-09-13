@@ -59,7 +59,7 @@ body {
   position: fixed; 
   top: 0; 
   left: 0; 
-  width: 300px; 
+  width: 220px; 
   height: 100%; 
   background: #F0F5FF; 
   transition: left 0.3s; 
@@ -469,6 +469,25 @@ body {
     font-size: 13px; 
     min-width: 60px;  
   } 
+}
+
+/* 电脑宽屏表格样式优化 */
+@media(min-width: 1200px) {
+  .sponsor-table th, 
+  .sponsor-table td,
+  .ban-table th,
+  .ban-table td,
+  .sp-table th,
+  .sp-table td {
+    padding: 6px 10px;
+    font-size: 14px;
+  }
+  
+  .sponsor-table th, 
+  .ban-table th,
+  .sp-table th {
+    font-size: 14px;
+  }
 }
 
 /* MCPing页面样式 */
