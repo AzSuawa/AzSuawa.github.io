@@ -412,8 +412,8 @@ body {
   padding: 8px; 
   border-radius: 4px; 
   margin: 8px 0; 
-  font-family: monospace; 
-  font-size: 13px; 
+  font-family: monospace;  
+  font-size: 14px;
   word-break: break-all; 
 }
 
