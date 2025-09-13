@@ -171,11 +171,13 @@ body {
 .sponsor-table th { 
   background-color: var(--primary-color); 
   color: white; 
+  font-size: 15px;
   font-weight: bold; 
 }
 
 .sponsor-table tr:hover { 
   background-color: var(--hover-bg); 
+  font-size: 15px;
 }
 
 .menu-group{ 
