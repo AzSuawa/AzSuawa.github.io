@@ -390,7 +390,6 @@ body {
 }
 
 .path { 
-  font-family: monospace; 
   font-size: 14px; 
   color: #c0392b; 
   word-break: break-all; 
@@ -411,8 +410,7 @@ body {
   background: #f0f5ff; 
   padding: 8px; 
   border-radius: 4px; 
-  margin: 8px 0; 
-  font-family: monospace;  
+  margin: 8px 0;   
   font-size: 14px;
   word-break: break-all; 
 }
