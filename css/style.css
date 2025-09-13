@@ -55,17 +55,54 @@ body {
   flex-grow: 1;
 }
 
-#sidebar { 
-  position: fixed; 
-  top: 0; 
-  left: 0; 
-  width: 220px; 
-  height: 100%; 
-  background: #F0F5FF; 
-  transition: left 0.3s; 
-  z-index: 99; 
-  padding-top: 60px; 
-  box-shadow: 2px 0 10px rgba(0,0,0,0.1); 
+/* 电脑屏幕特定样式 */
+@media(min-width: 1024px) {
+  #sidebar {
+    width: 220px;
+    left: 0;
+  }
+  
+  #sidebar ul li {
+    padding: 8px 12px;
+    border-bottom: 1px solid var(--border-color);
+  }
+  
+  #sidebar ul li a {
+    font-size: 13px;
+  }
+  
+  .group-header {
+    padding: 8px 12px;
+    font-size: 14px;
+  }
+  
+  .submenu li {
+    padding: 5px 12px 5px 32px;
+  }
+  
+  #content {
+    margin-left: 220px;
+  }
+}
+
+/* 手机屏幕样式 */
+@media(max-width: 1023px) {
+  #sidebar {
+    left: -220px;
+    width: 220px;
+  }
+  
+  #sidebar.active {
+    left: 0;
+  }
+  
+  #content {
+    margin-left: 0;
+  }
+  
+  .card {
+    width: 95%;
+  }
 }
 
 #sidebar.active { 
@@ -76,20 +113,8 @@ body {
   list-style: none; 
 }
 
-#sidebar ul li { 
-  padding: 10px 15px; 
-  border-bottom: 1px solid var(--border-color); 
-}
-
 #sidebar ul li:hover { 
   background-color: var(--hover-bg); 
-}
-
-#sidebar ul li a { 
-  color: var(--text-color); 
-  text-decoration: none; 
-  display: block; 
-  font-size: 14px; 
 }
 
 #sidebar ul li a:hover { 
@@ -100,13 +125,6 @@ body {
   margin-right: 10px; 
   width: 20px; 
   text-align: center; 
-}
-
-#content { 
-  padding: 70px 20px 20px; 
-  margin-left: 220px;
-  transition: margin-left 0.3s; 
-  min-height: 100vh; 
 }
 
 #content.shifted { 
@@ -182,16 +200,6 @@ body {
   border-bottom: 1px solid var(--border-color); 
 }
 
-.group-header { 
-  padding: 10px 15px; 
-  display: flex; 
-  font-size: 15px; 
-  font-weight: bold; 
-  align-items: center; 
-  cursor: pointer; 
-  user-select: none; 
-}
-
 .group-header:hover { 
   background-color: var(--hover-bg); 
 }
@@ -211,11 +219,6 @@ body {
   list-style: none; 
   overflow: hidden; 
   transition: max-height 0.3s ease; 
-}
-
-.submenu li { 
-  padding: 6px 15px 6px 35px; 
-  border-bottom: none; 
 }
 
 .submenu li a { 
@@ -436,21 +439,6 @@ body {
   opacity: 0.7; 
 }
 
-/* 响应式设计 */
-@media(max-width: 1023px) {
-  #sidebar {
-    left: -220px;
-  }
-  
-  #content {
-    margin-left: 0;
-  }
-  
-  .card {
-    width: 95%;
-  }
-}
-
 @media(max-width: 767px) {
   .sponsor-table { 
     width: 100%;  
@@ -468,7 +456,6 @@ body {
   } 
 }
 
-/* MCPing页面样式 */
 .mcp-container {
   max-width: 650px;
   margin: 0 auto;
@@ -520,7 +507,6 @@ body {
   text-align: center;
 }
 
-/* 皮肤上传页面样式 */
 .skin-upload-container {
   max-width: 500px;
   margin: 0 auto;
