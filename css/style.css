@@ -136,6 +136,14 @@ body {
   margin: 0; 
 }
 
+.card h2 { 
+  padding: 15px 20px; 
+  font-size: 18px; 
+  color: var(--text-color); 
+  border-bottom: 1px solid var(--border-color); 
+  margin: 0; 
+}
+
 .command-section { 
   padding: 15px; 
 }
