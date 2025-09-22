@@ -1,15 +1,22 @@
 document.addEventListener('DOMContentLoaded', function() {
-    // 初始化页面hash
-    if (!window.location.hash) {
-        window.location.hash = '#api';
-    }
+    // 初始化页面路由
+    initRouter();
     
     // 初始化菜单状态
     initMenu();
+});
+
+// 初始化路由系统
+function initRouter() {
+    // 处理哈希路由重定向
+    if (window.location.hash && window.location.pathname === '/') {
+        const cleanPath = window.location.hash.substring(1);
+        history.replaceState(null, null, '/' + cleanPath);
+    }
     
     // 初始化页面内容
-    initPageContent();
-});
+    loadInitialPage();
+}
 
 // 初始化菜单功能
 function initMenu() {
@@ -42,40 +49,20 @@ function initMenu() {
             }
         });
     });
-}
 
-// 页面内容映射
-const pageContentMap = {
-    'aa': 'pages/aa.html',
-    'ab': 'pages/ab.html',
-    'ac': 'pages/ac.html',
-    'cmds': 'pages/cmds.html',
-    'ba': 'pages/ba.html',
-    'bb': 'pages/bb.html',
-    'ban': 'pages/ban.html',
-    'g': 'pages/g.html',
-    'mcp': 'mcp.html',
-    'skin': 'skin.html',
-    'api': 'pages/api.html',
-    'sp': 'pages/sp.html',
-    'ban-qwqwcllwww': 'pages/ban/qwqwcllwww.html',
-    'ban-mam1145': 'pages/ban/mam1145.html',
-    'ban-iuhiuhne': 'pages/ban/iuhiuhne.html',
-    'ban-sudpkkkk': 'pages/ban/sudpkkkk.html'
-};
-
-// 初始化页面内容功能
-function initPageContent() {
-    // 侧边栏菜单项点击事件
-    document.querySelectorAll('#sidebar a[href^="#"]').forEach(link => {
+    // 导航链接点击事件
+    document.querySelectorAll('#sidebar a[href^="/"]').forEach(link => {
         link.addEventListener('click', async function(e) {
             e.preventDefault();
-            e.stopImmediatePropagation();
             
             // 更新活动菜单项
             updateActiveMenuItem(this);
             
-            const pageId = this.getAttribute('data-page');
+            const path = this.getAttribute('href');
+            const pageId = path.substring(1); // 移除前导/
+            
+            // 更新URL
+            history.pushState(null, null, path);
             await loadPageContent(pageId);
             
             // 移动端点击后自动关闭侧边栏
@@ -83,32 +70,53 @@ function initPageContent() {
                 document.getElementById('sidebar').classList.remove('active');
                 document.getElementById('content').classList.remove('shifted');
             }
-            
-            // 更新URL
-            history.replaceState(null, null, `#${pageId}`);
         });
     });
 
     // 处理浏览器前进/后退
     window.addEventListener('popstate', function() {
-        if(window.location.hash) {
-            const pageId = window.location.hash.substring(1);
-            const menuItem = document.querySelector(`[data-page="${pageId}"]`);
-            if(menuItem) menuItem.click();
-        }
-    });
-
-    // 初始化显示正确页面
-    if(window.location.hash) {
-        const pageId = window.location.hash.substring(1);
-        const menuItem = document.querySelector(`#sidebar a[data-page="${pageId}"]`);
+        const path = window.location.pathname;
+        const pageId = path.substring(1);
+        const menuItem = document.querySelector(`[data-page="${pageId}"]`);
         if(menuItem) {
             menuItem.click();
         } else {
-            showHomePage();
+            loadPageContent('aa'); // 默认首页
         }
+    });
+}
+
+// 页面内容映射
+const pageContentMap = {
+    'aa': '/pages/aa.html',
+    'ab': '/pages/ab.html',
+    'ac': '/pages/ac.html',
+    'cmds': '/pages/cmds.html',
+    'ba': '/pages/ba.html',
+    'bb': '/pages/bb.html',
+    'ban': '/pages/ban.html',
+    'g': '/pages/g.html',
+    'mcp': '/mcp.html',
+    'skin': '/skin.html',
+    'api': '/pages/api.html',
+    'sp': '/pages/sp.html',
+    'ban-qwqwcllwww': '/pages/ban/qwqwcllwww.html',
+    'ban-mam1145': '/pages/ban/mam1145.html',
+    'ban-iuhiuhne': '/pages/ban/iuhiuhne.html',
+    'ban-sudpkkkk': '/pages/ban/sudpkkkk.html'
+};
+
+// 加载初始页面
+function loadInitialPage() {
+    const path = window.location.pathname;
+    const pageId = path.substring(1) || 'aa'; // 默认为首页
+    
+    const menuItem = document.querySelector(`[data-page="${pageId}"]`);
+    if(menuItem) {
+        menuItem.click();
     } else {
-        showHomePage();
+        // 处理404或回退到首页
+        loadPageContent('aa');
     }
 }
 
@@ -159,14 +167,6 @@ async function loadPageContent(pageId) {
             `;
         }
     }
-}
-
-// 显示首页
-function showHomePage() {
-    document.getElementById('a-0').classList.add('active');
-    document.getElementById('a-1').classList.add('active');
-    document.getElementById('a-2').classList.add('active');
-    document.querySelector('#sidebar ul li:first-child').classList.add('active');
 }
 
 // 响应式处理
