@@ -175,7 +175,7 @@ async function loadPageContent(pageId, router) {
 
     const container = document.getElementById('dynamic-content');
     
-    if(pageId === 'ba') {
+    if(pageId === 'a') {
         // 显示首页卡片
         document.getElementById('a-0').classList.add('active');
         document.getElementById('a-1').classList.add('active');
