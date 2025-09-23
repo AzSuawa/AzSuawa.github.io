@@ -96,8 +96,8 @@ function setupNavigation(router) {
             loadPageContent(pageId, router);
             router.currentPage = pageId;
         } else {
-            loadPageContent('aa', router);
-            router.currentPage = 'aa';
+            loadPageContent('api', router);
+            router.currentPage = 'api';
         }
     });
 }
