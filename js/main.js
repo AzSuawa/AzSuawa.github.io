@@ -36,13 +36,13 @@ function handleInitialRoute(router) {
     }
     
     // 处理干净路径
-    const pageId = path.substring(1) || 'aa'; // 默认为首页
+    const pageId = path.substring(1) || 'api'; // 默认为首页
     if (pageContentMap[pageId]) {
         loadPageContent(pageId, router);
     } else {
         // 无效路径重定向到首页
-        history.replaceState({ pageId: 'aa' }, null, '/aa');
-        loadPageContent('aa', router);
+        history.replaceState({ pageId: 'api' }, null, '/api');
+        loadPageContent('api', router);
     }
 }
 
@@ -84,7 +84,7 @@ function setupNavigation(router) {
             pageId = event.state.pageId;
         } else {
             const path = window.location.pathname;
-            pageId = path.substring(1) || 'aa';
+            pageId = path.substring(1) || 'api';
         }
         
         // 避免重复加载相同页面
