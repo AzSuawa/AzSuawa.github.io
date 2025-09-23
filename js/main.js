@@ -116,6 +116,7 @@ const pageContentMap = {
     'skin': '/skin.html',
     'api': '/pages/api.html',
     'sp': '/pages/sp.html',
+    'bot-update': '/pages/bot-update.html',
     'ban-qwqwcllwww': '/pages/ban/qwqwcllwww.html',
     'ban-mam1145': '/pages/ban/mam1145.html',
     'ban-iuhiuhne': '/pages/ban/iuhiuhne.html',
