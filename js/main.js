@@ -7,7 +7,7 @@ const pageMetaData = {
     },
     'api': {
         title: '小小素BOT - API',
-        description: '小小素API',
+        description: 'Minecraft服务器Motd查询、2b2t.org数据图片查询',
         headerTitle: '小小素API'
     },
     'bot-update': {
@@ -16,9 +16,14 @@ const pageMetaData = {
         headerTitle: '小小素更新日志'
     },
     'skin': {
-        title: '素素の生存服 - 上传皮肤',
-        description: '小小素BOT的版本更新历史记录',
+        title: '上传皮肤到服务器 - 素素の生存服(p≧w≦q)',
+        description: '上传皮肤到服务器 - 素素の生存服(p≧w≦q)、azsu.top、小小素QQ机器人、API接口、MC服务器、Minecraft、我的世界、麦块',
         headerTitle: '素素の生存服'
+    },
+    'mcp': {
+        title: 'Minecraft服务器状态查询API - 阿素本素(p≧w≦q)',
+        description: 'Minecraft服务器状态查询API - 素素の生存服(p≧w≦q)、Motd、azsu.top、小小素QQ机器人、API接口、MC服务器、Minecraft、我的世界、麦块',
+        headerTitle: '小小素API'
     },
     'default': {
         title: '阿素本素(p≧w≦q)',
