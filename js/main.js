@@ -15,6 +15,11 @@ const pageMetaData = {
         description: '小小素BOT的版本更新历史记录',
         headerTitle: '小小素更新日志'
     },
+    'skin': {
+        title: '素素の生存服 - 上传皮肤',
+        description: '小小素BOT的版本更新历史记录',
+        headerTitle: '素素の生存服'
+    },
     'default': {
         title: '阿素本素(p≧w≦q)',
         description: '素素の生存服、azsu.top、小小素QQ机器人、API接口、MC服务器、Minecraft、我的世界、麦块',
@@ -82,15 +87,15 @@ function handleInitialRoute(router) {
     }
     
     // 处理干净路径
-    const pageId = path.substring(1) || 'ba'; // 默认为首页
+    const pageId = path.substring(1) || 'api'; // 默认为api页面
     if (pageContentMap[pageId]) {
         updatePageMeta(pageId);
         loadPageContent(pageId, router);
     } else {
-        // 无效路径重定向到首页
-        history.replaceState({ pageId: 'ba' }, null, '/ba');
-        updatePageMeta('ba');
-        loadPageContent('ba', router);
+        // 无效路径重定向到api页面
+        history.replaceState({ pageId: 'api' }, null, '/api');
+        updatePageMeta('api');
+        loadPageContent('api', router);
     }
 }
 
@@ -133,7 +138,7 @@ function setupNavigation(router) {
             pageId = event.state.pageId;
         } else {
             const path = window.location.pathname;
-            pageId = path.substring(1) || 'ba';
+            pageId = path.substring(1) || 'api';
         }
         
         // 避免重复加载相同页面
@@ -146,9 +151,9 @@ function setupNavigation(router) {
             loadPageContent(pageId, router);
             router.currentPage = pageId;
         } else {
-            updatePageMeta('ba');
-            loadPageContent('ba', router);
-            router.currentPage = 'ba';
+            updatePageMeta('api');
+            loadPageContent('api', router);
+            router.currentPage = 'api';
         }
     });
 }
@@ -229,15 +234,8 @@ async function loadPageContent(pageId, router) {
 
     const container = document.getElementById('dynamic-content');
     
-    if(pageId === 'ba') {
-        // 显示首页卡片
-        document.getElementById('a-0').classList.add('active');
-        document.getElementById('a-1').classList.add('active');
-        document.getElementById('a-2').classList.add('active');
-        container.innerHTML = '';
-        router.isLoading = false;
-        return;
-    }
+    // 移除了a-0, a-1, a-2的显示逻辑
+    // 所有页面都通过AJAX加载内容
     
     try {
         const response = await fetch(pageContentMap[pageId]);
