@@ -1,3 +1,48 @@
+// 页面元数据配置
+const pageMetaData = {
+    'aa': {
+        title: '阿素本素(p≧w≦q)',
+        description: '素素の生存服、azsu.top、小小素QQ机器人、API接口、MC服务器、Minecraft、我的世界、麦块',
+        headerTitle: '素素の生存服'
+    },
+    'api': {
+        title: '小小素BOT - API',
+        description: '小小素API',
+        headerTitle: '小小素API'
+    },
+    'bot-update': {
+        title: '小小素BOT - 更新日志',
+        description: '小小素BOT的版本更新历史记录',
+        headerTitle: '小小素更新日志'
+    },
+    'default': {
+        title: '阿素本素(p≧w≦q)',
+        description: '素素の生存服、azsu.top、小小素QQ机器人、API接口、MC服务器、Minecraft、我的世界、麦块',
+        headerTitle: '素素の生存服'
+    }
+};
+
+// 页面内容映射
+const pageContentMap = {
+    'aa': '/pages/aa.html',
+    'ab': '/pages/ab.html',
+    'ac': '/pages/ac.html',
+    'cmds': '/pages/cmds.html',
+    'ba': '/pages/ba.html',
+    'bb': '/pages/bb.html',
+    'ban': '/pages/ban.html',
+    'g': '/pages/g.html',
+    'mcp': '/mcp.html',
+    'skin': '/skin.html',
+    'api': '/pages/api.html',
+    'sp': '/pages/sp.html',
+    'bot-update': '/pages/bot-update.html',
+    'ban-qwqwcllwww': '/pages/ban/qwqwcllwww.html',
+    'ban-mam1145': '/pages/ban/mam1145.html',
+    'ban-iuhiuhne': '/pages/ban/iuhiuhne.html',
+    'ban-sudpkkkk': '/pages/ban/sudpkkkk.html'
+};
+
 document.addEventListener('DOMContentLoaded', function() {
     // 路由状态管理
     const router = {
@@ -30,19 +75,22 @@ function handleInitialRoute(router) {
         const cleanPath = hash.substring(1);
         if (pageContentMap[cleanPath]) {
             history.replaceState({ pageId: cleanPath }, null, '/' + cleanPath);
+            updatePageMeta(cleanPath);
             loadPageContent(cleanPath, router);
             return;
         }
     }
     
     // 处理干净路径
-    const pageId = path.substring(1) || 'api'; // 默认为首页
+    const pageId = path.substring(1) || 'ba'; // 默认为首页
     if (pageContentMap[pageId]) {
+        updatePageMeta(pageId);
         loadPageContent(pageId, router);
     } else {
         // 无效路径重定向到首页
-        history.replaceState({ pageId: 'api' }, null, '/api');
-        loadPageContent('api', router);
+        history.replaceState({ pageId: 'ba' }, null, '/ba');
+        updatePageMeta('ba');
+        loadPageContent('ba', router);
     }
 }
 
@@ -63,6 +111,7 @@ function setupNavigation(router) {
             
             // 更新URL
             history.pushState({ pageId }, null, path);
+            updatePageMeta(pageId);
             await loadPageContent(pageId, router);
             
             // 更新当前页面标记
@@ -84,7 +133,7 @@ function setupNavigation(router) {
             pageId = event.state.pageId;
         } else {
             const path = window.location.pathname;
-            pageId = path.substring(1) || 'api';
+            pageId = path.substring(1) || 'ba';
         }
         
         // 避免重复加载相同页面
@@ -93,35 +142,16 @@ function setupNavigation(router) {
         const menuItem = document.querySelector(`[data-page="${pageId}"]`);
         if(menuItem) {
             updateActiveMenuItem(menuItem);
+            updatePageMeta(pageId);
             loadPageContent(pageId, router);
             router.currentPage = pageId;
         } else {
-            loadPageContent('api', router);
-            router.currentPage = 'api';
+            updatePageMeta('ba');
+            loadPageContent('ba', router);
+            router.currentPage = 'ba';
         }
     });
 }
-
-// 页面内容映射
-const pageContentMap = {
-    'aa': '/pages/aa.html',
-    'ab': '/pages/ab.html',
-    'ac': '/pages/ac.html',
-    'cmds': '/pages/cmds.html',
-    'ba': '/pages/ba.html',
-    'bb': '/pages/bb.html',
-    'ban': '/pages/ban.html',
-    'g': '/pages/g.html',
-    'mcp': '/mcp.html',
-    'skin': '/skin.html',
-    'api': '/pages/api.html',
-    'sp': '/pages/sp.html',
-    'bot-update': '/pages/bot-update.html',
-    'ban-qwqwcllwww': '/pages/ban/qwqwcllwww.html',
-    'ban-mam1145': '/pages/ban/mam1145.html',
-    'ban-iuhiuhne': '/pages/ban/iuhiuhne.html',
-    'ban-sudpkkkk': '/pages/ban/sudpkkkk.html'
-};
 
 // 初始化菜单功能
 function initMenu(router) {
@@ -164,6 +194,29 @@ function updateActiveMenuItem(clickedItem) {
     clickedItem.parentElement.classList.add('active');
 }
 
+// 更新页面元数据
+function updatePageMeta(pageId) {
+    const metaData = pageMetaData[pageId] || pageMetaData['default'];
+    
+    // 更新title
+    document.title = metaData.title;
+    
+    // 更新meta description
+    let metaDesc = document.querySelector('meta[name="description"]');
+    if (!metaDesc) {
+        metaDesc = document.createElement('meta');
+        metaDesc.name = 'description';
+        document.head.appendChild(metaDesc);
+    }
+    metaDesc.content = metaData.description;
+    
+    // 更新header标题
+    const headerTitle = document.getElementById('title');
+    if (headerTitle) {
+        headerTitle.textContent = metaData.headerTitle;
+    }
+}
+
 // 加载页面内容
 async function loadPageContent(pageId, router) {
     // 设置加载状态
@@ -176,7 +229,7 @@ async function loadPageContent(pageId, router) {
 
     const container = document.getElementById('dynamic-content');
     
-    if(pageId === 'a') {
+    if(pageId === 'ba') {
         // 显示首页卡片
         document.getElementById('a-0').classList.add('active');
         document.getElementById('a-1').classList.add('active');
