@@ -1,17 +1,32 @@
 // 页面元数据配置
 const pageMetaData = {
     'aa': {
-        title: '阿素本素(p≧w≦q)',
+        title: '小小素(p≧w≦q)',
         description: '素素の生存服、azsu.top、小小素QQ机器人、API接口、MC服务器、Minecraft、我的世界、麦块',
-        headerTitle: '素素の生存服'
+        headerTitle: '小小素BOT'
+    },
+    'ab': {
+        title: '常见问题 - 小小素(p≧w≦q)',
+        description: '素素の生存服、azsu.top、小小素QQ机器人、API接口、MC服务器、Minecraft、我的世界、麦块',
+        headerTitle: '常见问题'
+    },
+    'ac': {
+        title: '鸣谢和赞助 - 小小素(p≧w≦q)',
+        description: '素素の生存服、azsu.top、小小素QQ机器人、API接口、MC服务器、Minecraft、我的世界、麦块',
+        headerTitle: '鸣谢和赞助'
+    },
+    'cmds': {
+        title: '指令帮助 - 小小素(p≧w≦q)',
+        description: '素素の生存服、azsu.top、小小素QQ机器人、API接口、MC服务器、Minecraft、我的世界、麦块',
+        headerTitle: '指令帮助'
     },
     'api': {
-        title: '小小素BOT - API',
+        title: '小小素API - 小小素(p≧w≦q)',
         description: 'Minecraft服务器Motd查询、2b2t.org数据图片查询',
         headerTitle: '小小素API'
     },
     'bot-update': {
-        title: '小小素BOT - 更新日志',
+        title: '更新日志 - 小小素(p≧w≦q)',
         description: '小小素BOT的版本更新历史记录',
         headerTitle: '小小素更新日志'
     },
