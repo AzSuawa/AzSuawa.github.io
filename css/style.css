@@ -696,7 +696,7 @@ body {
 
 /* 各个图标的掩码 */
 .mask-kuaishou { 
-    -webkit-mask-image: url('../svgs/brands/kuaishou.svg');
+    -webkit-mask-image: url('../svgs/kuaishou.svg');
     mask-image: url('../svgs/kuaishou.svg');
 }
 
