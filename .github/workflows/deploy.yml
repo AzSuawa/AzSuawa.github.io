@@ -1,0 +1,60 @@
+name: Deploy to EdgeOne Pages
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    
+    steps:
+    # 1. 检出代码
+    - name: Checkout code
+      uses: actions/checkout@v4
+      
+    # 2. 设置 Node.js 环境（在这里安装依赖）
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '18'
+        cache: 'npm'
+        
+    # 3. 安装依赖（关键步骤！）
+    - name: Install dependencies
+      run: npm install
+      
+    # 4. 构建项目
+    - name: Build project
+      run: npm run build
+      
+    # 5. 上传构建产物（供EdgeOne使用）
+    - name: Upload build artifacts
+      uses: actions/upload-pages-artifact@v3
+      with:
+        path: ./dist
+
+  # 部署到EdgeOne Pages（需要手动触发或配置自动部署）
+  deploy:
+    needs: build-and-deploy
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main'
+    
+    steps:
+    - name: Download build artifacts
+      uses: actions/download-artifact@v4
+      with:
+        name: github-pages
+        
+    - name: Setup EdgeOne CLI
+      run: npm install -g @tencent/edgeone-cli
+      
+    - name: Deploy to EdgeOne
+      run: |
+        edgeone login --secret-id ${{ secrets.TENCENT_SECRET_ID }} --secret-key ${{ secrets.TENCENT_SECRET_KEY }}
+        edgeone pages deploy --site-id ${{ secrets.EDGEONE_SITE_ID }} --dir ./
+      env:
+        TENCENT_SECRET_ID: ${{ secrets.TENCENT_SECRET_ID }}
+        TENCENT_SECRET_KEY: ${{ secrets.TENCENT_SECRET_KEY }}
