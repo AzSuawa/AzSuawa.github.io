@@ -9,6 +9,46 @@
     <link rel="stylesheet" href="css/style.css">
     <link rel="icon" href="./images/favicon.ico" type="image/x-icon">
     <meta name="theme-color" content="#A1BDFF">
+    <script>
+        // 在页面加载前设置初始标题（有助于SEO）
+        (function() {
+            // 从URL获取页面ID
+            var path = window.location.pathname;
+            var pageId = path.substring(1) || 'api';
+            
+            // 特殊处理skin.html页面
+            if (path.endsWith('skin.html') || path.endsWith('/skin')) {
+                pageId = 'skin';
+            }
+            
+            // 页面元数据映射
+            var pageMetaData = {
+                'aa': { title: '小小素(p≧≧w≦≦q)', description: '素素の生存服、azsu.top、小小素QQ机器人、API接口、MC服务器、Minecraft、我的世界、麦块' },
+                'ab': { title: '常见问题 - 小小素(p≧≧w≦≦q)', description: '素素の生存服、azsu.top、小小素QQ机器人、API接口、MC服务器、Minecraft、我的世界、麦块' },
+                'ac': { title: '鸣谢和赞助 - 小小素(p≧≧w≦≦q)', description: '素素の生存服、azsu.top、小小素QQ机器人、API接口、MC服务器、Minecraft、我的世界、麦块' },
+                'cmds': { title: '指令帮助 - 小小素(p≧≧w≦≦q)', description: '素素の生存服、azsu.top、小小素QQ机器人、API接口、MC服务器、Minecraft、我的世界、麦块' },
+                'api': { title: '小小素API - 小小素(p≧≧w≦≦q)', description: 'Minecraft服务器Motd查询、2b2t.org数据图片查询' },
+                'bot-update': { title: '更新日志 - 小小素(p≧≧w≦≦q)', description: '小小素BOT的版本更新历史记录' },
+                'skin': { title: '上传皮肤到服务器 - 素素の生存服(p≧≧w≦≦q)', description: '上传皮肤到服务器 - 素素の生存服(p≧≧w≦≦q)、azsu.top、小小素QQ机器人、API接口、MC服务器、Minecraft、我的世界、麦块' },
+                'mcp': { title: 'Minecraft服务器状态查询API - 阿素本素(p≧≧w≦≦q)', description: 'Minecraft服务器状态查询API - 素素の生存服(p≧≧w≦≦q)、Motd、azsu.top、小小素QQ机器人、API接口、MC服务器、Minecraft、我的世界、麦块' },
+                'ba': { title: '素素の生存服 - 阿素本素(p≧≧w≦≦q)', description: '素素の生存服、azsu.top、小小素QQ机器人、API接口、MC服务器、Minecraft、我的世界、麦块' },
+                'bb': { title: '机制修改 - 素素の生存服(p≧≧w≦≦q)', description: '素素の生存服、azsu.top、小小素QQ机器人、API接口、MC服务器、Minecraft、我的世界、麦块' },
+                'ban': { title: '封禁列表 - 素素の生存服(p≧≧w≦≦q)', description: '素素の生存服、azsu.top、小小素QQ机器人、API接口、MC服务器、Minecraft、我的世界、麦块' },
+                'sp': { title: '赞助列表 - 素素の生存服(p≧≧w≦≦q)', description: '素素の生存服、azsu.top、小小素QQ机器人、API接口、MC服务器、Minecraft、我的世界、麦块' },
+                'default': { title: '阿素本素(p≧≧w≦≦q)', description: '素素の生存服、azsu.top、小小素QQ机器人、API接口、MC服务器、Minecraft、我的世界、麦块' }
+            };
+            
+            // 设置文档标题
+            var meta = pageMetaData[pageId] || pageMetaData['default'];
+            document.title = meta.title;
+            
+            // 同时更新meta description
+            var metaDesc = document.querySelector('meta[name="description"]');
+            if (metaDesc) {
+                metaDesc.content = meta.description || '素素の生存服、azsu.top、小小素QQ机器人、API接口、MC服务器、Minecraft、我的世界、麦块';
+            }
+        })();
+    </script>
 </head>
 <body>
     <div id="header">
