@@ -427,7 +427,69 @@ body {
   background-color: currentColor;
   vertical-align: -0.125em;
   margin-right: 8px;
+  position: relative;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.2em;
+  height: 1.2em;
 }
+
+/* 提示框基础样式 */
+.mask-icon::after {
+    content: attr(data-tooltip);
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: rgba(0, 0, 0, 0.85);
+    color: white;
+    padding: 6px 12px;
+    border-radius: 4px;
+    font-size: 12px;
+    white-space: nowrap;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+    z-index: 1000;
+    pointer-events: none;
+    font-family: 'Microsoft YaHei', sans-serif;
+}
+
+/* 箭头样式 */
+.mask-icon::before {
+    content: '';
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    border: 5px solid transparent;
+    border-top-color: rgba(0, 0, 0, 0.85);
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+    z-index: 1001;
+    pointer-events: none;
+    margin-bottom: -10px;
+}
+
+/* 悬停时显示提示 */
+.mask-icon:hover::after,
+.mask-icon:hover::before {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* 为不同的图标设置合适的间距 */
+.command-section p:last-child {
+    margin-top: 10px;
+}
+
+.command-section p:last-child a {
+    margin-right: 15px;
+}
+
 
 .mask-kuaishou { 
   -webkit-mask-image: url('../svgs/kuaishou.svg');
@@ -484,6 +546,9 @@ body {
     width: 95%;
   }
 }
+
+
+
 
 @media (max-width: 767px) {
   .sponsor-table {
