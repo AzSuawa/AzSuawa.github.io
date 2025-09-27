@@ -454,10 +454,22 @@ body {
   mask-image: url('../svgs/youtube.svg');
 }
 
+.mask-qq { 
+  -webkit-mask-image: url('../svgs/qq.svg');
+  mask-image: url('../svgs/qq.svg');
+}
+
+.mask-discord { 
+  -webkit-mask-image: url('../svgs/discord.svg');
+  mask-image: url('../svgs/discord.svg');
+}
+
 .icon-red { color: #ff2f2f; }
 .icon-blue { color: #0084ff; }
 .icon-black { color: #000000; }
 .icon-youtube-red { color: #ff0000; }
+.icon-qq-blue { color: #12b7f5; }
+.icon-discord-blurple { color: #5865f2; }
 
 @media (max-width: 1023px) {
   #sidebar {
