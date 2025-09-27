@@ -413,7 +413,7 @@ body {
 .deprecated {
   opacity: 0.7;
 }
-/* 修正后的 .mask-icon 样式 */
+/* 修改后的 .mask-icon 样式 */
 .mask-icon {
   display: inline-flex;
   align-items: center;
@@ -430,16 +430,22 @@ body {
   vertical-align: middle;
   position: relative;
   cursor: pointer;
-  overflow: visible;
-  z-index: 1;
-  margin-right: 4px; /* 减少图标间距 */
+  margin-right: 4px;
 }
 
-/* 提示框基础样式 */
-.mask-icon::after {
+/* 创建外部的提示框容器 */
+.mask-icon-wrapper {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* 将提示框移到 .mask-icon-wrapper 上 */
+.mask-icon-wrapper::after {
   content: attr(data-tooltip);
   position: absolute;
-  bottom: 100%; /* 显示在图标上方 */
+  bottom: 100%;
   left: 50%;
   transform: translateX(-50%);
   background-color: rgba(0, 0, 0, 0.9);
@@ -451,15 +457,14 @@ body {
   opacity: 0;
   visibility: hidden;
   transition: all 0.3s ease;
-  z-index: 1000; /* 提高层级确保显示在最前面 */
+  z-index: 1000;
   pointer-events: none;
   font-family: 'Microsoft YaHei', sans-serif;
-  /* 确保提示框不会被裁剪 */
   min-width: max-content;
 }
 
-/* 箭头样式 */
-.mask-icon::before {
+/* 箭头也移到 wrapper 上 */
+.mask-icon-wrapper::before {
   content: '';
   position: absolute;
   bottom: 100%;
@@ -476,10 +481,16 @@ body {
 }
 
 /* 悬停时显示提示 */
-.mask-icon:hover::after,
-.mask-icon:hover::before {
+.mask-icon-wrapper:hover::after,
+.mask-icon-wrapper:hover::before {
   opacity: 1;
   visibility: visible;
+}
+
+/* 移除原来的提示框样式 */
+.mask-icon::after,
+.mask-icon::before {
+  display: none;
 }
 
 /* 为不同的图标设置合适的间距 */
