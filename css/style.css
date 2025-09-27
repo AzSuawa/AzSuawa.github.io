@@ -677,3 +677,51 @@ body {
   text-align: center;
   margin-top: 20px;
 }
+
+/* 掩码图标系统 */
+.mask-icon {
+    display: inline-block;
+    width: 1em;
+    height: 1em;
+    -webkit-mask-repeat: no-repeat;
+    mask-repeat: no-repeat;
+    -webkit-mask-size: contain;
+    mask-size: contain;
+    -webkit-mask-position: center;
+    mask-position: center;
+    background-color: currentColor; /* 继承文字颜色 */
+    vertical-align: -0.125em;
+    margin-right: 8px;
+}
+
+/* 各个图标的掩码 */
+.mask-kuaishou { 
+    -webkit-mask-image: url('../svgs/brands/kuaishou.svg');
+    mask-image: url('../svgs/kuaishou.svg');
+}
+
+.mask-douyin { 
+    -webkit-mask-image: url('../svgs/douyin.svg');
+    mask-image: url('../svgs/douyin.svg');
+}
+
+.mask-bilibili { 
+    -webkit-mask-image: url('../svgs/bilibili.svg');
+    mask-image: url('../svgs/bilibili.svg');
+}
+
+.mask-tiktok { 
+    -webkit-mask-image: url('../svgs/tiktok.svg');
+    mask-image: url('../svgs/tiktok.svg');
+}
+
+.mask-youtube { 
+    -webkit-mask-image: url('../svgs/youtube.svg');
+    mask-image: url('../svgs/youtube.svg');
+}
+
+/* 颜色类 */
+.icon-red { color: #ff2f2f; }
+.icon-blue { color: #0084ff; }
+.icon-black { color: #000000; }
+.icon-youtube-red { color: #ff0000; }
