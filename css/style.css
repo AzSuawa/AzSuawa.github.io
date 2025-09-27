@@ -414,73 +414,65 @@ body {
   opacity: 0.7;
 }
 
+/* 修改这部分代码 */
 .mask-icon {
-  display: inline-block;
-  width: 1em;
-  height: 1em;
-  -webkit-mask-repeat: no-repeat;
-  mask-repeat: no-repeat;
-  -webkit-mask-size: contain;
-  mask-size: contain;
-  -webkit-mask-position: center;
-  mask-position: center;
-  background-color: currentColor;
-  vertical-align: -0.125em;
-  margin-right: 8px;
-  
-  /* 添加悬停提示所需的样式 */
-  position: relative;
-  cursor: pointer;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   width: 1.2em;
   height: 1.2em;
+  position: relative;
+  cursor: pointer;
+  /* 移除或修改可能影响提示框显示的属性 */
+  overflow: visible; /* 添加这行 */
+  z-index: 1; /* 确保图标在正常层级 */
 }
 
 /* 提示框基础样式 */
 .mask-icon::after {
-    content: attr(data-tooltip);
-    position: absolute;
-    bottom: 100%;
-    left: 50%;
-    transform: translateX(-50%);
-    background-color: rgba(0, 0, 0, 0.85);
-    color: white;
-    padding: 6px 12px;
-    border-radius: 4px;
-    font-size: 12px;
-    white-space: nowrap;
-    opacity: 0;
-    visibility: hidden;
-    transition: all 0.3s ease;
-    z-index: 1000;
-    pointer-events: none;
-    font-family: 'Microsoft YaHei', sans-serif;
+  content: attr(data-tooltip);
+  position: absolute;
+  bottom: 100%; /* 显示在图标上方 */
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: rgba(0, 0, 0, 0.9);
+  color: white;
+  padding: 6px 12px;
+  border-radius: 4px;
+  font-size: 12px;
+  white-space: nowrap;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s ease;
+  z-index: 1000; /* 提高层级确保显示在最前面 */
+  pointer-events: none;
+  font-family: 'Microsoft YaHei', sans-serif;
+  /* 确保提示框不会被裁剪 */
+  min-width: max-content;
 }
 
 /* 箭头样式 */
 .mask-icon::before {
-    content: '';
-    position: absolute;
-    bottom: 100%;
-    left: 50%;
-    transform: translateX(-50%);
-    border: 5px solid transparent;
-    border-top-color: rgba(0, 0, 0, 0.85);
-    opacity: 0;
-    visibility: hidden;
-    transition: all 0.3s ease;
-    z-index: 1001;
-    pointer-events: none;
-    margin-bottom: -10px;
+  content: '';
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  border: 5px solid transparent;
+  border-top-color: rgba(0, 0, 0, 0.9);
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s ease;
+  z-index: 1001;
+  pointer-events: none;
+  margin-bottom: -10px;
 }
 
 /* 悬停时显示提示 */
 .mask-icon:hover::after,
 .mask-icon:hover::before {
-    opacity: 1;
-    visibility: visible;
+  opacity: 1;
+  visibility: visible;
 }
 
 /* 为不同的图标设置合适的间距 */
@@ -489,7 +481,7 @@ body {
 }
 
 .command-section p:last-child a {
-    margin-right: 15px;
+    margin-right: 6px;
 }
 
 
