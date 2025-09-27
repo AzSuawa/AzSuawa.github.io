@@ -413,19 +413,26 @@ body {
 .deprecated {
   opacity: 0.7;
 }
-
-/* 修改这部分代码 */
+/* 修正后的 .mask-icon 样式 */
 .mask-icon {
   display: inline-flex;
   align-items: center;
   justify-content: center;
   width: 1.2em;
   height: 1.2em;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-size: contain;
+  mask-size: contain;
+  -webkit-mask-position: center;
+  mask-position: center;
+  background-color: currentColor;
+  vertical-align: middle;
   position: relative;
   cursor: pointer;
-  /* 移除或修改可能影响提示框显示的属性 */
-  overflow: visible; /* 添加这行 */
-  z-index: 1; /* 确保图标在正常层级 */
+  overflow: visible;
+  z-index: 1;
+  margin-right: 4px; /* 减少图标间距 */
 }
 
 /* 提示框基础样式 */
