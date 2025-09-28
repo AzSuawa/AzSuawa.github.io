@@ -123,3 +123,16 @@ function generateStaticPages() {
 }
 
 generateStaticPages();
+
+
+// 在生成静态页面时替换模板变量
+function processTemplateVariables(template, pageId, meta, content) {
+    return template
+        .replace(/\{\{PAGE_ID\}\}/g, pageId)
+        .replace(/\{\{PAGE_TITLE\}\}/g, meta.title)
+        .replace(/\{\{PAGE_DESCRIPTION\}\}/g, meta.description)
+        .replace(/\{\{HEADER_TITLE\}\}/g, meta.headerTitle)
+        .replace(/\{\{PAGE_CONTENT\}\}/g, content)
+        .replace(/class="{{PAGE_ID === '([^']+)' ? 'active' : ''}}"/g, 
+            (match, targetPageId) => pageId === targetPageId ? 'class="active"' : 'class=""');
+}
