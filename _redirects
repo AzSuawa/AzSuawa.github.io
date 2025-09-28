@@ -1,0 +1,25 @@
+# 将 SPA 路由重写到 index.html
+/aa    /index.html   200
+/ab    /index.html   200
+/ac    /index.html   200
+/cmds  /index.html   200
+/api   /index.html   200
+/bot-update /index.html 200
+/ba    /index.html   200
+/bb    /index.html   200
+/ban   /index.html   200
+/sp    /index.html   200
+/g     /index.html   200
+
+# 为搜索引擎提供静态页面
+/aa    /aa.html  200  User-Agent: Googlebot|Bingbot|Baiduspider|YandexBot
+/ab    /ab.html  200  User-Agent: Googlebot|Bingbot|Baiduspider|YandexBot
+/ac    /ac.html  200  User-Agent: Googlebot|Bingbot|Baiduspider|YandexBot
+/cmds  /cmds.html 200 User-Agent: Googlebot|Bingbot|Baiduspider|YandexBot
+/api   /api.html  200 User-Agent: Googlebot|Bingbot|Baiduspider|YandexBot
+/bot-update /bot-update.html 200 User-Agent: Googlebot|Bingbot|Baiduspider|YandexBot
+/ba    /ba.html  200 User-Agent: Googlebot|Bingbot|Baiduspider|YandexBot
+/bb    /bb.html  200 User-Agent: Googlebot|Bingbot|Baiduspider|YandexBot
+/ban   /ban.html  200 User-Agent: Googlebot|Bingbot|Baiduspider|YandexBot
+/sp    /sp.html  200 User-Agent: Googlebot|Bingbot|Baiduspider|YandexBot
+/g     /g.html   200 User-Agent: Googlebot|Bingbot|Baiduspider|YandexBot
