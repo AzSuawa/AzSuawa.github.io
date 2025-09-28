@@ -1,12 +1,12 @@
-name: Deploy to EdgeOne with Static Pages
+name: Generate Static Pages
 
 on:
   push:
-    branches: [ main, master ]
+    branches: [ main ]
   workflow_dispatch:
 
 jobs:
-  build-and-deploy:
+  generate-pages:
     runs-on: ubuntu-latest
     
     steps:
@@ -23,12 +23,15 @@ jobs:
       run: npm install
       
     - name: Generate static pages
-      run: node scripts/generate-static-pages.js
+      run: npm run build:static
       
-    - name: Deploy to EdgeOne
-      uses: tencentcloud/edgeone-action@v1
-      with:
-        secret-id: ${{ secrets.TENCENT_CLOUD_SECRET_ID }}
-        secret-key: ${{ secrets.TENCENT_CLOUD_SECRET_KEY }}
-        zone-id: ${{ secrets.EDGEONE_ZONE_ID }}
-        upload-path: './'
+    - name: List generated files
+      run: ls -la *.html
+      
+    - name: Commit generated pages
+      run: |
+        git config --local user.email "action@github.com"
+        git config --local user.name "GitHub Action"
+        git add *.html
+        git commit -m "Auto-generated static pages" || echo "No changes to commit"
+        git push
