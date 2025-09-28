@@ -65,6 +65,26 @@ const pageMetaData = {
         description: '素素の生存服、azsu.top、小小素QQ机器人、API接口、MC服务器、Minecraft、我的世界、麦块',
         headerTitle: '小故事'
     },
+    'ban-qwqwcllwww': {
+        title: 'ban-qwqwcllwww - 素素の生存服(p≧w≦q)',
+        description: '素素の生存服、azsu.top、小小素QQ机器人、API接口、MC服务器、Minecraft、我的世界、麦块',
+        headerTitle: '封禁详情'
+    },
+    'ban-mam1145': {
+        title: 'ban-mam1145 - 素素の生存服(p≧w≦q)',
+        description: '素素の生存服、azsu.top、小小素QQ机器人、API接口、MC服务器、Minecraft、我的世界、麦块',
+        headerTitle: '封禁详情'
+    },
+    'ban-iuhiuhne': {
+        title: 'ban-iuhiuhne - 素素の生存服(p≧w≦q)',
+        description: '素素の生存服、azsu.top、小小素QQ机器人、API接口、MC服务器、Minecraft、我的世界、麦块',
+        headerTitle: '封禁详情'
+    },
+    'ban-sudpkkkk': {
+        title: 'ban-sudpkkkk - 素素の生存服(p≧w≦q)',
+        description: '素素の生存服、azsu.top、小小素QQ机器人、API接口、MC服务器、Minecraft、我的世界、麦块',
+        headerTitle: '封禁详情'
+    },
     'default': {
         title: '阿素本素(p≧w≦q)',
         description: '素素の生存服、azsu.top、小小素QQ机器人、API接口、MC服务器、Minecraft、我的世界、麦块',
@@ -93,6 +113,21 @@ const pageContentMap = {
     'ban-sudpkkkk': '/pages/ban/sudpkkkk.html'
 };
 
+// 检测用户类型
+function getUserType() {
+    const ua = navigator.userAgent.toLowerCase();
+    
+    // 检测搜索引擎爬虫
+    if (ua.includes('googlebot') || ua.includes('bingbot') || 
+        ua.includes('baiduspider') || ua.includes('yandexbot') ||
+        ua.includes('slurp') || ua.includes('duckduckbot')) {
+        return 'search_engine';
+    }
+    
+    // 检测普通用户
+    return 'normal_user';
+}
+
 // 检测是否静态页面
 function isStaticPage() {
     const ssrData = document.getElementById('ssr-data');
@@ -105,48 +140,85 @@ function getStaticPageId() {
     return ssrData ? JSON.parse(ssrData.textContent).pageId : null;
 }
 
-// 检测是否为搜索引擎爬虫
-function isSearchEngineBot() {
-    const userAgent = navigator.userAgent.toLowerCase();
-    const bots = [
-        'googlebot', 'bingbot', 'baiduspider', 'yandexbot', 
-        'duckduckbot', 'slurp', 'exabot', 'facebot', 'ia_archiver'
+// 智能路由处理 - 针对搜索引擎优化
+function handleSmartRouting() {
+    const userType = getUserType();
+    const path = window.location.pathname;
+    const pageId = path.substring(1) || 'api';
+    
+    // 有效的页面ID列表
+    const validPages = [
+        'aa', 'ab', 'ac', 'cmds', 'api', 'bot-update', 
+        'ba', 'bb', 'ban', 'sp', 'g', 'mcp', 'skin',
+        'ban-qwqwcllwww', 'ban-mam1145', 'ban-iuhiuhne', 'ban-sudpkkkk'
     ];
-    return bots.some(bot => userAgent.includes(bot));
+    
+    // 如果是搜索引擎爬虫，且访问的是路由路径（非.html），重定向到静态页面
+    if (userType === 'search_engine' && 
+        path !== '/' && 
+        !path.endsWith('.html') && 
+        validPages.includes(pageId)) {
+        
+        // 检查静态页面是否存在
+        const staticUrl = `/${pageId}.html`;
+        console.log('搜索引擎重定向到:', staticUrl);
+        
+        // 使用 replace 避免产生历史记录
+        window.location.replace(staticUrl);
+        return false; // 停止后续执行
+    }
+    
+    return true; // 继续正常执行
 }
 
-document.addEventListener('DOMContentLoaded', function() {
-    // 路由状态管理
-    const router = {
-        currentPage: null,
-        isLoading: false
-    };
+// 路由状态管理
+let router = {
+    currentPage: null,
+    isLoading: false
+};
 
+document.addEventListener('DOMContentLoaded', function() {
+    console.log('页面加载完成，用户类型:', getUserType());
+    
+    // 先执行智能路由检测
+    if (!handleSmartRouting()) {
+        console.log('已重定向到静态页面，停止SPA初始化');
+        return; // 如果是搜索引擎，已经跳转，停止执行SPA逻辑
+    }
+    
+    // 正常用户的SPA初始化
+    console.log('初始化SPA应用');
+    
     // 初始化路由系统
-    initRouter(router);
+    initRouter();
     
     // 初始化菜单状态
-    initMenu(router);
+    initMenu();
 });
 
 // 初始化路由系统
-function initRouter(router) {
+function initRouter() {
     // 处理初始路由
-    handleInitialRoute(router);
+    handleInitialRoute();
     
     // 设置导航事件监听器
-    setupNavigation(router);
+    setupNavigation();
 }
 
-function handleInitialRoute(router) {
+function handleInitialRoute() {
     const path = window.location.pathname;
     const hash = window.location.hash;
     
-    // 如果是搜索引擎爬虫且是静态页面，直接显示静态内容
-    if (isSearchEngineBot() && isStaticPage()) {
+    console.log('初始路由处理:', { path, hash, isStatic: isStaticPage() });
+    
+    // 如果是静态页面，显示静态内容
+    if (isStaticPage()) {
         const staticPageId = getStaticPageId();
         router.currentPage = staticPageId;
-        console.log('搜索引擎访问静态页面:', staticPageId);
+        console.log('静态页面模式:', staticPageId);
+        
+        // 显示静态内容
+        showStaticContent(staticPageId);
         return;
     }
     
@@ -156,41 +228,25 @@ function handleInitialRoute(router) {
         if (pageContentMap[cleanPath]) {
             history.replaceState({ pageId: cleanPath, isSPA: true }, null, '/' + cleanPath);
             updatePageMeta(cleanPath);
-            loadPageContent(cleanPath, router);
+            loadPageContent(cleanPath);
             return;
         }
-    }
-    
-    // 处理静态页面
-    if (isStaticPage()) {
-        const staticPageId = getStaticPageId();
-        router.currentPage = staticPageId;
-        
-        // 如果是静态页面但URL不匹配，重定向到正确URL
-        const currentPath = path.substring(1) || 'api';
-        if (currentPath !== staticPageId) {
-            history.replaceState({ pageId: staticPageId, isStatic: true }, null, '/' + staticPageId);
-        }
-        
-        // 显示静态内容
-        showStaticContent(staticPageId);
-        return;
     }
     
     // 处理SPA路由
     const pageId = path.substring(1) || 'api';
     if (pageContentMap[pageId]) {
         updatePageMeta(pageId);
-        loadPageContent(pageId, router);
+        loadPageContent(pageId);
     } else {
         // 无效路径重定向到api页面
         history.replaceState({ pageId: 'api', isSPA: true }, null, '/api');
         updatePageMeta('api');
-        loadPageContent('api', router);
+        loadPageContent('api');
     }
 }
 
-function setupNavigation(router) {
+function setupNavigation() {
     // 导航链接点击事件
     document.querySelectorAll('#sidebar a[href^="/"]').forEach(link => {
         link.addEventListener('click', async function(e) {
@@ -200,7 +256,12 @@ function setupNavigation(router) {
             const pageId = path.substring(1);
             
             // 避免重复加载相同页面
-            if (router.currentPage === pageId || router.isLoading) return;
+            if (router.currentPage === pageId || router.isLoading) {
+                console.log('跳过重复加载:', pageId);
+                return;
+            }
+            
+            console.log('导航到页面:', pageId);
             
             // 更新活动菜单项
             updateActiveMenuItem(this);
@@ -208,13 +269,13 @@ function setupNavigation(router) {
             // 更新URL和元数据
             history.pushState({ pageId, isSPA: true }, null, path);
             updatePageMeta(pageId);
-            await loadPageContent(pageId, router);
+            await loadPageContent(pageId);
             
             // 更新当前页面标记
             router.currentPage = pageId;
             
             // 移动端点击后自动关闭侧边栏
-            if(window.innerWidth <= 1023) {
+            if (window.innerWidth <= 1023) {
                 document.getElementById('sidebar').classList.remove('active');
                 document.getElementById('content').classList.remove('shifted');
             }
@@ -235,25 +296,20 @@ function setupNavigation(router) {
             isSPA = true;
         }
         
+        console.log('popstate事件:', { pageId, isSPA, current: router.currentPage });
+        
         // 避免重复加载相同页面
         if (router.currentPage === pageId) return;
         
-        // 如果是静态页面访问，显示静态内容
-        if (!isSPA && isStaticPage() && getStaticPageId() === pageId) {
-            showStaticContent(pageId);
-            router.currentPage = pageId;
-            return;
-        }
-        
         const menuItem = document.querySelector(`[data-page="${pageId}"]`);
-        if(menuItem) {
+        if (menuItem) {
             updateActiveMenuItem(menuItem);
             updatePageMeta(pageId);
-            loadPageContent(pageId, router);
+            loadPageContent(pageId);
             router.currentPage = pageId;
         } else {
             updatePageMeta('api');
-            loadPageContent('api', router);
+            loadPageContent('api');
             router.currentPage = 'api';
         }
     });
@@ -278,7 +334,11 @@ function showStaticContent(pageId) {
         updateMenuActiveState(pageId);
     }
     
+    // 更新页面元数据
+    updatePageMeta(pageId);
+    
     window.scrollTo(0, 0);
+    console.log('显示静态内容:', pageId);
 }
 
 // 更新菜单激活状态
@@ -294,17 +354,20 @@ function updateMenuActiveState(pageId) {
 }
 
 // 初始化菜单功能
-function initMenu(router) {
+function initMenu() {
     // 菜单按钮点击事件
-    document.getElementById('menu-btn').addEventListener('click', function() {
-        const sidebar = document.getElementById('sidebar');
-        const content = document.getElementById('content');
-        
-        if(window.innerWidth <= 1023) {
-            sidebar.classList.toggle('active');
-            content.classList.toggle('shifted');
-        }
-    });
+    const menuBtn = document.getElementById('menu-btn');
+    if (menuBtn) {
+        menuBtn.addEventListener('click', function() {
+            const sidebar = document.getElementById('sidebar');
+            const content = document.getElementById('content');
+            
+            if (window.innerWidth <= 1023) {
+                sidebar.classList.toggle('active');
+                content.classList.toggle('shifted');
+            }
+        });
+    }
 
     // 折叠菜单功能
     document.querySelectorAll('.group-header').forEach(header => {
@@ -331,7 +394,10 @@ function updateActiveMenuItem(clickedItem) {
     document.querySelectorAll('#sidebar li').forEach(item => {
         item.classList.remove('active');
     });
-    clickedItem.parentElement.classList.add('active');
+    
+    if (clickedItem && clickedItem.parentElement) {
+        clickedItem.parentElement.classList.add('active');
+    }
 }
 
 // 更新页面元数据
@@ -355,15 +421,19 @@ function updatePageMeta(pageId) {
     if (headerTitle) {
         headerTitle.textContent = metaData.headerTitle;
     }
+    
+    console.log('更新页面元数据:', pageId, metaData.title);
 }
 
 // 加载页面内容
-async function loadPageContent(pageId, router) {
+async function loadPageContent(pageId) {
     // 设置加载状态
     router.isLoading = true;
     
     const staticContent = document.getElementById('static-content');
     const dynamicContent = document.getElementById('dynamic-content');
+    
+    console.log('开始加载页面内容:', pageId);
     
     try {
         // 隐藏静态内容，显示动态内容
@@ -376,7 +446,9 @@ async function loadPageContent(pageId, router) {
         
         // 动态加载内容
         const response = await fetch(pageContentMap[pageId]);
-        if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
         
         const html = await response.text();
         
@@ -391,6 +463,8 @@ async function loadPageContent(pageId, router) {
         }
 
         window.scrollTo(0, 0);
+        console.log('页面内容加载成功:', pageId);
+        
     } catch (err) {
         console.error('加载失败:', err);
         if (dynamicContent) {
@@ -398,9 +472,30 @@ async function loadPageContent(pageId, router) {
                 <div class="card active error">
                     <h1>加载失败(＞﹏＜)</h1>
                     <p>${err.message}</p>
-                    <button onclick="location.reload()">刷新页面</button>
+                    <p>请检查网络连接或稍后重试</p>
+                    <button onclick="location.reload()" class="retry-btn">刷新页面</button>
+                    <button onclick="window.location.href='/'" class="home-btn">返回首页</button>
                 </div>
             `;
+            
+            // 添加重试按钮样式
+            const style = document.createElement('style');
+            style.textContent = `
+                .retry-btn, .home-btn {
+                    background-color: #A1BDFF;
+                    color: white;
+                    border: none;
+                    padding: 10px 20px;
+                    margin: 5px;
+                    border-radius: 4px;
+                    cursor: pointer;
+                    font-size: 14px;
+                }
+                .retry-btn:hover, .home-btn:hover {
+                    background-color: #8CAEFF;
+                }
+            `;
+            document.head.appendChild(style);
         }
     } finally {
         router.isLoading = false;
@@ -412,19 +507,41 @@ window.addEventListener('resize', function() {
     const sidebar = document.getElementById('sidebar');
     const content = document.getElementById('content');
     
-    if(window.innerWidth > 1023) {
-        sidebar.classList.remove('active');
-        content.classList.remove('shifted');
+    if (window.innerWidth > 1023) {
+        if (sidebar) sidebar.classList.remove('active');
+        if (content) content.classList.remove('shifted');
     }
 });
 
 // 页面可见性变化处理（SEO优化）
 document.addEventListener('visibilitychange', function() {
-    if (document.visibilityState === 'visible' && isSearchEngineBot()) {
-        // 搜索引擎爬虫重新激活页面时，确保显示正确内容
+    if (document.visibilityState === 'visible') {
+        // 页面重新可见时，确保显示正确内容
         const currentPage = router?.currentPage || getStaticPageId();
         if (currentPage) {
             updatePageMeta(currentPage);
         }
     }
 });
+
+// 错误处理
+window.addEventListener('error', function(e) {
+    console.error('全局错误:', e.error);
+});
+
+window.addEventListener('unhandledrejection', function(e) {
+    console.error('未处理的Promise拒绝:', e.reason);
+});
+
+// 导出全局函数（用于调试）
+window.getCurrentPageInfo = function() {
+    return {
+        currentPage: router.currentPage,
+        isStatic: isStaticPage(),
+        staticPageId: getStaticPageId(),
+        userType: getUserType(),
+        pageMetaData: pageMetaData[router.currentPage]
+    };
+};
+
+console.log('main.js 加载完成');
