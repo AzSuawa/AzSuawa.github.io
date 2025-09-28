@@ -1,0 +1,44 @@
+{
+    "Rules": [
+        {
+            "RuleName": "Static Pages Rewrite",
+            "Action": "Rewrite",
+            "Conditions": [
+                {
+                    "Target": "uri",
+                    "Operator": "match",
+                    "Values": ["/aa", "/ab", "/ac", "/cmds", "/api", "/bot-update", "/ba", "/bb", "/ban", "/sp", "/g"]
+                }
+            ],
+            "Parameters": [
+                {
+                    "Name": "uri",
+                    "Value": "/index.html"
+                }
+            ]
+        },
+        {
+            "RuleName": "SEO Bot Static Files",
+            "Action": "Rewrite",
+            "Conditions": [
+                {
+                    "Target": "header",
+                    "SubTarget": "user-agent",
+                    "Operator": "contain",
+                    "Values": ["Googlebot", "Bingbot", "Baiduspider", "YandexBot"]
+                },
+                {
+                    "Target": "uri",
+                    "Operator": "match",
+                    "Values": ["/aa", "/ab", "/ac", "/cmds", "/api", "/bot-update", "/ba", "/bb", "/ban", "/sp", "/g"]
+                }
+            ],
+            "Parameters": [
+                {
+                    "Name": "uri",
+                    "Value": "/$1.html"
+                }
+            ]
+        }
+    ]
+}
