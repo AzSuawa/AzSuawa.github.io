@@ -1,6 +1,0 @@
-{
-  "scripts": {
-    "build:static": "node scripts/generate-static-pages.js",
-    "build": "npm run build:static && echo '构建完成'"
-  }
-}
