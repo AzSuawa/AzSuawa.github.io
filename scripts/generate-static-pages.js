@@ -1,5 +1,9 @@
-const fs = require('fs');
-const path = require('path');
+import fs from 'fs';
+import path from 'path';
+import { fileURLToPath } from 'url';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 // 页面配置
 const pageMetaData = {
@@ -75,64 +79,89 @@ const pageContentMap = {
     'g': 'pages/g.html'
 };
 
-// 读取主模板
-const template = fs.readFileSync('index-template.html', 'utf8');
+// 处理模板变量替换
+function processTemplateVariables(template, pageId, meta, content) {
+    let processed = template
+        .replace(/\{\{PAGE_ID\}\}/g, pageId)
+        .replace(/\{\{PAGE_TITLE\}\}/g, meta.title)
+        .replace(/\{\{PAGE_DESCRIPTION\}\}/g, meta.description)
+        .replace(/\{\{HEADER_TITLE\}\}/g, meta.headerTitle)
+        .replace(/\{\{PAGE_CONTENT\}\}/g, content);
+    
+    // 处理活跃菜单项
+    processed = processed.replace(/class="{{PAGE_ID === '([^']+)' ? 'active' : ''}}"/g, 
+        (match, targetPageId) => pageId === targetPageId ? 'class="active"' : 'class=""');
+    
+    return processed;
+}
 
 // 生成静态页面
 function generateStaticPages() {
     console.log('开始生成静态页面...');
     
-    Object.keys(pageMetaData).forEach(pageId => {
-        try {
-            // 读取页面内容
-            const contentPath = pageContentMap[pageId];
-            if (!fs.existsSync(contentPath)) {
-                console.log(`跳过: ${contentPath} 不存在`);
-                return;
+    try {
+        // 读取模板
+        const templatePath = path.join(__dirname, '..', 'index-template.html');
+        if (!fs.existsSync(templatePath)) {
+            throw new Error('模板文件 index-template.html 不存在');
+        }
+        
+        const template = fs.readFileSync(templatePath, 'utf8');
+        
+        // 生成每个页面的静态文件
+        Object.keys(pageMetaData).forEach(pageId => {
+            try {
+                // 读取页面内容
+                const contentPath = path.join(__dirname, '..', pageContentMap[pageId]);
+                if (!fs.existsSync(contentPath)) {
+                    console.log(`跳过: ${contentPath} 不存在`);
+                    return;
+                }
+                
+                const pageContent = fs.readFileSync(contentPath, 'utf8');
+                const meta = pageMetaData[pageId];
+                
+                // 处理模板变量
+                const staticPage = processTemplateVariables(template, pageId, meta, pageContent);
+                
+                // 写入静态文件
+                const outputPath = path.join(__dirname, '..', `${pageId}.html`);
+                fs.writeFileSync(outputPath, staticPage);
+                console.log(`✓ 生成: ${pageId}.html`);
+                
+            } catch (error) {
+                console.error(`✗ 生成页面 ${pageId} 时出错:`, error.message);
             }
+        });
+        
+        // 复制特殊页面（skin.html, mcp.html）
+        ['skin', 'mcp'].forEach(page => {
+            const sourcePath = path.join(__dirname, '..', `${page}.html`);
+            if (fs.existsSync(sourcePath)) {
+                console.log(`✓ 保留: ${page}.html`);
+            }
+        });
+        
+        // 确保 index.html 存在（SPA入口）
+        if (!fs.existsSync(path.join(__dirname, '..', 'index.html'))) {
+            const spaTemplate = template
+                .replace(/\{\{PAGE_ID\}\}/g, 'api')
+                .replace(/\{\{PAGE_TITLE\}\}/g, '阿素本素(p≧w≦q)')
+                .replace(/\{\{PAGE_DESCRIPTION\}\}/g, '素素の生存服、azsu.top、小小素QQ机器人、API接口、MC服务器、Minecraft、我的世界、麦块')
+                .replace(/\{\{HEADER_TITLE\}\}/g, '素素の生存服')
+                .replace(/\{\{PAGE_CONTENT\}\}/g, '')
+                .replace(/class="{{PAGE_ID === '([^']+)' ? 'active' : ''}}"/g, 'class=""');
             
-            const pageContent = fs.readFileSync(contentPath, 'utf8');
-            const meta = pageMetaData[pageId];
-            
-            // 生成完整的HTML页面
-            let staticPage = template
-                .replace('{{PAGE_ID}}', pageId)
-                .replace('{{PAGE_TITLE}}', meta.title)
-                .replace('{{PAGE_DESCRIPTION}}', meta.description)
-                .replace('{{HEADER_TITLE}}', meta.headerTitle)
-                .replace('{{PAGE_CONTENT}}', pageContent);
-            
-            // 写入静态文件
-            const outputPath = `${pageId}.html`;
-            fs.writeFileSync(outputPath, staticPage);
-            console.log(`生成: ${outputPath}`);
-            
-        } catch (error) {
-            console.error(`生成页面 ${pageId} 时出错:`, error);
+            fs.writeFileSync(path.join(__dirname, '..', 'index.html'), spaTemplate);
+            console.log('✓ 生成: index.html (SPA入口)');
         }
-    });
-    
-    // 复制特殊页面（skin.html, mcp.html）
-    ['skin', 'mcp'].forEach(page => {
-        if (fs.existsSync(`${page}.html`)) {
-            console.log(`复制: ${page}.html`);
-        }
-    });
-    
-    console.log('静态页面生成完成！');
+        
+        console.log('🎉 静态页面生成完成！');
+        
+    } catch (error) {
+        console.error('❌ 生成静态页面失败:', error.message);
+        process.exit(1);
+    }
 }
 
 generateStaticPages();
-
-
-// 在生成静态页面时替换模板变量
-function processTemplateVariables(template, pageId, meta, content) {
-    return template
-        .replace(/\{\{PAGE_ID\}\}/g, pageId)
-        .replace(/\{\{PAGE_TITLE\}\}/g, meta.title)
-        .replace(/\{\{PAGE_DESCRIPTION\}\}/g, meta.description)
-        .replace(/\{\{HEADER_TITLE\}\}/g, meta.headerTitle)
-        .replace(/\{\{PAGE_CONTENT\}\}/g, content)
-        .replace(/class="{{PAGE_ID === '([^']+)' ? 'active' : ''}}"/g, 
-            (match, targetPageId) => pageId === targetPageId ? 'class="active"' : 'class=""');
-}
