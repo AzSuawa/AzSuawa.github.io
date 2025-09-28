@@ -70,3 +70,25 @@ function generateStaticPages() {
 }
 
 generateStaticPages();
+
+// 生成 _redirects 文件
+function generateRedirectsFile() {
+    const pages = Object.keys(pageMetaData);
+    let redirectsContent = '';
+    
+    // SPA 路由重写
+    pages.forEach(page => {
+        redirectsContent += `/${page}    /index.html   200\n`;
+    });
+    
+    // 搜索引擎静态页面
+    pages.forEach(page => {
+        redirectsContent += `/${page}    /${page}.html  200  User-Agent: Googlebot|Bingbot|Baiduspider|YandexBot\n`;
+    });
+    
+    fs.writeFileSync('_redirects', redirectsContent);
+    console.log('✓ 生成: _redirects');
+}
+
+// 在 generateStaticPages() 函数最后调用
+generateRedirectsFile();
