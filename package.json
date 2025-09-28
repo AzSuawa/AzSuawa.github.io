@@ -1,11 +1,6 @@
 {
-  "name": "azsu-website",
-  "version": "1.0.0",
   "scripts": {
     "build:static": "node scripts/generate-static-pages.js",
-    "deploy": "npm run build:static"
-  },
-  "devDependencies": {
-    "fs-extra": "^11.0.0"
+    "build": "npm run build:static && echo '构建完成'"
   }
 }
