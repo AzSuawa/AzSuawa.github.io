@@ -1,0 +1,582 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>验证码验证</title>
+    <style>
+        :root {
+            --primary-color: #A1BDFF;
+            --text-color: #333;
+            --light-bg: #E5EDFF;
+            --card-bg: #ffffff;
+            --border-color: #e1e8ff;
+            --hover-blue: #4285f4;
+            --hover-bg: rgba(66, 133, 244, 0.08);
+            --danger-color: #FFB3C0;
+            --info-color: #85DFB5;
+        }
+
+        body {
+            background-color: var(--light-bg);
+            color: var(--text-color);
+            font-family: 'Microsoft YaHei', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+        }
+        
+        .container {
+            text-align: center;
+            max-width: 500px;
+        }
+        
+        .start-btn {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 4px;
+            padding: 12px 24px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.2s;
+            margin-top: 20px;
+        }
+        
+        .start-btn:hover {
+            background-color: var(--hover-blue);
+        }
+        
+        .card {
+            background: var(--card-bg);
+            border-radius: 8px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+            width: 100%;
+            max-width: 380px;
+            overflow: hidden;
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 1000;
+        }
+        
+        .card-header {
+            padding: 16px 20px;
+            border-bottom: 1px solid var(--border-color);
+            position: relative;
+        }
+        
+        .card-title {
+            font-size: 18px;
+            font-weight: bold;
+            margin: 0 0 6px 0;
+            color: var(--text-color);
+        }
+        
+        .card-subtitle {
+            font-size: 14px;
+            color: var(--text-color);
+            margin: 0;
+            text-align: left;
+        }
+        
+        .cueword {
+            font-weight: bold;
+            color: var(--primary-color);
+        }
+        
+        .verification-container {
+            padding: 8px 16px 8px;
+        }
+        
+        .image-wrapper {
+            width: 100%;
+            margin: 8px 0 12px;
+            position: relative;
+        }
+        
+        .image-container {
+            position: relative;
+            width: 100%;
+            padding-top: 100%; /* 1:1 比例 */
+            overflow: hidden;
+            border: 2px solid var(--border-color);
+            border-radius: 4px;
+            background-color: #f9f9f9;
+        }
+        
+        .image-container img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .grid-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            grid-template-rows: repeat(4, 1fr);
+        }
+        
+        .grid-cell {
+            border: 2px solid rgba(0, 0, 0, 0.3);
+            transition: all 0.2s;
+            cursor: pointer;
+            box-sizing: border-box;
+        }
+        
+        .grid-cell:hover {
+            background-color: var(--hover-bg);
+        }
+        
+        .grid-cell.selected {
+            background-color: rgba(161, 189, 255, 0.4);
+            border-color: var(--primary-color);
+        }
+        
+        .card-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 20px;
+            border-top: 1px solid var(--border-color);
+        }
+        
+        .footer-text {
+            font-size: 12px;
+            color: #999;
+        }
+        
+        .btn {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 4px;
+            padding: 6px 14px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+        
+        .btn:hover {
+            background-color: var(--hover-blue);
+        }
+        
+        .btn:disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
+        }
+        
+        .btn-cancel {
+            background-color: #f1f1f1;
+            color: #666;
+            margin-right: 8px;
+        }
+        
+        .btn-cancel:hover {
+            background-color: #e5e5e5;
+        }
+
+        .status-message {
+            font-size: 12px;
+            color: #666;
+            margin-top: 8px;
+            text-align: center;
+        }
+        
+        .loading {
+            opacity: 0.6;
+            pointer-events: none;
+        }
+        
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            display: none;
+            z-index: 999;
+        }
+        
+        .success-message {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: var(--info-color);
+            color: white;
+            padding: 16px 24px;
+            border-radius: 4px;
+            font-weight: bold;
+            display: none;
+            z-index: 1001;
+        }
+        
+        .error-message {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: var(--danger-color);
+            color: #333;
+            padding: 16px 24px;
+            border-radius: 4px;
+            font-weight: bold;
+            display: none;
+            z-index: 1001;
+            max-width: 300px;
+            text-align: center;
+        }
+        
+        .close-btn {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            background: none;
+            border: none;
+            font-size: 20px;
+            cursor: pointer;
+            color: #999;
+        }
+        
+        .close-btn:hover {
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>captcha验证测试</h1>
+        <p>验证成功后需要清除浏览器数据才能重新验证</p>
+        <p>后面还没做好</p>
+        <button class="start-btn" id="startBtn">开始验证</button>
+    </div>
+
+    <div class="overlay" id="overlay"></div>
+    
+    <div class="card" id="captchaCard">
+        <div class="card-header">
+            <h2 class="card-title">请选择所有包含<span id="cueword" class="cueword">...</span>的内容</h2>
+            <button class="close-btn" id="closeBtn">×</button>
+        </div>
+        
+        <div class="verification-container">
+            <div class="image-wrapper">
+                <div class="image-container">
+                    <img id="captchaImage" alt="验证码图片" style="display: none;">
+                    <div class="grid-overlay" id="gridOverlay"></div>
+                </div>
+            </div>
+            <div class="status-message" id="statusMessage">初始化...</div>
+        </div>
+        
+        <div class="card-footer">
+            <span class="footer-text">By 阿素本素</span>
+            <div>
+                <button class="btn btn-cancel" id="cancelBtn">取消</button>
+                <button class="btn" id="submitBtn" disabled>继续</button>
+            </div>
+        </div>
+    </div>
+    
+    <div class="success-message" id="successMessage">验证成功！</div>
+    
+    <div class="error-message" id="errorMessage">
+        <div id="errorText"></div>
+        <button class="btn" id="errorCloseBtn" style="margin-top: 12px;">关闭</button>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const startBtn = document.getElementById('startBtn');
+            const captchaCard = document.getElementById('captchaCard');
+            const overlay = document.getElementById('overlay');
+            const gridOverlay = document.getElementById('gridOverlay');
+            const submitBtn = document.getElementById('submitBtn');
+            const cancelBtn = document.getElementById('cancelBtn');
+            const closeBtn = document.getElementById('closeBtn');
+            const captchaImage = document.getElementById('captchaImage');
+            const cuewordElement = document.getElementById('cueword');
+            const statusMessage = document.getElementById('statusMessage');
+            const successMessage = document.getElementById('successMessage');
+            const errorMessage = document.getElementById('errorMessage');
+            const errorText = document.getElementById('errorText');
+            const errorCloseBtn = document.getElementById('errorCloseBtn');
+            const card = document.querySelector('.card');
+            
+            let selectedCells = [];
+            let currentToken = '';
+            let verificationInProgress = false;
+            
+            // 检查本地存储中是否有有效的captcha_token
+            function checkCaptchaToken() {
+                const tokenData = localStorage.getItem('captcha_token');
+                const expiresAt = localStorage.getItem('captcha_token_expires');
+                
+                if (tokenData && expiresAt && parseInt(expiresAt) > Math.floor(Date.now() / 1000)) {
+                    return tokenData;
+                }
+                return null;
+            }
+            
+            // 存储captcha_token和过期时间
+            function storeCaptchaToken(token, expiresIn = 240) {
+                const expiresAt = Math.floor(Date.now() / 1000) + expiresIn;
+                localStorage.setItem('captcha_token', token);
+                localStorage.setItem('captcha_token_expires', expiresAt.toString());
+            }
+            
+            // 显示验证窗口
+            function showCaptcha() {
+                captchaCard.style.display = 'block';
+                overlay.style.display = 'block';
+                initVerification();
+            }
+            
+            // 隐藏验证窗口
+            function hideCaptcha() {
+                captchaCard.style.display = 'none';
+                overlay.style.display = 'none';
+            }
+            
+            // 显示成功消息
+            function showSuccess() {
+                successMessage.style.display = 'block';
+                setTimeout(() => {
+                    successMessage.style.display = 'none';
+                }, 1000);
+            }
+            
+            // 显示错误消息
+            function showError(message) {
+                errorText.textContent = message;
+                errorMessage.style.display = 'block';
+            }
+            
+            // 创建4x4网格
+            for (let i = 0; i < 16; i++) {
+                const cell = document.createElement('div');
+                cell.className = 'grid-cell';
+                cell.dataset.index = i;
+                
+                cell.addEventListener('click', function() {
+                    if (verificationInProgress) return;
+                    
+                    this.classList.toggle('selected');
+                    
+                    const index = parseInt(this.dataset.index);
+                    if (this.classList.contains('selected')) {
+                        if (!selectedCells.includes(index)) {
+                            selectedCells.push(index);
+                        }
+                    } else {
+                        selectedCells = selectedCells.filter(item => item !== index);
+                    }
+                    
+                    // 更新提交按钮状态
+                    submitBtn.disabled = selectedCells.length === 0;
+                });
+                
+                gridOverlay.appendChild(cell);
+            }
+
+            // 初始化验证
+            async function initVerification() {
+                try {
+                    setLoading(true);
+                    statusMessage.textContent = '正在获取验证令牌...';
+                    
+                    // 检查是否有有效的token
+                    const existingToken = checkCaptchaToken();
+                    if (existingToken) {
+                        currentToken = existingToken;
+                        statusMessage.textContent = '正在加载验证图片...';
+                        await loadCaptchaImage();
+                        return;
+                    }
+                    
+                    // 通过代理服务器获取token
+                    const tokenResponse = await fetch('https://api.azsu.top/5002/captcha/get_token');
+                    const tokenData = await tokenResponse.json();
+                    
+                    if (tokenData.code === 10000) {
+                        currentToken = tokenData.data.captcha_token;
+                        statusMessage.textContent = '正在加载验证图片...';
+                        await loadCaptchaImage();
+                    } else {
+                        showError('获取验证令牌失败: ' + tokenData.message);
+                        setLoading(false);
+                        hideCaptcha();
+                    }
+                } catch (error) {
+                    showError('初始化验证失败: ' + error.message);
+                    setLoading(false);
+                    hideCaptcha();
+                }
+            }
+
+            async function loadCaptchaImage() {
+                try {
+                    const response = await fetch(`https://api.azsu.top/5001/captcha?captcha_token=${currentToken}`);
+                    const data = await response.json();
+                    
+                    if (data.code === 16001 || data.code === 10000) {
+                        if (data.data.image_base64) {
+                            captchaImage.src = 'data:image/jpeg;base64,' + data.data.image_base64;
+                            captchaImage.style.display = 'block';
+                        }
+                        // 更新提示词
+                        if (data.data.cueword) {
+                            cuewordElement.textContent = data.data.cueword;
+                        }
+                        statusMessage.textContent = '调试信息：'+data.message;
+                        setLoading(false);
+                        
+                        // 检查状态
+                        if (data.data.status === 'fail' || !data.data.status) {
+                            showError(data.message || '验证失败');
+                            hideCaptcha();
+                        }
+                    } else {
+                        showError('加载验证图片失败: ' + data.message);
+                        setLoading(false);
+                        hideCaptcha();
+                    }
+                } catch (error) {
+                    showError('加载验证图片失败: ' + error.message);
+                    setLoading(false);
+                    hideCaptcha();
+                }
+            }
+
+            // 提交按钮点击事件
+            submitBtn.addEventListener('click', async function() {
+                if (verificationInProgress || selectedCells.length === 0) return;
+                
+                verificationInProgress = true;
+                submitBtn.disabled = true;
+                setLoading(true);
+                statusMessage.textContent = '正在验证...';
+                
+                try {
+                    const response = await fetch(`https://api.azsu.top/5001/captcha?captcha_token=${currentToken}&selected_cells=${JSON.stringify(selectedCells)}`);
+                    const data = await response.json();
+                    
+                    if (data.code === 16102) {
+                        showError(data.message || 'token无效或已超时');
+                        setLoading(false);
+                        hideCaptcha();
+                        return;
+                    }
+                    
+                    // 处理验证成功的情况 (code 16002)
+                    if (data.code === 16002) {
+                        // 验证成功
+                        showSuccess();
+                        storeCaptchaToken(currentToken);
+                        setTimeout(() => {
+                            hideCaptcha();
+                            resetSelection();
+                        }, 1000);
+                        return;
+                    }
+                    
+                    if (data.code === 16001 || data.code === 10000) {
+                        statusMessage.textContent = '调试信息：'+data.message;
+                        
+                        if (data.data.status === 'success') {
+                            // 验证成功
+                            showSuccess();
+                            storeCaptchaToken(currentToken);
+                            setTimeout(() => {
+                                hideCaptcha();
+                                resetSelection();
+                            }, 1000);
+                        } else if (data.data.status === 'processing') {
+                            // 继续验证
+                            if (data.data.image_base64) {
+                                captchaImage.src = 'data:image/jpeg;base64,' + data.data.image_base64;
+                            }
+                            // 更新提示词
+                            if (data.data.cueword) {
+                                cuewordElement.textContent = data.data.cueword;
+                            }
+                            // 重置选择
+                            resetSelection();
+                            setLoading(false);
+                        } else if (data.data.status === 'fail' || !data.data.status) {
+                            // 验证失败
+                            showError(data.message || '验证失败');
+                            setLoading(false);
+                            hideCaptcha();
+                        }
+                    } else {
+                        showError('验证失败: ' + data.message);
+                        setLoading(false);
+                        hideCaptcha();
+                    }
+                } catch (error) {
+                    showError('验证请求失败: ' + error.message);
+                    setLoading(false);
+                    hideCaptcha();
+                } finally {
+                    verificationInProgress = false;
+                }
+            });
+            
+            // 取消按钮点击事件
+            cancelBtn.addEventListener('click', function() {
+                hideCaptcha();
+                resetSelection();
+            });
+            
+            // 关闭按钮点击事件
+            closeBtn.addEventListener('click', function() {
+                hideCaptcha();
+                resetSelection();
+            });
+            
+            // 错误关闭按钮点击事件
+            errorCloseBtn.addEventListener('click', function() {
+                errorMessage.style.display = 'none';
+            });
+
+            function resetSelection() {
+                selectedCells = [];
+                document.querySelectorAll('.grid-cell.selected').forEach(cell => {
+                    cell.classList.remove('selected');
+                });
+                submitBtn.disabled = true;
+            }
+
+            function setLoading(loading) {
+                if (loading) {
+                    card.classList.add('loading');
+                } else {
+                    card.classList.remove('loading');
+                }
+                verificationInProgress = loading;
+            }
+            
+            // 开始验证按钮点击事件
+            startBtn.addEventListener('click', function() {
+                showCaptcha();
+            });
+        });
+    </script>
+</body>
+</html>
