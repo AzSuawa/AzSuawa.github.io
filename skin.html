@@ -196,21 +196,6 @@
           display: none; 
         }
 
-        /* 响应式设计 */
-        @media(max-width: 1023px) {
-          #sidebar {
-            left: -250px;
-          }
-          
-          #content {
-            margin-left: 0;
-          }
-          
-          .card {
-            width: 95%;
-          }
-        }
-
         /* 皮肤上传页面特定样式 */
         .skin-upload-container {
           max-width: 500px;
@@ -342,6 +327,230 @@
         #fileInput {
           display: none;
         }
+
+        /* 验证码验证样式 */
+        .captcha-overlay {
+          position: fixed;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          background-color: rgba(0, 0, 0, 0.5);
+          display: none;
+          z-index: 999;
+        }
+        
+        .captcha-card {
+          background: var(--card-bg);
+          border-radius: 8px;
+          box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+          width: 100%;
+          max-width: 380px;
+          overflow: hidden;
+          display: none;
+          position: fixed;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%);
+          z-index: 1000;
+        }
+        
+        .captcha-card-header {
+          padding: 16px 20px;
+          border-bottom: 1px solid var(--border-color);
+          position: relative;
+        }
+        
+        .captcha-card-title {
+          font-size: 18px;
+          font-weight: bold;
+          margin: 0 0 6px 0;
+          color: var(--text-color);
+        }
+        
+        .captcha-card-subtitle {
+          font-size: 14px;
+          color: var(--text-color);
+          margin: 0;
+          text-align: left;
+        }
+        
+        .captcha-cueword {
+          font-weight: bold;
+          color: var(--primary-color);
+        }
+        
+        .captcha-verification-container {
+          padding: 8px 16px 8px;
+        }
+        
+        .captcha-image-wrapper {
+          width: 100%;
+          margin: 8px 0 12px;
+          position: relative;
+        }
+        
+        .captcha-image-container {
+          position: relative;
+          width: 100%;
+          padding-top: 100%; /* 1:1 比例 */
+          overflow: hidden;
+          border: 2px solid var(--border-color);
+          border-radius: 4px;
+          background-color: #f9f9f9;
+        }
+        
+        .captcha-image-container img {
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+        }
+        
+        .captcha-grid-overlay {
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          display: grid;
+          grid-template-columns: repeat(4, 1fr);
+          grid-template-rows: repeat(4, 1fr);
+        }
+        
+        .captcha-grid-cell {
+          border: 2px solid rgba(0, 0, 0, 0.3);
+          transition: all 0.2s;
+          cursor: pointer;
+          box-sizing: border-box;
+        }
+        
+        .captcha-grid-cell:hover {
+          background-color: var(--hover-bg);
+        }
+        
+        .captcha-grid-cell.selected {
+          background-color: rgba(161, 189, 255, 0.4);
+          border-color: var(--primary-color);
+        }
+        
+        .captcha-card-footer {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          padding: 12px 20px;
+          border-top: 1px solid var(--border-color);
+        }
+        
+        .captcha-footer-text {
+          font-size: 12px;
+          color: #999;
+        }
+        
+        .captcha-btn {
+          background-color: var(--primary-color);
+          color: white;
+          border: none;
+          border-radius: 4px;
+          padding: 6px 14px;
+          font-size: 14px;
+          cursor: pointer;
+          transition: background-color 0.2s;
+        }
+        
+        .captcha-btn:hover {
+          background-color: var(--hover-blue);
+        }
+        
+        .captcha-btn:disabled {
+          background-color: #ccc;
+          cursor: not-allowed;
+        }
+        
+        .captcha-btn-cancel {
+          background-color: #f1f1f1;
+          color: #666;
+          margin-right: 8px;
+        }
+        
+        .captcha-btn-cancel:hover {
+          background-color: #e5e5e5;
+        }
+
+        .captcha-status-message {
+          font-size: 12px;
+          color: #666;
+          margin-top: 8px;
+          text-align: center;
+        }
+        
+        .captcha-loading {
+          opacity: 0.6;
+          pointer-events: none;
+        }
+        
+        /* 修改验证成功和错误消息样式 */
+        .captcha-success-message {
+          position: fixed;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%);
+          background-color: rgba(0, 0, 0, 0.7); /* 改为黑色背景 */
+          color: white; /* 白色文字 */
+          padding: 16px 24px;
+          border-radius: 4px;
+          font-weight: bold;
+          display: none;
+          z-index: 1001;
+        }
+
+        .captcha-error-message {
+          position: fixed;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%);
+          background-color: rgba(0, 0, 0, 0.7); /* 改为黑色背景 */
+          color: white; /* 白色文字 */
+          padding: 16px 24px;
+          border-radius: 4px;
+          font-weight: bold;
+          display: none;
+          z-index: 1001;
+          max-width: 300px;
+          text-align: center;
+        }
+        
+        .captcha-close-btn {
+          position: absolute;
+          top: 12px;
+          right: 12px;
+          background: none;
+          border: none;
+          font-size: 20px;
+          cursor: pointer;
+          color: #999;
+        }
+        
+        .captcha-close-btn:hover {
+          color: #333;
+        }
+
+        /* 响应式设计 */
+        @media(max-width: 1023px) {
+          #sidebar {
+            left: -250px;
+          }
+          
+          #content {
+            margin-left: 0;
+          }
+          
+          .card {
+            width: 95%;
+          }
+        }
     </style>
 </head>
 <body>
@@ -402,289 +611,650 @@
             </ul>
         </div>
     </div>
-
-        <div class="menu-group">
-            <div class="group-header">
-                <i class="fas fa-star"></i>
-                <span>其他</span>
-                <i class="fas fa-chevron-right toggle"></i>
-            </div>
-            <ul class="submenu" style="display: none;">
-                <li><a href="/g" data-page="g"><i class="fas fa-book"></i> 小故事</a></li>
-                <li><a href="/api" data-page="api"><i class="fas fa-star"></i> API</a></li>
-                <li><a href="/ban-qwqwcllwww" data-page="ban-qwqwcllwww"><i class="fas fa-star"></i> ban-qwqwcllwww</a></li>
-                <li><a href="/ban-mam1145" data-page="ban-mam1145"><i class="fas fa-star"></i> ban-man1145</a></li>
-                <li><a href="/ban-iuhiuhne" data-page="ban-iuhiuhne"><i class="fas fa-star"></i> ban-iuhiuhne</a></li>
-                <li><a href="/ban-sudpkkkk" data-page="ban-sudpkkkk"><i class="fas fa-star"></i> ban-sudpkkkk</a></li>
-            </ul>
-        </div>
-    </div>
     
     <!-- 内容区域 -->
     <div id="content">
         <div class="card">
             <h1>上传皮肤到服务器</h1>
-            <div class="command-section skin-upload-container">
-                <div class="skin-form-group">
-                    <label for="playerId">玩家ID:</label>
-                    <input type="text" id="playerId" placeholder="请输入你的游戏ID" required>
-                </div>
-                
-                <div class="skin-drop-area" id="dropArea">
-                    <p>可拖放文件到此处</p>
-                    <button class="skin-btn" id="selectBtn">选择文件</button>
-                    <input type="file" id="fileInput" accept="image/png">
-                    <div class="skin-file-size-limit">仅支持原版皮肤(PNG)</div>
-                </div>
-                <div class="skin-progress-container" id="progressContainer">
-                    <p id="statusText">准备上传...</p>
-                    <progress class="skin-progress" id="uploadProgress" value="0" max="100"></progress>
-                </div>
-                
-                <div class="skin-file-list" id="fileList"></div>
+        <div class="command-section skin-upload-container">
+            <div class="skin-form-group">
+                <label for="playerId">玩家ID:</label>
+                <input type="text" id="playerId" placeholder="请输入你的游戏ID" required>
+            </div>
+            
+            <div class="skin-drop-area" id="dropArea">
+                <p>可拖放文件到此处</p>
+                <button class="skin-btn" id="selectBtn">选择文件</button>
+                <input type="file" id="fileInput" accept="image/png">
+                <div class="skin-file-size-limit">仅支持原版皮肤(PNG)</div>
+            </div>
+            <div class="skin-progress-container" id="progressContainer">
+                <p id="statusText">准备上传...</p>
+                <progress class="skin-progress" id="uploadProgress" value="0" max="100"></progress>
+            </div>
+            
+            <div class="skin-file-list" id="fileList"></div>
+        </div>
+    </div>
+</div>
+
+<!-- 验证码验证组件 -->
+<div class="captcha-overlay" id="captchaOverlay"></div>
+
+<div class="captcha-card" id="captchaCard">
+    <div class="captcha-card-header">
+        <h2 class="captcha-card-title">请选择所有包含<span id="cueword" class="captcha-cueword">加载中</span>的内容</h2>
+        <button class="captcha-close-btn" id="captchaCloseBtn">×</button>
+    </div>
+    
+    <div class="captcha-verification-container">
+        <div class="captcha-image-wrapper">
+            <div class="captcha-image-container">
+                <img id="captchaImage" alt="验证图片" style="display: none;">
+                <div class="captcha-grid-overlay" id="captchaGridOverlay"></div>
+                <div class="captcha-center-message" id="captchaCenterMessage">正在初始化...</div>
             </div>
         </div>
     </div>
+    
+    <div class="captcha-card-footer">
+        <span class="captcha-footer-text">By 阿素本素</span>
+        <div>
+            <button class="captcha-btn captcha-btn-cancel" id="captchaCancelBtn">取消</button>
+            <button class="captcha-btn" id="captchaSubmitBtn" disabled>继续</button>
+        </div>
+    </div>
+</div>
 
-    <script>
-        // 菜单功能
-        document.addEventListener('DOMContentLoaded', function() {
-            // 菜单按钮点击事件
-            document.getElementById('menu-btn').addEventListener('click', function() {
-                const sidebar = document.getElementById('sidebar');
-                const content = document.getElementById('content');
+<div class="captcha-success-message" id="captchaSuccessMessage">验证成功！</div>
+
+<div class="captcha-error-message" id="captchaErrorMessage">
+    <div id="captchaErrorText"></div>
+
+</div>
+
+<script>
+    // 菜单功能
+    document.addEventListener('DOMContentLoaded', function() {
+        // 菜单按钮点击事件
+        document.getElementById('menu-btn').addEventListener('click', function() {
+            const sidebar = document.getElementById('sidebar');
+            const content = document.getElementById('content');
+            
+            if(window.innerWidth <= 1023) {
+                sidebar.classList.toggle('active');
+                content.classList.toggle('shifted');
+            }
+        });
+
+        // 折叠菜单功能
+        document.querySelectorAll('.group-header').forEach(header => {
+            header.addEventListener('click', function() {
+                const group = this.parentElement;
+                const submenu = this.nextElementSibling;
+                const icon = this.querySelector('.toggle');
                 
-                if(window.innerWidth <= 1023) {
-                    sidebar.classList.toggle('active');
-                    content.classList.toggle('shifted');
+                group.classList.toggle('active');
+                
+                if (group.classList.contains('active')) {
+                    submenu.style.display = 'block';
+                    icon.classList.replace('fa-chevron-right', 'fa-chevron-down');
+                } else {
+                    submenu.style.display = 'none';
+                    icon.classList.replace('fa-chevron-down', 'fa-chevron-right');
                 }
             });
+        });
 
-            // 折叠菜单功能
-            document.querySelectorAll('.group-header').forEach(header => {
-                header.addEventListener('click', function() {
-                    const group = this.parentElement;
-                    const submenu = this.nextElementSibling;
-                    const icon = this.querySelector('.toggle');
-                    
-                    group.classList.toggle('active');
-                    
-                    if (group.classList.contains('active')) {
-                        submenu.style.display = 'block';
-                        icon.classList.replace('fa-chevron-right', 'fa-chevron-down');
-                    } else {
-                        submenu.style.display = 'none';
-                        icon.classList.replace('fa-chevron-down', 'fa-chevron-right');
+        // 响应式处理
+        window.addEventListener('resize', function() {
+            const sidebar = document.getElementById('sidebar');
+            const content = document.getElementById('content');
+            
+            if(window.innerWidth > 1023) {
+                sidebar.classList.remove('active');
+                content.classList.remove('shifted');
+            }
+        });
+    });
+
+    // 皮肤上传功能
+    const dropArea = document.getElementById('dropArea');
+    const fileInput = document.getElementById('fileInput');
+    const selectBtn = document.getElementById('selectBtn');
+    const progressContainer = document.getElementById('progressContainer');
+    const uploadProgress = document.getElementById('uploadProgress');
+    const statusText = document.getElementById('statusText');
+    const fileList = document.getElementById('fileList');
+    const playerIdInput = document.getElementById('playerId');
+    
+    // 服务器地址
+    const serverUrl = 'https://api.azsu.top/skin/upload';
+    const skinPreviewBaseUrl = 'https://api.azsu.top/skin/file?player=';
+    
+    // 验证码相关变量
+    const captchaOverlay = document.getElementById('captchaOverlay');
+    const captchaCard = document.getElementById('captchaCard');
+    const captchaGridOverlay = document.getElementById('captchaGridOverlay');
+    const captchaSubmitBtn = document.getElementById('captchaSubmitBtn');
+    const captchaCancelBtn = document.getElementById('captchaCancelBtn');
+    const captchaCloseBtn = document.getElementById('captchaCloseBtn');
+    const captchaImage = document.getElementById('captchaImage');
+    const cuewordElement = document.getElementById('cueword');
+    const captchaCenterMessage = document.getElementById('captchaCenterMessage');
+    const captchaSuccessMessage = document.getElementById('captchaSuccessMessage');
+    const captchaErrorMessage = document.getElementById('captchaErrorMessage');
+    const captchaErrorText = document.getElementById('captchaErrorText');
+    const captchaErrorCloseBtn = document.getElementById('captchaErrorCloseBtn');
+    
+    let selectedCells = [];
+    let currentToken = '';
+    let verificationInProgress = false;
+    let pendingFiles = null;
+    let pendingPlayerId = '';
+    
+    // 创建4x4网格
+    for (let i = 0; i < 16; i++) {
+        const cell = document.createElement('div');
+        cell.className = 'captcha-grid-cell';
+        cell.dataset.index = i;
+        
+        cell.addEventListener('click', function() {
+            if (verificationInProgress) return;
+            
+            this.classList.toggle('selected');
+            
+            const index = parseInt(this.dataset.index);
+            if (this.classList.contains('selected')) {
+                if (!selectedCells.includes(index)) {
+                    selectedCells.push(index);
+                }
+            } else {
+                selectedCells = selectedCells.filter(item => item !== index);
+            }
+            
+            // 更新提交按钮状态
+            captchaSubmitBtn.disabled = selectedCells.length === 0;
+        });
+        
+        captchaGridOverlay.appendChild(cell);
+    }
+
+    // 阻止默认拖放行为
+    ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+        dropArea.addEventListener(eventName, preventDefaults, false);
+        document.body.addEventListener(eventName, preventDefaults, false);
+    });
+    
+    function preventDefaults(e) {
+        e.preventDefault();
+        e.stopPropagation();
+    }
+    
+    // 高亮拖放区域
+    ['dragenter', 'dragover'].forEach(eventName => {
+        dropArea.addEventListener(eventName, highlight, false);
+    });
+    
+    ['dragleave', 'drop'].forEach(eventName => {
+        dropArea.addEventListener(eventName, unhighlight, false);
+    });
+    
+    function highlight() {
+        dropArea.classList.add('highlight');
+    }
+    
+    function unhighlight() {
+        dropArea.classList.remove('highlight');
+    }
+    
+    // 处理拖放文件
+    dropArea.addEventListener('drop', handleDrop, false);
+    
+    function handleDrop(e) {
+        const dt = e.dataTransfer;
+        const files = dt.files;
+        handleFiles(files);
+    }
+    
+    // 点击选择文件按钮
+    selectBtn.addEventListener('click', () => {
+        fileInput.click();
+    });
+    
+    // 处理选择的文件
+    fileInput.addEventListener('change', () => {
+        handleFiles(fileInput.files);
+    });
+    
+    // 处理文件
+    function handleFiles(files) {
+        fileList.innerHTML = '';
+        
+        const playerId = playerIdInput.value.trim();
+        if (!playerId) {
+            showError('请先输入玩家ID(p≧w≦q)');
+            return;
+        }
+        
+        const pngFiles = Array.from(files).filter(file => file.type === 'image/png');
+        
+        if (pngFiles.length === 0) {
+            showError('请选择PNG格式的皮肤文件(p≧w≦q)');
+            return;
+        }
+        
+        // 检查文件大小 (10KB限制)
+        const oversizedFiles = pngFiles.filter(file => file.size > 10 * 1024);
+        if (oversizedFiles.length > 0) {
+            showError(`文件 "${oversizedFiles[0].name}" 超过10KB限制(p≧w≦q)`);
+            return;
+        }
+        
+        // 显示文件列表
+        const fileItem = document.createElement('div');
+        fileItem.className = 'skin-file-item';
+        fileItem.innerHTML = `
+            <div class="skin-file-info">
+                <span class="skin-file-icon">📄</span>
+                <span>${pngFiles[0].name} (${formatFileSize(pngFiles[0].size)})</span>
+            </div>
+            <span class="skin-file-status skin-status-pending">等待验证</span>
+        `;
+        fileList.appendChild(fileItem);
+        
+        // 保存待处理的文件和玩家ID
+        pendingFiles = pngFiles;
+        pendingPlayerId = playerId;
+        
+        // 开始验证码验证
+        startCaptchaVerification();
+    }
+    
+    // 验证码验证功能
+    function startCaptchaVerification() {
+        showCaptcha();
+        initVerification();
+    }
+    
+    // 检查本地存储中是否有有效的captcha_token
+    function checkCaptchaToken() {
+        const tokenData = localStorage.getItem('captcha_token');
+        const expiresAt = localStorage.getItem('captcha_token_expires');
+        
+        if (tokenData && expiresAt && parseInt(expiresAt) > Math.floor(Date.now() / 1000)) {
+            return tokenData;
+        }
+        return null;
+    }
+    
+    // 存储captcha_token和过期时间
+    function storeCaptchaToken(token, expiresIn = 240) {
+        const expiresAt = Math.floor(Date.now() / 1000) + expiresIn;
+        localStorage.setItem('captcha_token', token);
+        localStorage.setItem('captcha_token_expires', expiresAt.toString());
+    }
+    
+    // 清除captcha_token
+    function clearCaptchaToken() {
+        localStorage.removeItem('captcha_token');
+        localStorage.removeItem('captcha_token_expires');
+    }
+    
+    // 显示验证窗口
+    function showCaptcha() {
+        captchaCard.style.display = 'block';
+        captchaOverlay.style.display = 'block';
+    }
+    
+    // 隐藏验证窗口
+    function hideCaptcha() {
+        captchaCard.style.display = 'none';
+        captchaOverlay.style.display = 'none';
+    }
+    
+    // 显示成功消息
+    function showCaptchaSuccess() {
+        captchaSuccessMessage.style.display = 'block';
+        setTimeout(() => {
+            captchaSuccessMessage.style.display = 'none';
+        }, 1000);
+    }
+    
+    // 显示错误消息
+    function showCaptchaError(message) {
+        captchaErrorText.textContent = message;
+        captchaErrorMessage.style.display = 'block';
+    }
+    
+    // 更新中央消息
+    function updateCenterMessage(message) {
+        captchaCenterMessage.textContent = message;
+        captchaCenterMessage.style.display = 'block';
+    }
+    
+    // 隐藏中央消息
+    function hideCenterMessage() {
+        captchaCenterMessage.style.display = 'none';
+    }
+    
+    // 初始化验证
+    async function initVerification() {
+        try {
+            setCaptchaLoading(true);
+            updateCenterMessage('正在初始化...');
+            
+            // 每次验证都获取新的token，避免重复使用
+            clearCaptchaToken();
+            
+            // 通过代理服务器获取token
+            const tokenResponse = await fetch('https://api.azsu.top/5002/captcha/get_token');
+            const tokenData = await tokenResponse.json();
+            
+            if (tokenData.code === 10000) {
+                currentToken = tokenData.data.captcha_token;
+                updateCenterMessage('正在加载验证图片...');
+                await loadCaptchaImage();
+            } else {
+                showCaptchaError('获取验证令牌失败: ' + tokenData.message);
+                setCaptchaLoading(false);
+                hideCaptcha();
+            }
+        } catch (error) {
+            showCaptchaError('初始化验证失败: ' + error.message);
+            setCaptchaLoading(false);
+            hideCaptcha();
+        }
+    }
+
+    async function loadCaptchaImage() {
+        try {
+            const response = await fetch(`https://api.azsu.top/5001/captcha?captcha_token=${currentToken}`);
+            const data = await response.json();
+            
+            if (data.code === 16001 || data.code === 10000) {
+                if (data.data.image_base64) {
+                    captchaImage.src = 'data:image/jpeg;base64,' + data.data.image_base64;
+                    captchaImage.style.display = 'block';
+                    hideCenterMessage();
+                }
+                // 更新提示词
+                if (data.data.cueword) {
+                    cuewordElement.textContent = data.data.cueword;
+                }
+                setCaptchaLoading(false);
+                
+                // 检查状态
+                if (data.data.status === 'fail' || !data.data.status) {
+                    showCaptchaError(data.message || '验证失败');
+                    setCaptchaLoading(false);
+                    hideCaptcha();
+                }
+            } else {
+                showCaptchaError('加载验证图片失败: ' + data.message);
+                setCaptchaLoading(false);
+                hideCaptcha();
+            }
+        } catch (error) {
+            showCaptchaError('加载验证图片失败: ' + error.message);
+            setCaptchaLoading(false);
+            hideCaptcha();
+        }
+    }
+
+    // 提交按钮点击事件
+    captchaSubmitBtn.addEventListener('click', async function() {
+        if (verificationInProgress || selectedCells.length === 0) return;
+        
+        verificationInProgress = true;
+        captchaSubmitBtn.disabled = true;
+        setCaptchaLoading(true);
+        updateCenterMessage('正在验证...');
+        
+        try {
+            const response = await fetch(`https://api.azsu.top/5001/captcha?captcha_token=${currentToken}&selected_cells=${JSON.stringify(selectedCells)}`);
+            const data = await response.json();
+            
+            if (data.code === 16102) {
+                showCaptchaError(data.message || 'token无效或已超时');
+                setCaptchaLoading(false);
+                return;
+            }
+            
+            // 处理验证成功的情况 (code 16002)
+            if (data.code === 16002) {
+                // 验证成功
+                hideCaptcha();
+                setTimeout(() => {
+                    showCaptchaSuccess();
+                    storeCaptchaToken(currentToken);
+                    setTimeout(() => {
+                        resetCaptchaSelection();
+                        // 验证成功后开始上传文件
+                        uploadFile(pendingFiles[0], pendingPlayerId);
+                    }, 1000);
+                }, 10);
+                return;
+            }
+            
+            if (data.code === 16001 || data.code === 10000) {
+                if (data.data.status === 'success') {
+                    // 验证成功
+                    hideCaptcha();
+                    setTimeout(() => {
+                        showCaptchaSuccess();
+                        storeCaptchaToken(currentToken);
+                        setTimeout(() => {
+                            resetCaptchaSelection();
+                            // 验证成功后开始上传文件
+                            uploadFile(pendingFiles[0], pendingPlayerId);
+                        }, 1000);
+                    }, 10);
+                } else if (data.data.status === 'processing') {
+                    // 继续验证
+                    updateCenterMessage('正在加载验证图片...');
+                    if (data.data.image_base64) {
+                        captchaImage.src = 'data:image/jpeg;base64,' + data.data.image_base64;
+                        captchaImage.style.display = 'block';
+                        hideCenterMessage();
                     }
-                });
-            });
-
-            // 响应式处理
-            window.addEventListener('resize', function() {
-                const sidebar = document.getElementById('sidebar');
-                const content = document.getElementById('content');
-                
-                if(window.innerWidth > 1023) {
-                    sidebar.classList.remove('active');
-                    content.classList.remove('shifted');
+                    // 更新提示词
+                    if (data.data.cueword) {
+                        cuewordElement.textContent = data.data.cueword;
+                    }
+                    // 重置选择
+                    resetCaptchaSelection();
+                    setCaptchaLoading(false);
+                } else if (data.data.status === 'fail' || !data.data.status) {
+                    // 验证失败
+                    showCaptchaError(data.message || '验证失败');
+                    setCaptchaLoading(false);
                 }
-            });
-        });
-
-        // 皮肤上传功能
-        const dropArea = document.getElementById('dropArea');
-        const fileInput = document.getElementById('fileInput');
-        const selectBtn = document.getElementById('selectBtn');
-        const progressContainer = document.getElementById('progressContainer');
-        const uploadProgress = document.getElementById('uploadProgress');
-        const statusText = document.getElementById('statusText');
-        const fileList = document.getElementById('fileList');
-        const playerIdInput = document.getElementById('playerId');
-        
-        // 服务器地址
-        const serverUrl = 'https://api.azsu.top/skin/upload';
-        const skinPreviewBaseUrl = 'https://api.azsu.top/skin/file?player=';
-        
-        // 阻止默认拖放行为
-        ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
-            dropArea.addEventListener(eventName, preventDefaults, false);
-            document.body.addEventListener(eventName, preventDefaults, false);
-        });
-        
-        function preventDefaults(e) {
-            e.preventDefault();
-            e.stopPropagation();
-        }
-        
-        // 高亮拖放区域
-        ['dragenter', 'dragover'].forEach(eventName => {
-            dropArea.addEventListener(eventName, highlight, false);
-        });
-        
-        ['dragleave', 'drop'].forEach(eventName => {
-            dropArea.addEventListener(eventName, unhighlight, false);
-        });
-        
-        function highlight() {
-            dropArea.classList.add('highlight');
-        }
-        
-        function unhighlight() {
-            dropArea.classList.remove('highlight');
-        }
-        
-        // 处理拖放文件
-        dropArea.addEventListener('drop', handleDrop, false);
-        
-        function handleDrop(e) {
-            const dt = e.dataTransfer;
-            const files = dt.files;
-            handleFiles(files);
-        }
-        
-        // 点击选择文件按钮
-        selectBtn.addEventListener('click', () => {
-            fileInput.click();
-        });
-        
-        // 处理选择的文件
-        fileInput.addEventListener('change', () => {
-            handleFiles(fileInput.files);
-        });
-        
-        // 处理文件
-        function handleFiles(files) {
-            fileList.innerHTML = '';
-            
-            const playerId = playerIdInput.value.trim();
-            if (!playerId) {
-                showError('请先输入玩家ID(p≧w≦q)');
-                return;
+            } else {
+                showCaptchaError('验证失败: ' + data.message);
+                setCaptchaLoading(false);
+                hideCaptcha();
             }
-            
-            const pngFiles = Array.from(files).filter(file => file.type === 'image/png');
-            
-            if (pngFiles.length === 0) {
-                showError('请选择PNG格式的皮肤文件(p≧w≦q)');
-                return;
-            }
-            
-            // 检查文件大小 (10KB限制)
-            const oversizedFiles = pngFiles.filter(file => file.size > 10 * 1024);
-            if (oversizedFiles.length > 0) {
-                showError(`文件 "${oversizedFiles[0].name}" 超过10KB限制(p≧w≦q)`);
-                return;
-            }
-            
-            // 显示文件列表
-            const fileItem = document.createElement('div');
-            fileItem.className = 'skin-file-item';
-            fileItem.innerHTML = `
-                <div class="skin-file-info">
-                    <span class="skin-file-icon">📄</span>
-                    <span>${pngFiles[0].name} (${formatFileSize(pngFiles[0].size)})</span>
-                </div>
-                <span class="skin-file-status skin-status-pending">等待上传</span>
-            `;
-            fileList.appendChild(fileItem);
-            
-            // 开始上传
-            uploadFile(pngFiles[0], playerId, fileItem);
+        } catch (error) {
+            showCaptchaError('验证请求失败: ' + error.message);
+            setCaptchaLoading(false);
+        } finally {
+            verificationInProgress = false;
         }
-        
-        // 上传文件
-        function uploadFile(file, playerId, fileItem) {
-            progressContainer.style.display = 'block';
-            statusText.textContent = '准备上传...';
-            statusText.style.color = '';
-            uploadProgress.value = 0;
+    });
+    
+    // 取消按钮点击事件
+    captchaCancelBtn.addEventListener('click', function() {
+        hideCaptcha();
+        resetCaptchaSelection();
+        // 清除待处理的文件
+        pendingFiles = null;
+        pendingPlayerId = '';
+        fileList.innerHTML = '';
+    });
+    
+    // 关闭按钮点击事件
+    captchaCloseBtn.addEventListener('click', function() {
+        hideCaptcha();
+        resetCaptchaSelection();
+        // 清除待处理的文件
+        pendingFiles = null;
+        pendingPlayerId = '';
+        fileList.innerHTML = '';
+    });
+    
+    // 错误关闭按钮点击事件
+    captchaErrorCloseBtn.addEventListener('click', function() {
+        captchaErrorMessage.style.display = 'none';
+    });
+    
+    function resetCaptchaSelection() {
+        selectedCells = [];
+        document.querySelectorAll('.captcha-grid-cell.selected').forEach(cell => {
+            cell.classList.remove('selected');
+        });
+        captchaSubmitBtn.disabled = true;
+    }
+    
+    function setCaptchaLoading(loading) {
+        if (loading) {
+            captchaCard.classList.add('captcha-loading');
+        } else {
+            captchaCard.classList.remove('captcha-loading');
+        }
+        verificationInProgress = loading;
+    }
+    
+    // 显示验证成功消息
+    function showCaptchaSuccess() {
+        captchaSuccessMessage.style.display = 'block';
+        // 1秒后自动隐藏成功消息
+        setTimeout(() => {
+            captchaSuccessMessage.style.display = 'none';
+        }, 1000);
+    }
+    
+    // 显示错误消息
+    function showCaptchaError(message) {
+        captchaErrorText.textContent = message;
+        captchaErrorMessage.style.display = 'block';
+        // 1秒后自动隐藏错误消息
+        setTimeout(() => {
+            captchaErrorMessage.style.display = 'none';
+        }, 3000);
+    }
+    
+    // 上传文件
+    function uploadFile(file, playerId) {
+        progressContainer.style.display = 'block';
+        statusText.textContent = '准备上传...';
+        statusText.style.color = '';
+        uploadProgress.value = 0;
+    
+        const formData = new FormData();
+        formData.append('file', file);
+        formData.append('player_id', playerId);
+        formData.append('captcha_token', currentToken);
+    
+        const xhr = new XMLHttpRequest();
+        xhr.open('POST', serverUrl, true);
+        xhr.setRequestHeader('Accept', 'application/json');
+    
+        // 更新进度条
+        xhr.upload.onprogress = function(e) {
+            if (e.lengthComputable) {
+                const percent = Math.round((e.loaded / e.total) * 100);
+                uploadProgress.value = percent;
+                statusText.textContent = `上传中: ${percent}%`;
             
-            const formData = new FormData();
-            formData.append('file', file);
-            formData.append('player_id', playerId);
-            
-            const xhr = new XMLHttpRequest();
-            xhr.open('POST', serverUrl, true);
-            xhr.setRequestHeader('Accept', 'application/json');
-            
-            // 更新进度条
-            xhr.upload.onprogress = function(e) {
-                if (e.lengthComputable) {
-                    const percent = Math.round((e.loaded / e.total) * 100);
-                    uploadProgress.value = percent;
-                    statusText.textContent = `上传中: ${percent}%`;
-                    
-                    // 更新文件状态
-                    fileItem.querySelector('.skin-file-status').textContent = `${percent}%`;
-                    fileItem.querySelector('.skin-file-status').className = 'skin-file-status skin-status-pending';
-                    
-                    // 进度完成即视为上传成功
-                    if (percent === 100) {
+                // 更新文件状态
+                const fileItem = document.querySelector('.skin-file-item');
+                fileItem.querySelector('.skin-file-status').textContent = `${percent}%`;
+                fileItem.querySelector('.skin-file-status').className = 'skin-file-status skin-status-pending';
+            }
+        };
+    
+        xhr.onload = function() {
+            const fileItem = document.querySelector('.skin-file-item');
+    
+            // 修改这里：允许200和400状态码，因为服务器错误也返回400
+            if (xhr.status === 200 || xhr.status === 400) {
+                try {
+                    const response = JSON.parse(xhr.responseText);
+                    if (response.code === 14000) {
+                        // 真正的成功
                         statusText.textContent = '文件上传成功(p≧w≦q)';
                         statusText.style.color = '#28a745';
+                        uploadProgress.value = 100;
                         updateFileStatus(fileItem, '上传成功', 'success');
                         addPreviewLink(fileItem, playerId);
+                    } else {
+                        // 服务器返回错误（如token无效）
+                        statusText.textContent = response.message || '上传失败';
+                        statusText.style.color = '#dc3545';
+                        updateFileStatus(fileItem, response.message || '上传失败', 'error');
                     }
+                } catch (e) {
+                    console.log('服务器响应解析异常:', e);
+                    statusText.textContent = '服务器响应异常';
+                    statusText.style.color = '#dc3545';
+                    updateFileStatus(fileItem, '服务器异常', 'error');
                 }
-            };
-            
-            xhr.onload = function() {
-                // 保留原有响应处理作为备用
-                if (uploadProgress.value < 100) {
-                    if (xhr.status === 200) {
-                        try {
-                            const response = JSON.parse(xhr.responseText);
-                            if (response.code === 14000) {
-                                statusText.textContent = '服务器处理完成(p≧w≦q)';
-                                uploadProgress.value = 100;
-                                updateFileStatus(fileItem, '处理完成', 'success');
-                            }
-                        } catch (e) {
-                            console.log('服务器响应解析异常:', e);
-                        }
-                    }
-                }
-            };
-
-            xhr.onerror = function() {
-                if (uploadProgress.value < 100) {
-                    showError('网络错误(p≧w≦q)');
-                    updateFileStatus(fileItem, '网络错误', 'error');
-                }
-            };
-
-            xhr.send(formData);
-        }
-
-        
-        function updateFileStatus(fileItem, text, type) {
-            const statusSpan = fileItem.querySelector('.skin-file-status');
-            statusSpan.textContent = text;
-            statusSpan.className = `skin-file-status skin-status-${type}`;
-        }
-        
-        function addPreviewLink(fileItem, playerId) {
-            const previewLink = document.createElement('a');
-            previewLink.href = skinPreviewBaseUrl + playerId;
-            previewLink.textContent = '查看皮肤';
-            previewLink.className = 'skin-preview-link';
-            previewLink.target = '_blank';
-            fileItem.appendChild(previewLink);
-        }
-        
-        function showError(message) {
-            statusText.textContent = message;
+            } else {
+                // 其他HTTP状态码错误
+                statusText.textContent = `上传失败 (${xhr.status})`;
+                statusText.style.color = '#dc3545';
+                updateFileStatus(fileItem, `失败: ${xhr.status}`, 'error');
+            }
+    
+            // 无论成功失败都重置
+            fileInput.value = '';
+            pendingFiles = null;
+            pendingPlayerId = '';
+        };
+    
+        xhr.onerror = function() {
+            statusText.textContent = '网络错误(p≧w≦q)';
             statusText.style.color = '#dc3545';
-            progressContainer.style.display = 'block';
-        }
+            const fileItem = document.querySelector('.skin-file-item');
+            updateFileStatus(fileItem, '网络错误', 'error');
         
-        function formatFileSize(bytes) {
-            if (bytes === 0) return '0 Bytes';
-            const k = 1024;
-            const sizes = ['Bytes', 'KB', 'MB', 'GB'];
-            const i = Math.floor(Math.log(bytes) / Math.log(k));
-            return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
-        }
-    </script>
-</body>
+            // 上传失败后也重置文件输入
+            fileInput.value = '';
+            pendingFiles = null;
+            pendingPlayerId = '';
+        };
+    
+        xhr.send(formData);
+    }
+        
+    function updateFileStatus(fileItem, text, type) {
+        const statusSpan = fileItem.querySelector('.skin-file-status');
+        statusSpan.textContent = text;
+        statusSpan.className = `skin-file-status skin-status-${type}`;
+    }
+    
+    function addPreviewLink(fileItem, playerId) {
+        const previewLink = document.createElement('a');
+        previewLink.href = skinPreviewBaseUrl + playerId;
+        previewLink.textContent = '查看皮肤';
+        previewLink.className = 'skin-preview-link';
+        previewLink.target = '_blank';
+        fileItem.appendChild(previewLink);
+    }
+    
+    function showError(message) {
+        statusText.textContent = message;
+        statusText.style.color = '#dc3545';
+        progressContainer.style.display = 'block';
+    }
+    
+    function formatFileSize(bytes) {
+        if (bytes === 0) return '0 Bytes';
+        const k = 1024;
+        const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+        const i = Math.floor(Math.log(bytes) / Math.log(k));
+        return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+    }
+</script>
 </html>
