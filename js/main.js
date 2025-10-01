@@ -1,4 +1,3 @@
-UTF-8 BOM
 // 页面元数据配置
 const pageMetaData = {
     'aa': {
