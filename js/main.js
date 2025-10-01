@@ -236,7 +236,7 @@ function updatePageMeta(pageId) {
     metaDesc.content = metaData.description;
     
     // 更新header标题
-    const headerTitle = document.getElementById('title');
+    const headerTitle = document.getElementById('header')?.querySelector('#title');
     if (headerTitle) {
         headerTitle.textContent = metaData.headerTitle;
     }
