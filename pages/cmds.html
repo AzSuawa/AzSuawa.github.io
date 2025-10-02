@@ -1,174 +1,48 @@
-<!DOCTYPE html>
-<html lang="zh-CN">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-</head>
-<body>
-<div id="cmds">
-    <div class="header-spacer" style="height: 10px;"></div>
-    <div id="cmd-title">小小素指令<span class="version-badge">v1.12.2</span></div>
-    </div>
-    <div class="cmd-container">
-        <div class="cmd-section">
-            <div class="cmd-section-header">
-                <i class="fas fa-list-ul"></i>  基础指令
+<div id="bot-update">
+    <div class="card active">
+        <h1>小小素更新日志</h1>
+        <div class="command-section">
+            <div class="api-endpoint">
+                <p>🎉【更新通知】v1.12.1（2025.9.21）<br>🚀更新内容：<br>🌟新增API开放接口<br>🌟第三次反风控成功(9月敏感期)<br>🌟新增自动封禁<br>🌟新增Whois查询<br>🌟优化了一些功能<br>🌟更新了版本号<br>🌟快4个月没发更新通知了发一下~<br>💡使用指令“help”查看帮助信息~</p>
             </div>
-            <div class="cmd-grid">
-                <div class="command-card">
-                    <div class="command-name">mcp [服务器地址]</div>
-                    <div class="command-desc">查询Minecraft服务器状态，若要修改返回水印内容，请联系阿素（需验证服务器所有权）</div>
-                    <div class="command-example">示例: mcp azsu.top</div>
-                </div>
-                <div class="command-card">
-                    <div class="command-name">qd</div>
-                    <div class="command-desc">每日签到。</div>
-                </div>
-                <div class="command-card">
-                    <div class="command-name">小小酥 [@用户(默认自己)]</div>
-                    <div class="command-desc">查询小小酥的数量。</div>
-                    <div class="command-example">示例: 小小酥 @Az_Su</div>
-                </div>
-                <div class="command-card">
-                    <div class="command-name">小小酥.pay &lt;@用户&gt; &lt;金额&gt;</div>
-                    <div class="command-desc">向某人转账(税率245%)</div>
-                    <div class="command-example">示例: 小小酥.pay @Az_Su 100</div>
-                </div>
-                <div class="command-card">
-                    <div class="command-name">大转盘 &lt;@用户/开启/关闭&gt;</div>
-                    <div class="command-desc">禁言大转盘，每次消耗100个小小酥。</div>
-                    <div class="command-example">示例: 大转盘 @许愿沙</div>
-                </div>
-                <div class="command-card">
-                    <div class="command-name">我要进群</div>
-                    <div class="command-desc">加入小小素交流群</div>
-                    <div class="command-desc">请添加小小素为好友，私信发送该指令！</div>
-                </div>
-                <div class="command-card">
-                    <div class="command-name">领取小小酥</div>
-                    <div class="command-desc">加入小小素交流群领取1000小小酥！</div>
-                </div>
-                <div class="command-card">
-                    <div class="command-name">baninfo &lt;用户ID/@用户&gt;</div>
-                    <div class="command-desc">查询某人封禁信息。</div>
-                </div>
+            <div class="api-endpoint">
+                <p>🎉【更新通知】v1.11.0（2025.7.17）<br>🚀更新内容：<br>🌟修复了一些BUG<br>🌟优化了一些内容<br>💡使用指令“help”查看帮助信息~</p>
             </div>
-        </div>
-        <div class="cmd-section">
-            <div class="cmd-section-header query">
-                <i class="fas fa-search"></i>  查询指令
+            <div class="api-endpoint">
+                <p>🎉【更新通知】v1.10.15（2025.6.4）<br>🚀更新内容：<br>🌟因北京事件敏感期腾讯严查，任何政敏、吵架、黄色内容都可能导致封号封群，阿素临时抽空制作了宵禁功能<br>【设置宵禁】<br>小小素.宵禁 开始时间(hh:mm) 结束时间(hh:mm)<br>（示例: 小小素.宵禁 23:30 8:00）<br>【关闭宵禁】<br>小小素.宵禁 -1<br>🌟祝各位考生上岸！<br>💡使用指令“help”查看帮助信息~</p>
             </div>
-            <div class="cmd-grid">
-                <div class="command-card">
-                    <div class="command-name">org.s &lt;玩家ID&gt;</div>
-                    <div class="command-desc">查询2b2t.org玩家信息。</div>
-                    <div class="command-example">示例: org.s Az_Su</div>
-                </div>
-                <div class="command-card">
-                    <div class="command-name">org.t</div>
-                    <div class="command-desc">查询2b2t.org在线玩家列表。</div>
-                    <div class="command-example">示例: org.t</div>
-                </div>
-                <div class="command-card">
-                    <div class="command-name">org.r &lt;类型&gt;</div>
-                    <div class="command-desc">查询2b2t.org排行榜前20。</div>
-                    <div class="command-desc">支持类型：playtime(p),kills(k),deaths(d)</div>
-                    <div class="command-example">示例: org.r p</div>
-                </div>
-                <div class="command-card">
-                    <div class="command-name">org.r &lt;类型&gt; [玩家ID]</div>
-                    <div class="command-desc">查询2b2t.org玩家排名。</div>
-                    <div class="command-desc">支持类型：playtime(p),kills(k),deaths(d),all</div>
-                    <div class="command-example">示例: org.r all Az_Su</div>
-                </div>
-                <div class="command-card">
-                    <div class="command-name">whois &lt;域名&gt;</div>
-                    <div class="command-desc">Whois查询</div>
-                    <div class="command-example">示例: whois azsu.top</div>
-                </div>
-                <div class="command-card">
-                    <div class="command-name">gg.s/t/r  ......</div>
-                    <div class="command-desc">2b2t.gg数据不再更新。</div>
-                </div>
-                <div class="command-card">
-                    <div class="command-name">pub.t</div>
-                    <div class="command-desc">查询2b2t.pub在线玩家列表。</div>
-                </div>
+            <div class="api-endpoint">
+                <p>🎉【更新通知】v1.10.13（2025.6.1）<br>🚀更新内容：<br>🌟第二次反风控成功(北京事件敏感期)<br>🌟修复了因腾讯更新引发的部分功能异常<br>🌟新增2b2t.org排行榜查询(playtime,kills,deaths,all)<br>🌟新增小小酥转账功能(税率245%)<br>🌟修复小小素入群后群管理获得权限不及时的Bug<br>🌟“mcp.绑定”指令支持私聊<br>🌟新增了一些高级管理员指令<br>💡使用指令“help”查看帮助信息~</p>
             </div>
-        </div>
-        <div class="cmd-section">
-            <div class="cmd-section-header admin">
-                <i class="fas fa-terminal"></i>  管理员指令
+            <div class="api-endpoint">
+                <p>⚠️【变更通知】（2025.5.17）<br>❗变更内容：<br>🌟终止对2b2t.gg(原2b2t.icu)数据的更新，从2b2t.gg撤离机器人，相关查询功能仍然保留<br>💡使用指令“help”查看帮助信息~</p>
             </div>
-            <div class="cmd-grid">
-                <div class="command-card">
-                    <div class="command-name">mute &lt;@用户&gt; &lt;禁言时间&gt;</div>
-                    <div class="command-desc">禁言某人，禁言时间支持单位：s(秒,默认),m(分钟),h(小时),d(天),mo(月)，禁言时间为0即解除禁言。</div>
-                    <div class="command-example">示例: mute @晚辅君 30d</div>
-                </div>
-                <div class="command-card">
-                    <div class="command-name">kick &lt;@用户&gt; [拉黑(可选)]</div>
-                    <div class="command-desc">将某人踢出群聊，支持拉黑。</div>
-                    <div class="command-example">示例: kick @晚辅君 拉黑</div>
-                </div>
-                <div class="command-card">
-                    <div class="command-name">mcp.绑定 &lt;服务器地址&gt;</div>
-                    <div class="command-desc">绑定当前群聊或私聊的mcping默认服务器地址。</div>
-                </div>
-                <div class="command-card">
-                    <div class="command-name">mcp.白名单 &lt;IP地址/关闭&gt;</div>
-                    <div class="command-desc">添加或关闭白名单，一旦添加则视为本群开启白名单，无法查询白名单以外的地址，并撤回调用指令的消息（需要群管理权限）</div>
-                </div>
-                <div class="command-card">
-                    <div class="command-name">小小素.入群欢迎</div>
-                    <div class="command-desc">设置或取消入群欢迎，支持多种占位符变量。</div>
-                </div>
-               <div class="command-card">
-                    <div class="command-name">小小素.宵禁 &lt;开始时间(hh:mm)&gt; &lt;结束时间(hh:mm)&gt;</div>
-                    <div class="command-desc">设置宵禁。固定敏感日期：1.1-1.20、[3.1-3.15]、4.4-4.6、4.15、4.29、[5.20-6.10]、[6.4]、7.5、8.15、[9.1-9.20]、10.1、10.10、11.20、11.27、12.4、12.13、12.26</div>
-                    <div class="command-example">示例: 小小素.宵禁 23:30 7:00</div>
-               </div>
-               <div class="command-card">
-                    <div class="command-name">小小素.宵禁 -1</div>
-                    <div class="command-desc">关闭宵禁。</div>
-                    <div class="command-example">示例: 小小素.宵禁 -1</div>
-                </div>
-                <div class="command-card">
-                    <div class="command-name">小小素.复读机 &lt;开启/关闭&gt;</div>
-                    <div class="command-desc">开启或关闭复读机功能，支持单双句复读，默认开启。</div>
-                </div>
-                <div class="command-card">
-                    <div class="command-name">小小素管理员 &lt;添加/删除/清空&gt; &lt;@A@B@C&gt;</div>
-                    <div class="command-desc">添加本群的小小素管理员。</div>
-                    <div class="command-example">示例: 小小素.管理员 @Az_Su</div>
-                </div>
+            <div class="api-endpoint">
+                <p>🎉【更新通知】v1.9.10（2025.5.1）<br>🚀更新内容：<br>🌟增加2b2t.gg排行榜查询(joins,kills,deaths,kd,playtime)<br>🌟完善了小小素的黑名单功能<br>🌟部分群聊开启了活跃度自动换小小酥~<br>🌟可以使用指令查询小小酥的数量<br>🌟增加2b2t.org在线玩家列表查询<br>🌟增加2b2t.org玩家信息查询(功能和样式复刻自无限原力外群 妖梦Bot)<br>💡使用指令“help”查看帮助信息~</p>
             </div>
-        </div>
-        <div class="cmd-section">
-            <div class="cmd-section-header super-admin">
-                <i class="fas fa-cog"></i>  高级管理员指令
+            <div class="api-endpoint">
+                <p>🎉【更新通知】v1.8.13（2025.4.14）<br>🚀更新内容：<br>🌟移除了病毒<br>🌟入群申请自动通过，若不想要请: 管理群>设置管理员>小小素ʙᴏᴛ>不接收验证消息<br>🌟修复了一些已知的Bug<br>🌟优化了部分功能<br>💡使用指令“help”查看帮助信息~</p>
             </div>
-            <div class="cmd-grid">
-                <div class="command-card">
-                    <div class="command-name">ban &lt;@用户&gt;</div>
-                    <div class="command-desc">黑名单，仅限高级管理员使用。</div>
-                </div>
-                <div class="command-card">
-                    <div class="command-name">unban &lt;@用户&gt;</div>
-                    <div class="command-desc">从黑名单中移除某人，仅限高级管理员使用。</div>
-                </div>
-                <div class="command-card">
-                    <div class="command-name">小小酥.give &lt;@用户&gt; &lt;金额&gt;</div>
-                    <div class="command-desc">为某人发放小小酥，金额支持负数(扣除小小酥)，仅限高级管理员使用。</div>
-                </div>
-                <div class="command-card">
-                    <div class="command-name">数据修改 &lt;Key&gt;</div>
-                    <div class="command-desc">查询Key对应的Value。</div>
-                </div>
-                <div class="command-card">
-                    <div class="command-name">数据修改 &lt;Key&gt; &lt;Value&gt;</div>
-                    <div class="command-desc">修改Value。</div>
-               </div>
+            <div class="api-endpoint">
+                <p>🎉【更新通知】v1.8.10（2025.3.16）<br>🚀更新内容：<br>🌟优化了MC机器人的离线重连<br>🌟优化签到功能，增加小小酥(积分)收支记录<br>🌟修复了“mute”和“kick”指令艾特无效的Bug<br>🌟删除了几个过时的无用功能<br>🌟新增标记(黑名单)功能(需要高级管理员权限)<br>🌟新增“防机器人刷屏”开关，开启后将禁用签到等较刷屏的功能<br>🌟修复了消息同步无法发送图片的Bug<br>🌟仍在试图摆脱腾讯的风控💦💦<br>💡使用指令“help”查看帮助信息~</p>
+            </div>
+            <div class="api-endpoint">
+                <p>🎉【更新通知】v1.8.0（2025.3.8）<br>🚀更新内容：<br>🌟两会敏感期风控尝试复活小小素<br>🌟2b2t.icu“素stats”查询功能支持在游戏内使用<br>🌟开放机器人邀请，无需申请即可拉群<br>🌟更新了版本号<br>💡使用指令“help”查看帮助信息~</p>
+            </div>
+            <div class="api-endpoint">
+                <p>🎉【更新通知】v1.7.5（2025.3.1）<br>🚀更新内容：<br>🌟2b2t.icu的玩家信息查询功能新增了首次加入日期<br>🌟修复了“2024/12/31 23:59”查询时间错误Bug<br>🌟移除了KillGlitch<br>❗小小素仅在周末及节假日开放<br>💡使用指令“help”查看帮助信息~</p>
+            </div>
+            <div class="api-endpoint">
+                <p>🎉【更新通知】v1.6.4（2025.3.1）<br>🚀更新内容：<br>🌟新增禁言大转盘<br>🌟更新了2b2t.icu的stats查询功能<br>🌟修复了mute指令的一个Bug<br>🌟移除了KillGlitch<br>❗小小素仅在周末及节假日开放<br>💡使用指令“help”查看帮助信息~</p>
+            </div>
+            <div class="api-endpoint">
+                <p>🎉【更新通知】v1.4.3（2025.2.16）<br>🚀更新内容：<br>🌟修复了“mute”和“kick”指令的2个Bug<br>🌟修复了入群欢迎功能的2个Bug<br>🌟自定义入群欢迎新增私信发送功能<br>🌟优化复读机功能，并增加双句复读<br>❗所有群聊的复读机已自动关闭，若要使用复读机请重新开启！<br>💡使用指令“help”查看帮助信息~</p>
+            </div>
+            <div class="api-endpoint">
+                <p>🎉【更新通知】v1.3.3（2025.2.15）<br>🚀更新内容：<br>🌟修复了使用管理员指令时发生错误的Bug<br>🌟机器人加入群组后，自动将群主和群管理设为当前群组的“小小素管理员”<br>🌟“mute”和“kick”指令现在支持直接艾特目标用户了！<br>🌟新增自定义入群欢迎，支持部分变量<br>🌟开放签到指令<br>💡使用指令“help”查看帮助信息~</p>
+            </div>
+            <div class="api-endpoint">
+                <p>🎉【早期更新】<br><i class="fas fa-circle"></i><span class="param">2024.11.17</span><br>🌟在2b2t.icu中投放MC机器人，收集聊天记录、实时在线玩家等数据<br><i class="fas fa-circle"></i><span class="param">2024.11.28</span><br>🌟建立QQ机器人<br><i class="fas fa-circle"></i><span class="param">2024.12.7</span><br>🌟新增部分群聊消息同步<br><i class="fas fa-circle"></i><span class="param">2025.1.23</span><br>🌟服务规模达到31个群聊<br>🌟新增“mute”和“kick”<br><i class="fas fa-circle"></i><span class="param">2025.1.24</span><br>🌟小小素被设为2b2t.icu官方群管理，新增复读机、敏感词过滤、权限系统、2b2t.icu群聊宵禁</p>
             </div>
         </div>
     </div>
