@@ -1,5 +1,0 @@
-{
-  "scripts": {
-    "fix-encoding": "node fix-encoding.js"
-  }
-}
