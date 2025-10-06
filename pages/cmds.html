@@ -109,8 +109,12 @@
                     <div class="command-desc">绑定当前群聊或私聊的mcping默认服务器地址。</div>
                 </div>
                 <div class="command-card">
-                    <div class="command-name">mcp.白名单 &lt;IP地址/关闭&gt;</div>
-                    <div class="command-desc">添加或关闭白名单，一旦添加则视为本群开启白名单，无法查询白名单以外的地址，并撤回调用指令的消息（需要群管理权限）</div>
+                    <div class="command-name">mcp.白名单 &lt;地址/关闭&gt;</div>
+                    <div class="command-desc">
+    添加或关闭白名单，一旦添加则视为本群开启白名单，无法查询白名单以外的地址，并撤回调用指令的消息（需要群管理权限）<br>
+    可添加多个地址，添加的域名及其所有子域名将被允许<br>
+    若添加地址未指定端口号则允许该地址的全部端口，若有端口号则仅允许该端口
+</div>
                 </div>
                 <div class="command-card">
                     <div class="command-name">小小素.入群欢迎</div>
