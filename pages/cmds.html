@@ -1,11 +1,11 @@
 <div id="cmds">
     <div class="header-spacer" style="height: 10px;"></div>
-    <div id="cmd-title">小小素指令<span class="version-badge">v1.12.2</span></div>
+    <div id="cmd-title">小小素指令<span class="version-badge">v1.12.11</span></div>
     </div>
     <div class="cmd-container">
         <div class="cmd-section">
             <div class="cmd-section-header">
-                <i class="fas fa-list-ul"></i>  基础指令
+                <p><i class="fas fa-search"></i> 查询指令</p>
             </div>
             <div class="cmd-grid">
                 <div class="command-card">
@@ -13,45 +13,6 @@
                     <div class="command-desc">查询Minecraft服务器状态，若要修改特定地址的水印内容，请联系阿素（需验证服务器所有权），发现不良服务器可向小小素开发者举报。</div>
                     <div class="command-example">示例: mcp azsu.top</div>
                 </div>
-                <div class="command-card">
-                    <div class="command-name">qd</div>
-                    <div class="command-desc">每日签到。</div>
-                </div>
-                <div class="command-card">
-                    <div class="command-name">小小酥 [@用户(默认自己)]</div>
-                    <div class="command-desc">查询小小酥的数量。</div>
-                    <div class="command-example">示例: 小小酥 @Az_Su</div>
-                </div>
-                <div class="command-card">
-                    <div class="command-name">小小酥.pay &lt;@用户&gt; &lt;金额&gt;</div>
-                    <div class="command-desc">向某人转账(税率245%)</div>
-                    <div class="command-example">示例: 小小酥.pay @Az_Su 100</div>
-                </div>
-                <div class="command-card">
-                    <div class="command-name">大转盘 &lt;@用户/开启/关闭&gt;</div>
-                    <div class="command-desc">禁言大转盘，每次消耗100个小小酥。</div>
-                    <div class="command-example">示例: 大转盘 @许愿沙</div>
-                </div>
-                <div class="command-card">
-                    <div class="command-name">我要进群</div>
-                    <div class="command-desc">加入小小素交流群</div>
-                    <div class="command-desc">请添加小小素为好友，私信发送该指令！</div>
-                </div>
-                <div class="command-card">
-                    <div class="command-name">领取小小酥</div>
-                    <div class="command-desc">加入小小素交流群领取1000小小酥！</div>
-                </div>
-                <div class="command-card">
-                    <div class="command-name">baninfo &lt;用户ID/@用户&gt;</div>
-                    <div class="command-desc">查询某人封禁信息。</div>
-                </div>
-            </div>
-        </div>
-        <div class="cmd-section">
-            <div class="cmd-section-header query">
-                <i class="fas fa-search"></i>  查询指令
-            </div>
-            <div class="cmd-grid">
                 <div class="command-card">
                     <div class="command-name">org.s &lt;玩家ID&gt;</div>
                     <div class="command-desc">查询2b2t.org玩家信息。</div>
@@ -75,19 +36,28 @@
                     <div class="command-example">示例: org.r all Az_Su</div>
                 </div>
                 <div class="command-card">
+                    <div class="command-name">skin [玩家名]</div>
+                    <div class="command-desc">查询指定玩家的Minecraft皮肤。</div>
+                    <div class="command-example">示例: skin Az_Su</div>
+                </div>
+                <div class="command-card">
                     <div class="command-name">whois &lt;域名&gt;</div>
-                    <div class="command-desc">Whois查询</div>
+                    <div class="command-desc">域名Whois查询。</div>
                     <div class="command-example">示例: whois azsu.top</div>
                 </div>
                 <div class="command-card">
                     <div class="command-name">gg.s/t/r  ......</div>
-                    <div class="command-desc">2b2t.gg数据不再更新。</div>
+                    <div class="command-desc">2b2t.gg数据自5月17日起不再更新。</div>
+                </div>
+                <div class="command-card">
+                    <div class="command-name">baninfo &lt;用户ID/@用户&gt;</div>
+                    <div class="command-desc">查询某人封禁信息。</div>
                 </div>
             </div>
         </div>
         <div class="cmd-section">
             <div class="cmd-section-header admin">
-                <i class="fas fa-terminal"></i>  管理员指令
+                <p><i class="fas fa-terminal"></i> 管理员指令</p>
             </div>
             <div class="cmd-grid">
                 <div class="command-card">
@@ -135,8 +105,43 @@
             </div>
         </div>
         <div class="cmd-section">
+            <div class="cmd-section-header query">
+                <p><i class="fas fa-list-ul"></i> 目前用处不大的指令</p>
+            </div>
+            <div class="cmd-grid">
+                <div class="command-card">
+                    <div class="command-name">qd</div>
+                    <div class="command-desc">每日签到。</div>
+                </div>
+                <div class="command-card">
+                    <div class="command-name">小小酥 [@用户(默认自己)]</div>
+                    <div class="command-desc">查询小小酥的数量。</div>
+                    <div class="command-example">示例: 小小酥 @Az_Su</div>
+                </div>
+                <div class="command-card">
+                    <div class="command-name">小小酥.pay &lt;@用户&gt; &lt;金额&gt;</div>
+                    <div class="command-desc">向某人转账(税率245%)</div>
+                    <div class="command-example">示例: 小小酥.pay @Az_Su 100</div>
+                </div>
+                <div class="command-card">
+                    <div class="command-name">大转盘 &lt;@用户/开启/关闭&gt;</div>
+                    <div class="command-desc">禁言大转盘，每次消耗100个小小酥。</div>
+                    <div class="command-example">示例: 大转盘 @许愿沙</div>
+                </div>
+                <div class="command-card">
+                    <div class="command-name">我要进群</div>
+                    <div class="command-desc">加入小小素交流群</div>
+                    <div class="command-desc">请添加小小素为好友，私信发送该指令！</div>
+                </div>
+                <div class="command-card">
+                    <div class="command-name">领取小小酥</div>
+                    <div class="command-desc">加入小小素交流群领取1000小小酥！</div>
+                </div>
+            </div>
+        </div>
+        <div class="cmd-section">
             <div class="cmd-section-header super-admin">
-                <i class="fas fa-cog"></i>  高级管理员指令
+                <p><i class="fas fa-cog"></i>  高级管理员指令</p>
             </div>
             <div class="cmd-grid">
                 <div class="command-card">
