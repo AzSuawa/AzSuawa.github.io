@@ -149,6 +149,12 @@ let menuState = {
     expandedGroups: ['素素の生存服', '小小素BOT'] // 默认展开的菜单组
 };
 
+// 全局路由对象
+let router = {
+    currentPage: null,
+    isLoading: false
+};
+
 // 检查是否在子页面
 function isSubPage() {
     const path = window.location.pathname;
@@ -246,6 +252,12 @@ function toggleSidebar() {
 function initializePage() {
     const pageId = getCurrentPageId();
     
+    // 初始化路由对象
+    window.router = router;
+    
+    // 设置当前页面
+    router.currentPage = pageId;
+    
     // 初始化菜单
     initMenu();
     
@@ -266,10 +278,6 @@ function initializePage() {
     
     // 主页面初始化SPA路由
     if (!isSubPage()) {
-        const router = {
-            currentPage: null,
-            isLoading: false
-        };
         initRouter(router);
     }
 }
@@ -341,18 +349,24 @@ function initMenu() {
 
 // 处理SPA导航
 function handleSPANavigation(pageId, href) {
-    const router = window.router || { currentPage: null, isLoading: false };
+    // 使用全局路由对象
+    const currentRouter = window.router || router;
     
-    if (router.currentPage === pageId || router.isLoading) return;
+    if (currentRouter.currentPage === pageId || currentRouter.isLoading) {
+        console.log('重复导航或正在加载:', pageId);
+        return;
+    }
+    
+    console.log('导航到页面:', pageId);
     
     if (pageId === 'home') {
         history.pushState({ pageId: 'home' }, null, '/');
         showHomeContent();
-        router.currentPage = 'home';
+        currentRouter.currentPage = 'home';
     } else {
         history.pushState({ pageId }, null, href);
-        loadPageContent(pageId, router);
-        router.currentPage = pageId;
+        loadPageContent(pageId, currentRouter);
+        currentRouter.currentPage = pageId;
     }
     
     setActiveMenuItem(pageId);
@@ -374,6 +388,10 @@ function setActiveMenuItem(pageId) {
 function initRouter(router) {
     window.router = router;
     
+    // 确保当前页面状态正确
+    const currentPageId = getCurrentPageId();
+    router.currentPage = currentPageId;
+    
     // 处理初始路由
     handleInitialRoute(router);
     
@@ -385,6 +403,8 @@ function handleInitialRoute(router) {
     const path = window.location.pathname;
     const pageId = getCurrentPageId();
     
+    console.log('初始路由处理:', { path, pageId });
+    
     // 处理根路径
     if (path === '/' || path === '') {
         showHomeContent();
@@ -394,6 +414,7 @@ function handleInitialRoute(router) {
     
     // 处理其他页面路由
     if (pageId !== 'home' && !isSpecialPage(pageId)) {
+        console.log('加载初始页面内容:', pageId);
         loadPageContent(pageId, router);
         router.currentPage = pageId;
     }
@@ -410,6 +431,8 @@ function setupNavigation(router) {
             const path = window.location.pathname;
             pageId = path === '/' ? 'home' : path.substring(1);
         }
+        
+        console.log('popstate 事件:', pageId);
         
         if (router.currentPage === pageId) return;
         
@@ -434,6 +457,8 @@ function setupNavigation(router) {
 
 // 显示主页内容
 function showHomeContent() {
+    console.log('显示主页内容');
+    
     const dynamicContent = document.getElementById('dynamic-content');
     if (dynamicContent) {
         dynamicContent.innerHTML = '';
@@ -450,27 +475,49 @@ function showHomeContent() {
 
 // 加载页面内容（SPA方式）
 async function loadPageContent(pageId, router) {
+    if (router.isLoading) {
+        console.log('正在加载中，跳过重复请求:', pageId);
+        return;
+    }
+    
     router.isLoading = true;
+    
+    console.log('开始加载页面内容:', pageId);
+    
+    // 显示加载状态
+    const container = document.getElementById('dynamic-content');
+    container.innerHTML = '<div class="card active"><div class="loading"><p>加载中...</p></div></div>';
     
     // 隐藏所有默认卡片
     document.querySelectorAll('.card').forEach(card => {
         card.style.display = 'none';
     });
 
-    const container = document.getElementById('dynamic-content');
-    
     try {
         let response;
+        let targetUrl;
+        
         // 检查是子目录页面还是根目录页面
         if (['mam1145', 'sudpkkkk', 'iuhiuhne', 'qwqwcllwww', 'g'].includes(pageId)) {
-            response = await fetch(`/${pageId}/index.html`);
+            targetUrl = `/${pageId}/index.html`;
         } else {
-            response = await fetch(`/${pageId}.html`);
+            targetUrl = `/${pageId}.html`;
         }
         
-        if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+        console.log('正在请求:', targetUrl);
+        response = await fetch(targetUrl);
+        
+        if (!response.ok) {
+            throw new Error(`HTTP错误! 状态码: ${response.status}`);
+        }
         
         const html = await response.text();
+        
+        if (!html || html.trim().length === 0) {
+            throw new Error('获取到的内容为空');
+        }
+        
+        console.log('成功获取内容，长度:', html.length);
         
         // 提取内容部分
         const tempDiv = document.createElement('div');
@@ -480,23 +527,37 @@ async function loadPageContent(pageId, router) {
         if (content) {
             container.innerHTML = content.innerHTML;
         } else {
-            container.innerHTML = tempDiv.querySelector('body').innerHTML;
+            // 尝试直接获取body内容
+            const bodyContent = tempDiv.querySelector('body');
+            if (bodyContent) {
+                container.innerHTML = bodyContent.innerHTML;
+            } else {
+                container.innerHTML = html;
+            }
         }
 
         updatePageMeta(pageId);
         setActiveMenuItem(pageId);
         window.scrollTo(0, 0);
+        
+        console.log('页面加载完成:', pageId);
+        
     } catch (err) {
-        console.error('加载失败:', err);
+        console.error('页面加载失败:', err);
         container.innerHTML = `
             <div class="card active error">
                 <h1>加载失败(＞﹏＜)</h1>
-                <p>${err.message}</p>
-                <button onclick="location.reload()">刷新页面</button>
+                <p>错误信息: ${err.message}</p>
+                <p>页面ID: ${pageId}</p>
+                <div style="margin-top: 15px;">
+                    <button onclick="location.reload()" style="margin: 5px; padding: 8px 16px; background: #4285f4; color: white; border: none; border-radius: 4px; cursor: pointer;">刷新页面</button>
+                    <button onclick="window.location.href='/${pageId}.html'" style="margin: 5px; padding: 8px 16px; background: #34a853; color: white; border: none; border-radius: 4px; cursor: pointer;">直接访问页面</button>
+                </div>
             </div>
         `;
     } finally {
         router.isLoading = false;
+        console.log('加载状态重置完成');
     }
 }
 
