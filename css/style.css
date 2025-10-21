@@ -69,6 +69,7 @@ body {
   overflow-x: hidden;
   display: flex;
   flex-direction: column;
+  margin-top: -1px;
 }
 
 /* 隐藏滚动条但保持滚动功能 */
