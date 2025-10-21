@@ -154,15 +154,33 @@ function toggleSidebar() {
     }
 }
 
+// 确保动态内容容器存在
+function ensureDynamicContentContainer() {
+    let container = document.getElementById('dynamic-content');
+    if (!container) {
+        console.log('创建dynamic-content容器');
+        container = document.createElement('div');
+        container.id = 'dynamic-content';
+        const mainContent = document.querySelector('#content .container') || document.querySelector('#content') || document.body;
+        mainContent.appendChild(container);
+    }
+    return container;
+}
+
 // 初始化所有页面
 function initializePage() {
     const pageId = getCurrentPageId();
+    
+    console.log('初始化页面，当前页面ID:', pageId);
     
     // 初始化路由对象
     window.router = router;
     
     // 设置当前页面
     router.currentPage = pageId;
+    
+    // 确保动态内容容器存在
+    ensureDynamicContentContainer();
     
     // 初始化菜单
     initMenu();
@@ -233,8 +251,11 @@ function initMenu() {
                 const href = this.getAttribute('href');
                 const pageId = href === '/' ? 'home' : href.substring(1);
                 
+                console.log('菜单点击:', { href, pageId, currentPage: router.currentPage });
+                
                 // 特殊页面直接跳转
                 if (isSpecialPage(pageId)) {
+                    console.log('特殊页面，直接跳转');
                     return true; // 允许默认行为
                 }
                 
@@ -263,7 +284,7 @@ function handleSPANavigation(pageId, href) {
         return;
     }
     
-    console.log('导航到页面:', pageId);
+    console.log('SPA导航到页面:', pageId, '当前页面:', currentRouter.currentPage);
     
     if (pageId === 'home') {
         history.pushState({ pageId: 'home' }, null, '/');
@@ -298,6 +319,8 @@ function initRouter(router) {
     const currentPageId = getCurrentPageId();
     router.currentPage = currentPageId;
     
+    console.log('初始化路由，当前页面:', currentPageId);
+    
     // 处理初始路由
     handleInitialRoute(router);
     
@@ -313,6 +336,7 @@ function handleInitialRoute(router) {
     
     // 处理根路径
     if (path === '/' || path === '' || path === '/index.html') {
+        console.log('检测到首页，显示主页内容');
         showHomeContent();
         router.currentPage = 'home';
         return;
@@ -338,7 +362,7 @@ function setupNavigation(router) {
             pageId = path === '/' ? 'home' : path.substring(1);
         }
         
-        console.log('popstate 事件:', pageId);
+        console.log('popstate 事件:', pageId, '当前页面:', router.currentPage);
         
         if (router.currentPage === pageId) return;
         
@@ -365,15 +389,24 @@ function setupNavigation(router) {
 function showHomeContent() {
     console.log('显示主页内容');
     
-    const dynamicContent = document.getElementById('dynamic-content');
-    if (dynamicContent) {
-        dynamicContent.innerHTML = '';
-    }
+    const container = ensureDynamicContentContainer();
+    container.innerHTML = '';
     
     // 显示主页的默认卡片
-    document.querySelectorAll('.card').forEach(card => {
-        card.style.display = 'block';
-    });
+    const defaultCards = document.querySelectorAll('.card');
+    if (defaultCards.length > 0) {
+        defaultCards.forEach(card => {
+            card.style.display = 'block';
+        });
+    } else {
+        // 如果没有默认卡片，显示主页内容
+        container.innerHTML = `
+            <div class="card active">
+                <h1>欢迎来到素素の生存服</h1>
+                <p>请选择左侧菜单浏览内容</p>
+            </div>
+        `;
+    }
     
     window.scrollTo(0, 0);
 }
@@ -389,8 +422,10 @@ async function loadPageContent(pageId, router) {
     
     console.log('开始加载页面内容:', pageId);
     
+    // 确保容器存在
+    const container = ensureDynamicContentContainer();
+    
     // 显示加载状态
-    const container = document.getElementById('dynamic-content');
     container.innerHTML = '<div class="card active"><div class="loading"><p>加载中...</p></div></div>';
     
     // 隐藏所有默认卡片
@@ -399,18 +434,13 @@ async function loadPageContent(pageId, router) {
     });
 
     try {
-        let response;
         let targetUrl;
         
-        // 检查是子目录页面还是根目录页面
-        if (['mam1145', 'sudpkkkk', 'iuhiuhne', 'qwqwcllwww', 'g'].includes(pageId)) {
-            targetUrl = `/${pageId}/index.html`;
-        } else {
-            targetUrl = `/${pageId}.html`;
-        }
+        // 所有页面都是子目录结构
+        targetUrl = `/${pageId}/index.html`;
         
         console.log('正在请求:', targetUrl);
-        response = await fetch(targetUrl);
+        const response = await fetch(targetUrl);
         
         if (!response.ok) {
             throw new Error(`HTTP错误! 状态码: ${response.status}`);
@@ -427,20 +457,31 @@ async function loadPageContent(pageId, router) {
         // 提取内容部分
         const tempDiv = document.createElement('div');
         tempDiv.innerHTML = html;
-        const content = tempDiv.querySelector('#content');
         
-        if (content) {
-            container.innerHTML = content.innerHTML;
+        // 尝试不同的内容提取方式
+        let contentHTML = '';
+        const contentElement = tempDiv.querySelector('#content');
+        if (contentElement) {
+            contentHTML = contentElement.innerHTML;
         } else {
-            // 尝试直接获取body内容
-            const bodyContent = tempDiv.querySelector('body');
-            if (bodyContent) {
-                container.innerHTML = bodyContent.innerHTML;
+            const mainContent = tempDiv.querySelector('main') || tempDiv.querySelector('.container') || tempDiv.querySelector('.content');
+            if (mainContent) {
+                contentHTML = mainContent.innerHTML;
             } else {
-                container.innerHTML = html;
+                // 如果都找不到，使用body内容但排除脚本和样式
+                const bodyContent = tempDiv.querySelector('body');
+                if (bodyContent) {
+                    const clone = bodyContent.cloneNode(true);
+                    const scripts = clone.querySelectorAll('script, style, link, meta, title');
+                    scripts.forEach(el => el.remove());
+                    contentHTML = clone.innerHTML;
+                } else {
+                    contentHTML = html;
+                }
             }
         }
-
+        
+        container.innerHTML = contentHTML;
         setActiveMenuItem(pageId);
         window.scrollTo(0, 0);
         
@@ -451,11 +492,10 @@ async function loadPageContent(pageId, router) {
         container.innerHTML = `
             <div class="card active error">
                 <h1>加载失败(＞﹏＜)</h1>
-                <p>错误信息: ${err.message}</p>
-                <p>页面ID: ${pageId}</p>
+                <p>错误: ${err.message}</p>
+                <p>页面: ${pageId}</p>
                 <div style="margin-top: 15px;">
-                    <button onclick="location.reload()" style="margin: 5px; padding: 8px 16px; background: #4285f4; color: white; border: none; border-radius: 4px; cursor: pointer;">刷新页面</button>
-                    <button onclick="window.location.href='/${pageId}.html'" style="margin: 5px; padding: 8px 16px; background: #34a853; color: white; border: none; border-radius: 4px; cursor: pointer;">直接访问页面</button>
+                    <button onclick="location.reload()" style="margin: 5px; padding: 8px 16px; background: #A1BDFF; color: white; border: none; border-radius: 4px; cursor: pointer;">刷新页面</button>
                 </div>
             </div>
         `;
