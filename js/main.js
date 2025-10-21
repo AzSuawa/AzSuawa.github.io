@@ -1,97 +1,3 @@
-// 页面元数据配置
-const pageMetaData = {
-    'aa': {
-        title: '小小素(p≧w≦q)',
-        description: '素素の生存服、azsu.top、小小素QQ机器人、API接口、MC服务器、Minecraft、我的世界、麦块',
-        headerTitle: '小小素BOT'
-    },
-    'ab': {
-        title: '常见问题 - 小小素(p≧w≦q)',
-        description: '素素の生存服、azsu.top、小小素QQ机器人、API接口、MC服务器、Minecraft、我的世界、麦块',
-        headerTitle: '常见问题'
-    },
-    'ac': {
-        title: '鸣谢和赞助 - 小小素(p≧w≦q)',
-        description: '素素の生存服、azsu.top、小小素QQ机器人、API接口、MC服务器、Minecraft、我的世界、麦块',
-        headerTitle: '鸣谢和赞助'
-    },
-    'cmds': {
-        title: '指令帮助 - 小小素(p≧w≦q)',
-        description: '素素の生存服、azsu.top、小小素QQ机器人、API接口、MC服务器、Minecraft、我的世界、麦块',
-        headerTitle: '指令帮助'
-    },
-    'api': {
-        title: '小小素API - 小小素(p≧w≦q)',
-        description: 'Minecraft服务器Motd查询、2b2t.org数据图片查询',
-        headerTitle: '小小素API'
-    },
-    'bot-update': {
-        title: '更新日志 - 小小素(p≧w≦q)',
-        description: '小小素BOT的版本更新历史记录',
-        headerTitle: '小小素更新日志'
-    },
-    'skin': {
-        title: '上传皮肤到服务器 - 素素の生存服(p≧w≦q)',
-        description: '上传皮肤到服务器 - 素素の生存服(p≧w≦q)、azsu.top、小小素QQ机器人、API接口、MC服务器、Minecraft、我的世界、麦块',
-        headerTitle: '素素の生存服'
-    },
-    'mcp': {
-        title: 'Minecraft服务器状态查询API - 阿素本素(p≧w≦q)',
-        description: 'Minecraft服务器状态查询API - 素素の生存服(p≧w≦q)、Motd、azsu.top、小小素QQ机器人、API接口、MC服务器、Minecraft、我的世界、麦块',
-        headerTitle: '小小素API'
-    },
-    'ba': {
-        title: '素素の生存服 - 阿素本素(p≧w≦q)',
-        description: '素素の生存服、azsu.top、小小素QQ机器人、API接口、MC服务器、Minecraft、我的世界、麦块',
-        headerTitle: '素素の生存服'
-    },
-    'bb': {
-        title: '机制修改 - 素素の生存服(p≧w≦q)',
-        description: '素素の生存服、azsu.top、小小素QQ机器人、API接口、MC服务器、Minecraft、我的世界、麦块',
-        headerTitle: '机制修改'
-    },
-    'ban': {
-        title: '封禁列表 - 素素の生存服(p≧w≦q)',
-        description: '素素の生存服、azsu.top、小小素QQ机器人、API接口、MC服务器、Minecraft、我的世界、麦块',
-        headerTitle: '封禁列表'
-    },
-    'g': {
-        title: '小故事 - 阿素本素(p≧w≦q)',
-        description: '素素の生存服、azsu.top、小小素QQ机器人、API接口、MC服务器、Minecraft、我的世界、麦块',
-        headerTitle: '小故事'
-    },
-    'sp': {
-        title: '赞助列表 - 素素の生存服(p≧w≦q)',
-        description: '素素の生存服、azsu.top、小小素QQ机器人、API接口、MC服务器、Minecraft、我的世界、麦块',
-        headerTitle: '赞助列表'
-    },
-    'mam1145': {
-        title: '玩家处理 - mam1145 - 素素の生存服(p≧w≦q)',
-        description: '素素の生存服、azsu.top、小小素QQ机器人、API接口、MC服务器、Minecraft、我的世界、麦块',
-        headerTitle: '玩家处理详情'
-    },
-    'sudpkkkk': {
-        title: '玩家处理 - sudpkkkk - 素素の生存服(p≧w≦q)',
-        description: '素素の生存服、azsu.top、小小素QQ机器人、API接口、MC服务器、Minecraft、我的世界、麦块',
-        headerTitle: '玩家处理详情'
-    },
-    'iuhiuhne': {
-        title: '玩家处理 - iuhiuhne - 素素の生存服(p≧w≦q)',
-        description: '素素の生存服、azsu.top、小小素QQ机器人、API接口、MC服务器、Minecraft、我的世界、麦块',
-        headerTitle: '玩家处理详情'
-    },
-    'qwqwcllwww': {
-        title: '玩家处理 - qwqwcllwww - 素素の生存服(p≧w≦q)',
-        description: '素素の生存服、azsu.top、小小素QQ机器人、API接口、MC服务器、Minecraft、我的世界、麦块',
-        headerTitle: '玩家处理详情'
-    },
-    'default': {
-        title: '阿素本素(p≧w≦q)',
-        description: '素素の生存服、azsu.top、小小素QQ机器人、API接口、MC服务器、Minecraft、我的世界、麦块',
-        headerTitle: '素素の生存服'
-    }
-};
-
 // 菜单HTML模板
 const menuHTML = `
 <div class="menu-group active">
@@ -406,7 +312,7 @@ function handleInitialRoute(router) {
     console.log('初始路由处理:', { path, pageId });
     
     // 处理根路径
-    if (path === '/' || path === '') {
+    if (path === '/' || path === '' || path === '/index.html') {
         showHomeContent();
         router.currentPage = 'home';
         return;
@@ -469,7 +375,6 @@ function showHomeContent() {
         card.style.display = 'block';
     });
     
-    updatePageMeta('default');
     window.scrollTo(0, 0);
 }
 
@@ -536,7 +441,6 @@ async function loadPageContent(pageId, router) {
             }
         }
 
-        updatePageMeta(pageId);
         setActiveMenuItem(pageId);
         window.scrollTo(0, 0);
         
@@ -558,29 +462,6 @@ async function loadPageContent(pageId, router) {
     } finally {
         router.isLoading = false;
         console.log('加载状态重置完成');
-    }
-}
-
-// 更新页面元数据
-function updatePageMeta(pageId) {
-    const metaData = pageMetaData[pageId] || pageMetaData['default'];
-    
-    // 更新title
-    document.title = metaData.title;
-    
-    // 更新meta description
-    let metaDesc = document.querySelector('meta[name="description"]');
-    if (!metaDesc) {
-        metaDesc = document.createElement('meta');
-        metaDesc.name = 'description';
-        document.head.appendChild(metaDesc);
-    }
-    metaDesc.content = metaData.description;
-    
-    // 更新header标题
-    const headerTitle = document.getElementById('header')?.querySelector('#title');
-    if (headerTitle) {
-        headerTitle.textContent = metaData.headerTitle;
     }
 }
 
