@@ -6,16 +6,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>阿素本素(p≧w≦q)</title>
     
-    <!-- 主题颜色兼容性 -->
     <meta name="theme-color" content="#A1BDFF">
     <meta name="msapplication-TileColor" content="#A1BDFF">
     <meta name="apple-mobile-web-app-status-bar-style" content="#A1BDFF">
     
     <link rel="stylesheet" href="css/all.min.css">
     <link rel="stylesheet" href="css/style.css">
-    <link rel="icon" href="./images/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="images/favicon.ico" type="image/x-icon">
     
-    <!-- 强制UTF-8编码 -->
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta http-equiv="Content-Script-Type" content="text/javascript; charset=UTF-8">
     <meta http-equiv="X-Content-Type-Options" content="nosniff">
@@ -29,48 +27,7 @@
     </div>
     
     <div id="sidebar">
-        <div class="menu-group active">
-            <div class="group-header">
-                <i class="fas fa-star"></i>
-                <span>素素の生存服</span>
-                <i class="fas fa-chevron-down toggle"></i>
-            </div>
-            <ul class="submenu">
-                <li class="active"><a href="/ba" data-page="ba"><i class="fas fa-home"></i> 首页</a></li>
-                <li><a href="/bb" data-page="bb"><i class="fas fa-list-alt"></i> 机制修改</a></li>
-                <li><a href="/sp" data-page="sp"><i class="fas fa-heart"></i> 赞助列表</a></li>
-                <li><a href="/ban" data-page="ban"><i class="fas fa-ban"></i> 封禁列表</a></li>
-                <li class="active"><a href="./skin" data-page="skin"><i class="fas fa-star"></i> 上传皮肤</a></li>
-            </ul>
-        </div>
-
-        <div class="menu-group active">
-            <div class="group-header">
-                <i class="fas fa-star"></i>
-                <span>小小素BOT</span>
-                <i class="fas fa-chevron-down toggle"></i>
-            </div>
-            <ul class="submenu">
-                <li class="active"><a href="/aa" data-page="aa"><i class="fas fa-home"></i> 首页</a></li>
-                <li><a href="/api" data-page="api"><i class="fas fa-solid fa-code"></i> API</a></li>
-                <li><a href="/ab" data-page="ab"><i class="fas fa-star"></i> 常见问题</a></li>
-                <li><a href="/ac" data-page="ac"><i class="fas fa-heart"></i> 鸣谢和赞助</a></li>
-                <li><a href="/cmds" data-page="cmds"><i class="fas fa-list-alt"></i> 指令列表</a></li>
-                <li><a href="/bot-update" data-page="bot-update"><i class="fas fa-book"></i> 更新日志</a></li>
-                <li class="active"><a href="./mcp" data-page="mcp"><i class="fas fa-star"></i> MCPing</a></li>
-            </ul>
-        </div>
-
-        <div class="menu-group">
-            <div class="group-header">
-                <i class="fas fa-star"></i>
-                <span>其他</span>
-                <i class="fas fa-chevron-right toggle"></i>
-            </div>
-            <ul class="submenu" style="display: none;">
-                <li><a href="/g" data-page="g"><i class="fas fa-book"></i> 小故事</a></li>
-            </ul>
-        </div>
+        <!-- 菜单内容将由JS动态加载 -->
     </div>
     
     <div id="content">
@@ -82,21 +39,23 @@
             </div>
         </div>
         
-    <div class="card active"> 
-        <h2>如何加入</h2>
-        <div class="command-section">
-            <p><i class="fas fa-circle"></i><strong>正版玩家：</strong>使用正版账号进入游戏即可<br><i class="fas fa-circle"></i><strong>离线玩家：</strong>一般只能使用<strong> 未被正版玩家使用的ID </strong>，如果要使用被正版占用的ID请找管理。注册时「登录失败无效会话」说明你的ID已被正版玩家占用，换个ID重新进入试试。在QQ群内发送 <strong>/mcid &lt;你的ID&gt;</strong> 可以查询你的ID是否已经被正版玩家使用。<br><i class="fas fa-circle"></i>本服不支持外置登录和离线皮肤模组（如万用皮肤补丁）。玩家可以在<a href="https://azsu.top/skin" style="color: #4285f4; text-decoration: none;">点击前往</a>上传自己的皮肤，上传后进入游戏在菜单里更新皮肤即可。</p>
+        <div class="card active"> 
+            <h2>如何加入</h2>
+            <div class="command-section">
+                <p><i class="fas fa-circle"></i><strong>正版玩家：</strong>使用正版账号进入游戏即可<br><i class="fas fa-circle"></i><strong>离线玩家：</strong>一般只能使用<strong> 未被正版玩家使用的ID </strong>，如果要使用被正版占用的ID请找管理。注册时「登录失败无效会话」说明你的ID已被正版玩家占用，换个ID重新进入试试。在QQ群内发送 <strong>/mcid &lt;你的ID&gt;</strong> 可以查询你的ID是否已经被正版玩家使用。<br><i class="fas fa-circle"></i>本服不支持外置登录和离线皮肤模组（如万用皮肤补丁）。玩家可以在<a href="/skin" style="color: #4285f4; text-decoration: none;">点击前往</a>上传自己的皮肤，上传后进入游戏在菜单里更新皮肤即可。</p>
+            </div>
         </div>
-    </div>
-    <div class="card active"> 
-        <h2>家被熊，遭遇破坏或盗窃</h2>
-        <div class="command-section">
-            <p><i class="fas fa-circle"></i>在游戏内使用指令 <strong>/co i</strong> 打开查熊模式，点击方块可以查询该位置记录信息。将破坏情况、位置、时间等信息发给阿素，证实后可对破坏行为进行回滚，对破坏人员进行处罚。</p>
+        
+        <div class="card active"> 
+            <h2>家被熊，遭遇破坏或盗窃</h2>
+            <div class="command-section">
+                <p><i class="fas fa-circle"></i>在游戏内使用指令 <strong>/co i</strong> 打开查熊模式，点击方块可以查询该位置记录信息。将破坏情况、位置、时间等信息发给阿素，证实后可对破坏行为进行回滚，对破坏人员进行处罚。</p>
+            </div>
         </div>
-    </div>
         
         <div id="dynamic-content"></div>
     </div>
-    <script src="js/main.js" charset="UTF-8"></script>
+    
+    <script src="js/main.js"></script>
 </body>
 </html>

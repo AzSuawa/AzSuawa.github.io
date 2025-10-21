@@ -9,7 +9,7 @@
   --danger-color: #FFB3C0;
   --info-color: #85DFB5;
 }
-
+>
 * {
   margin: 0;
   padding: 0;
@@ -33,7 +33,7 @@ body {
   z-index: 100;
   color: white;
 }
-
+/* 移动端菜单按钮样式优化 */
 #menu-btn {
   font-size: 20px;
   cursor: pointer;
@@ -41,6 +41,8 @@ body {
   border: none;
   color: white;
   margin-right: 20px;
+  padding: 5px;
+  z-index: 101;
 }
 
 #title {
@@ -57,39 +59,19 @@ body {
 
 #sidebar {
   position: fixed;
-  top: 60px; /* 从header下面开始 */
+  top: 0;
   left: 0;
   width: 220px;
-  height: calc(100vh - 60px); /* 减去header高度 */
+  height: 100%;
   background: #F0F5FF;
   transition: left 0.3s;
   z-index: 99;
+  padding-top: 60px;
   box-shadow: 2px 0 10px rgba(0,0,0,0.1);
-  overflow-y: auto;
-  overflow-x: hidden;
-  display: flex;
-  flex-direction: column;
-}
-
-/* 隐藏滚动条但保持滚动功能 */
-#sidebar::-webkit-scrollbar {
-  width: 0px;
-  background: transparent;
-}
-
-#sidebar {
-  scrollbar-width: none;
-  -ms-overflow-style: none;
 }
 
 #sidebar.active {
   left: 0;
-}
-
-/* 菜单内容容器 */
-#sidebar > .menu-content {
-  flex: 1;
-  padding-bottom: 20px;
 }
 
 #sidebar ul {
@@ -179,7 +161,7 @@ body {
   width: auto;
   max-width: 100%;
   border-collapse: collapse;
-  margin: 0; /* 移除居中 */
+  margin: 0 auto;
 }
 
 .sponsor-table th,
@@ -189,7 +171,7 @@ body {
 .sp-table th,
 .sp-table td {
   padding: 8px 12px;
-  text-align: left; /* 确保所有内容左对齐 */
+  text-align: left;
   border-bottom: 1px solid var(--border-color);
 }
 
@@ -199,7 +181,6 @@ body {
   background-color: var(--primary-color);
   color: white;
   font-weight: bold;
-  text-align: left; /* 表头也左对齐 */
 }
 
 .sponsor-table tr:hover,

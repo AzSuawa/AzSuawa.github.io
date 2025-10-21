@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name='description' content='素素の生存服、azsu.top、小小素QQ机器人、API接口、MC服务器、Minecraft、我的世界、麦块'>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>素素の生存服 - 阿素本素(p≧w≦q)</title>
+    
+    <meta name="theme-color" content="#A1BDFF">
+    <meta name="msapplication-TileColor" content="#A1BDFF">
+    <meta name="apple-mobile-web-app-status-bar-style" content="#A1BDFF">
+    
+    <link rel="stylesheet" href="../css/all.min.css">
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="icon" href="../images/favicon.ico" type="image/x-icon">
+    
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="Content-Script-Type" content="text/javascript; charset=UTF-8">
+    <meta http-equiv="X-Content-Type-Options" content="nosniff">
+</head>
+<body>
+    <div id="header">
+        <button id="menu-btn">
+            <i class="fas fa-bars"></i>
+        </button>
+        <div id="title">素素の生存服</div>
+    </div>
+    
+    <div id="sidebar">
+        <!-- 菜单由JS动态加载 -->
+    </div>
+    
+    <div id="content">
+        <div class="card active"> 
+            <h1>服务器信息</h1>
+            <div class="command-section">
+                <p><i class="fas fa-circle"></i>地址：azsu.top</p>
+                <p><i class="fas fa-circle"></i>版本：Java 1.9-1.21.8</p>
+                <p><i class="fas fa-circle"></i>核心：Purpur 1.21.8</p>
+                <p>
+                    <a href="https://qm.qq.com/q/DYSYCifFRu" style="color: #4285f4; text-decoration: none;">
+                        <span class="mask-icon-wrapper" data-tooltip="QQ群">
+                            <span class="mask-icon mask-qq icon-qq-blue"></span>
+                        </span>
+                    </a>
+                    <a href="https://discord.gg/WkeYWaSHUB" style="color: #4285f4; text-decoration: none;">
+                        <span class="mask-icon-wrapper" data-tooltip="Discord">
+                            <span class="mask-icon mask-discord icon-discord-blurple"></span>
+                        </span>
+                    </a>
+                    <a href="https://b23.tv/9YpkTuA" style="color: #4285f4; text-decoration: none;">
+                        <span class="mask-icon-wrapper" data-tooltip="Bilibili">
+                            <span class="mask-icon mask-bilibili icon-blue"></span>
+                        </span>
+                    </a>
+                    <a href="https://youtube.com/@azsuawa" style="color: #4285f4; text-decoration: none;">
+                        <span class="mask-icon-wrapper" data-tooltip="YouTube">
+                            <span class="mask-icon mask-youtube icon-youtube-red"></span>
+                        </span>
+                    </a>
+                    <a href="https://tiktok.com/@azsuawa" style="color: #4285f4; text-decoration: none;">
+                        <span class="mask-icon-wrapper" data-tooltip="TikTok">
+                            <span class="mask-icon mask-tiktok icon-black"></span>
+                        </span>
+                    </a>
+                    <a href="https://www.douyin.com/user/MS4wLjABAAAAwQ-jEhb5eF4dR1blhxBOV35CMU8bwF510dULFReUG3DKG3NPCfkdYWdxUaEuz1ud" style="color: #4285f4; text-decoration: none;">
+                        <span class="mask-icon-wrapper" data-tooltip="中国抖音">
+                            <span class="mask-icon mask-douyin icon-black"></span>
+                        </span>
+                    </a>
+                    <a href="https://v.kuaishou.com/JJq8X4PN" style="color: #4285f4; text-decoration: none;">
+                        <span class="mask-icon-wrapper" data-tooltip="快手">
+                            <span class="mask-icon mask-kuaishou icon-red"></span>
+                        </span>
+                    </a>
+                </p>
+            </div>
+        </div>
+        <div class="card active"> 
+            <h2>如何加入</h2>
+            <div class="command-section">
+                <p><i class="fas fa-circle"></i><strong>正版玩家：</strong>使用正版账号进入游戏即可</p>
+                <p><i class="fas fa-circle"></i><strong>离线玩家：</strong>一般只能使用<strong> 未被正版玩家使用的ID </strong>，如果要使用被正版占用的ID请找管理。注册时「登录失败无效会话」说明你的ID已被正版玩家占用，换个ID重新进入试试。在QQ群内发送 <strong>/mcid &lt;你的ID&gt;</strong> 可以查询你的ID是否已经被正版玩家使用。</p>
+                <p><i class="fas fa-circle"></i>本服不支持外置登录和离线皮肤模组（如万用皮肤补丁）。玩家可以在<a href="/skin" style="color: #4285f4; text-decoration: none;">点击前往</a>上传自己的皮肤，上传后进入游戏在菜单里更新皮肤即可。</p>
+            </div>
+        </div>
+        <div class="card active"> 
+            <h2>为什么阿素不开无规则服</h2>
+            <div class="command-section">
+                <p><i class="fas fa-circle"></i>阿素不喜欢无规则国服的环境。</p>
+                <p><i class="fas fa-circle"></i>无规则圈子较小，玩家群体不是很大。</p>
+                <p><i class="fas fa-circle"></i>无规则服管理员无权干涉玩家任何行为，包括攻击服务器、违法犯罪、违反社会公德等行为，法律与运营风险高。</p>
+                <p><i class="fas fa-circle"></i>无规则国服玩家群体恶俗人居多，玩家或管理组容易被卷入各种恶性纷争，个人权利与人身安全受到威胁。</p>
+            </div>
+        </div>
+        <div class="card active"> 
+            <h2>功能举例</h2>
+            <div class="command-section">
+                <div class="command-example">支持正版&离线</div>
+                <div class="command-example">自定义皮肤</div>
+                <div class="command-example">死亡不掉落</div>
+                <div class="command-example">开放飞行</div>
+                <div class="command-example">开放夜视</div>
+                <div class="command-example">领地系统</div>
+                <div class="command-example">商店系统</div>
+                <div class="command-example">更多地形</div>
+                <div class="command-example">箱子商店</div>
+                <div class="command-example">随机传送</div>
+                <div class="command-example">箱子锁</div>
+                <div class="command-example">粘液科技</div>
+            </div>
+        </div>
+    </div>
+    
+    <script src="../js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name='description' content='Minecraft服务器状态查询API - 素素の生存服(p≧w≦q)、Motd、azsu.top、小小素QQ机器人、API接口、MC服务器、Minecraft、我的世界、麦块'>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Minecraft服务器状态查询API - 阿素本素(p≧w≦q)</title>
+    <link rel="stylesheet" href="../css/all.min.css">
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="icon" href="../images/favicon.ico" type="image/x-icon">
+    <meta name="theme-color" content="#A1BDFF">
+    <style>
+        /* MCPing页面特定样式 */
+        .mcp-container {
+          max-width: 500px;
+          margin: 0 auto;
+        }
+
+        .mcp-form-group {
+          margin-bottom: 15px;
+        }
+
+        .mcp-form-group label {
+          display: block;
+          margin-bottom: 5px;
+          font-weight: bold;
+        }
+
+        .mcp-form-group input[type="text"] {
+          width: calc(100% - 2px);
+          padding: 10px;
+          border: 1px solid #ced4da;
+          border-radius: 4px;
+          font-size: 14px;
+          box-sizing: border-box;
+        }
+
+        .mcp-btn {
+          background-color: var(--primary-color);
+          color: white;
+          padding: 10px 20px;
+          border: none;
+          border-radius: 4px;
+          cursor: pointer;
+          font-size: 16px;
+          margin: 10px 5px;
+          transition: background-color 0.3s;
+        }
+
+        .mcp-btn:hover {
+          background-color: #8CAEFF;
+        }
+
+        .mcp-loading {
+          display: none;
+          text-align: center;
+          margin: 20px 0;
+        }
+
+        .mcp-result {
+          margin-top: 20px;
+          text-align: center;
+        }
+
+        .mcp-image {
+          max-width: 100%;
+          border-radius: 4px;
+          box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .mcp-error {
+          color: #dc3545;
+          margin-top: 10px;
+          text-align: center;
+        }
+        
+        /* 确保卡片显示 */
+        .card {
+          display: block !important;
+        }
+    </style>
+</head>
+<body>
+    <!-- 头部标题 -->
+    <div id="header">
+        <button id="menu-btn">
+            <i class="fas fa-bars"></i>
+        </button>
+        <div id="title">小小素API</div>
+    </div>
+    
+    <div id="sidebar">
+        <!-- 菜单由JS动态加载 -->
+    </div>
+    
+    <!-- 内容区域 -->
+    <div id="content">
+        <div class="card active">
+            <h1>小小素MCPing</h1>
+            <div class="command-section mcp-container">
+                <div class="mcp-form-group">
+                    <label for="mcp-ip">服务器地址</label>
+                    <input type="text" id="mcp-ip" placeholder="示例: azsu.top" value="azsu.top">
+                </div>
+                <div class="mcp-form-group">
+                    <label for="mcp-watermark">水印</label>
+                    <input type="text" id="mcp-watermark" placeholder="示例: §2awa" value="§c延迟仅供参考§7｜§e小小素交流群:§6199755660§7｜§b制作:§b阿素本素§3(Az_Su)">
+                </div>
+                <button class="mcp-btn" id="mcp-submit-btn">/mcping</button>
+                <button class="mcp-btn" id="mcp-link-btn">API</button>
+                <div class="mcp-loading">
+                    <p>Ping...</p>
+                </div>
+
+                <div class="mcp-result" id="mcp-result"></div>
+                <div class="mcp-error" id="mcp-error"></div>
+            </div>
+        </div>
+    </div>
+
+    <script src="../js/main.js"></script>
+    <script>
+        // MCPing功能
+        document.addEventListener('DOMContentLoaded', function() {
+            const submitBtn = document.getElementById('mcp-submit-btn');
+            const linkBtn = document.getElementById('mcp-link-btn');
+            
+            if (submitBtn) {
+                submitBtn.addEventListener('click', function() {
+                    const ip = document.getElementById('mcp-ip').value.trim();
+                    const watermark = document.getElementById('mcp-watermark').value.trim();
+                    const resultDiv = document.getElementById('mcp-result');
+                    const errorDiv = document.getElementById('mcp-error');
+                    const loadingDiv = document.querySelector('.mcp-loading');
+
+                    // 验证输入
+                    if (!ip) {
+                        errorDiv.textContent = '请输入服务器地址';
+                        return;
+                    }
+
+                    // 清空之前的结果和错误
+                    resultDiv.innerHTML = '';
+                    errorDiv.textContent = '';
+                    
+                    // 显示加载动画
+                    loadingDiv.style.display = 'block';
+
+                    // 构建API URL，添加时间戳防止缓存
+                    let apiUrl = `https://api.azsu.top/mcping/image?ip=${encodeURIComponent(ip)}&t=${Date.now()}`;
+                    if (watermark) {
+                        apiUrl += `&watermark=${encodeURIComponent(watermark)}`;
+                    }
+
+                    // 创建图片元素
+                    const img = new Image();
+                    img.onload = function() {
+                        loadingDiv.style.display = 'none';
+                        // 先清空结果再添加新图片
+                        resultDiv.innerHTML = '';
+                        resultDiv.appendChild(img);
+                    };
+                    img.onerror = function() {
+                        loadingDiv.style.display = 'none';
+                        errorDiv.textContent = 'Ping失败(p≧w≦q)';
+                    };
+                    img.src = apiUrl;
+                    img.className = 'mcp-image';
+                });
+
+                // 页面加载完成后自动执行ping
+                setTimeout(() => {
+                    submitBtn.click();
+                }, 500);
+            }
+
+            if (linkBtn) {
+                linkBtn.addEventListener('click', function() {
+                    window.location.href = '/api';
+                });
+            }
+        });
+    </script>
+</body>
+</html>
