@@ -23,37 +23,493 @@
         <button id="menu-btn">
             <i class="fas fa-bars"></i>
         </button>
-        <div id="title">素素の生存服</div>
+        <div id="title">小小素API</div>
     </div>
     
     <div id="sidebar">
-        <!-- 菜单内容将由JS动态加载 -->
+        <!-- 菜单由JS动态加载 -->
     </div>
     
     <div id="content">
-        <div class="card active" id="a-0">
-            <h1>您不应该看到此内容，请您刷新页面。</h1>
-            <div class="command-section">
-                <p>若重复出现此情况，说明您的浏览器未加载JavaScript。请停止使用中国浏览器，并关闭阅读优化、小说模式等功能。</p>
-                <div class="command-example">小小素交流群: 199755660</div>
+        <div id="api">
+            <div class="card active">
+                <h1>小小素API文档 <div class="command-example">上次更新: 2025-10-19</div></h1>
+                <div class="command-section">
+                    <p><strong>公开本API提供的数据应标注来源：azsu.top，未认证请求存在频率限制，可向开发者申请访问密钥</strong></p>
+                    <div class="api-endpoint">
+                        <div class="api-source-note">BaseURL: https://api.azsu.top</div>
+                        <p><strong>通用状态码</strong></p>
+                        <table class="sponsor-table ban-table">
+                            <thead>
+                                <tr>
+                                    <th>HTTP状态码</th>
+                                    <th>Code</th>
+                                    <th>描述</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>200</td>
+                                    <td>10000</td>
+                                    <td>请求成功</td>
+                                </tr>
+                                <tr>
+                                    <td>429</td>
+                                    <td>10004</td>
+                                    <td>请求过于频繁</td>
+                                </tr>
+                                <tr>
+                                    <td>503</td>
+                                    <td>10005</td>
+                                    <td>服务器繁忙</td>
+                                </tr>
+                                <tr>
+                                    <td>400</td>
+                                    <td>10101</td>
+                                    <td>缺少参数</td>
+                                </tr>
+                                <tr>
+                                    <td>403</td>
+                                    <td>10102</td>
+                                    <td>权限不足</td>
+                                </tr>
+                                <tr>
+                                    <td>404</td>
+                                    <td>10103</td>
+                                    <td>内容不存在</td>
+                                </tr>
+                                <tr>
+                                    <td>401</td>
+                                    <td>10104</td>
+                                    <td>认证失败</td>
+                                </tr>
+                                <tr>
+                                    <td>451</td>
+                                    <td>10105</td>
+                                    <td>因法律原因被禁止访问</td>
+                                </tr>
+                                <tr>
+                                    <td>500</td>
+                                    <td>10201</td>
+                                    <td>内部错误</td>
+                                </tr>
+                                <tr>
+                                    <td>500</td>
+                                    <td>10202</td>
+                                    <td>服务不可用</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="card active">
+                <h2>MCPing</h2>
+                <div class="command-section">
+                    <div class="api-endpoint">
+                        <p><span class="method">GET</span><span class="path">/mcping/json</span></p>
+                        <p>返回指定MC服务器的Ping信息(JSON)</p>
+                        <p><strong>请求参数</strong></p>
+                        <ul class="param-list">
+                            <p><i class="fas fa-circle"></i><span class="param">ip</span> - 服务器地址</p>
+                        </ul>
+                        <p><strong>请求示例</strong></p>
+                        <div class="example">
+                            https://api.azsu.top/mcping/json?ip=azsu.top
+                        </div>
+                        <p><strong>返回参数</strong></p>
+                        <p><strong>返回结果</strong></p>
+                    </div>
+                    <div class="api-endpoint">
+                        <p><span class="method">GET</span><span class="path">/mcping/image</span></p>
+                        <p>返回指定MC服务器的Ping信息(图片)</p>
+                        <p><strong>请求参数</strong></p>
+                        <ul class="param-list">
+                            <p><i class="fas fa-circle"></i><span class="param">ip</span> - 服务器地址</p>
+                            <p><i class="fas fa-circle"></i><span class="param">watermark</span> - 自定义水印文字(可选)</p>
+                        </ul>
+                        <p><strong>请求示例</strong></p>
+                        <div class="example">
+                            https://api.azsu.top/mcping/image?ip=azsu.top&amp;watermark=§c延迟仅供参考§7｜§e小小素交流群:§6199755660§7｜§b制作:阿素本素§3(Az_Su)
+                        </div>
+                    </div>
+                    <p><strong>状态码</strong></p>
+                    <table class="sponsor-table ban-table">
+                        <thead>
+                            <tr>
+                                <th>HTTP状态码</th>
+                                <th>Code</th>
+                                <th>描述</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>400</td>
+                                <td>13100</td>
+                                <td>其他查询错误</td>
+                            </tr>
+                            <tr>
+                                <td>400</td>
+                                <td>13101</td>
+                                <td>连接被拒绝</td>
+                            </tr>
+                            <tr>
+                                <td>400</td>
+                                <td>13102</td>
+                                <td>连接超时</td>
+                            </tr>
+                            <tr>
+                                <td>400</td>
+                                <td>13103</td>
+                                <td>DNS解析失败</td>
+                            </tr>
+                            <tr>
+                                <td>400</td>
+                                <td>13104</td>
+                                <td>建立连接但无数据</td>
+                            </tr>
+                            <tr>
+                                <td>400</td>
+                                <td>13105</td>
+                                <td>连接被关闭</td>
+                            </tr>
+                            <tr>
+                                <td>403</td>
+                                <td>13106</td>
+                                <td>该地址被列入黑名单</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            
+            <div class="card active">
+                <h2>Skin</h2>
+                <div class="command-section">
+                    <div class="api-endpoint">
+                        <p><span class="method">GET</span><span class="path">/skin/file</span></p>
+                        <p>返回指定ID由玩家上传的皮肤文件，若没有上传皮肤，正版ID返回正版皮肤，非正版ID返回菜鸟皮肤，用于azsu.top服务器设置皮肤功能。若SkinsRestorer插件无法识别请改为5003端口。</p>      
+                        <div class="api-source-note">正版玩家皮肤来自Mojang API</div>
+                        <p><strong>请求参数</strong></p>
+                        <ul class="param-list">
+                            <p><i class="fas fa-circle"></i><span class="param">player</span> - 玩家ID</p>
+                        </ul>
+                        <p><strong>请求示例</strong></p>
+                        <div class="example">
+                            https://api.azsu.top:5003/skin/file?player=Az_Su
+                        </div>
+                    </div>
+                    <p><strong>状态码</strong></p>
+                    <table class="sponsor-table ban-table">
+                        <thead>
+                            <tr>
+                                <th>HTTP状态码</th>
+                                <th>Code</th>
+                                <th>描述</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>200</td>
+                                <td>14000</td>
+                                <td>文件上传成功</td>
+                            </tr>
+                            <tr>
+                                <td>400</td>
+                                <td>14101</td>
+                                <td>没有上传文件</td>
+                            </tr>
+                            <tr>
+                                <td>400</td>
+                                <td>14102</td>
+                                <td>没有选择文件</td>
+                            </tr>
+                            <tr>
+                                <td>400</td>
+                                <td>14103</td>
+                                <td>不支持的文件格式</td>
+                            </tr>
+                            <tr>
+                                <td>400</td>
+                                <td>14104</td>
+                                <td>文件太大</td>
+                            </tr>
+                            <tr>
+                                <td>400</td>
+                                <td>14105</td>
+                                <td>文件安全验证失败</td>
+                            </tr>
+                            <tr>
+                                <td>500</td>
+                                <td>14201</td>
+                                <td>文件保存失败</td>
+                            </tr>
+                            <tr>
+                                <td>500</td>
+                                <td>14202</td>
+                                <td>服务端缺失必要文件</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="card active">
+                <h2>Whois</h2>
+                <div class="command-section">
+                    <div class="api-endpoint">
+                        <p><span class="method">GET</span><span class="path">/whois/image</span></p>
+                        <p>返回Whois查询图片</p>
+                        <p><strong>请求参数</strong></p>
+                        <ul class="param-list">
+                            <p><i class="fas fa-circle"></i><span class="param">domain</span> - 域名</p>
+                        </ul>
+                        <p><strong>请求示例</strong></p>
+                        <div class="example">
+                            https://api.azsu.top/whois/image?domain=azsu.top
+                        </div>
+                    </div>
+                    <p><strong>状态码</strong></p>
+                    <table class="sponsor-table ban-table">
+                        <thead>
+                            <tr>
+                                <th>HTTP状态码</th>
+                                <th>Code</th>
+                                <th>描述</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>500</td>
+                                <td>12203</td>
+                                <td>Whois查询错误</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="card active">
+                <h2>2B2T.ORG</h2>
+                <div class="command-section">
+                    <div class="api-endpoint">
+                        <p><span class="method">GET</span><span class="path">/org/tablist/image</span></p>
+                        <p>返回2b2t.org当前在线玩家列表(图片)</p>
+                        <div class="api-source-note">基于2b2t.vc数据进行二次处理</div>
+                        
+                        <p><strong>请求示例</strong></p>
+                        <div class="example">
+                            https://api.azsu.top/org/tablist/image
+                        </div>
+                    </div>
+                    <div class="api-endpoint">
+                        <p><span class="method">GET</span><span class="path">/org/rankings/playtime/image</span></p>
+                        <p>返回2b2t.org近一个月在线时长排行榜前20名(图片)</p>
+                        
+                        <div class="api-source-note">基于2b2t.vc数据进行二次处理</div>
+                        
+                        
+                        <p><strong>请求示例</strong></p>
+                        <div class="example">
+                            https://api.azsu.top/org/rankings/playtime/image
+                        </div>
+                    </div>
+                    <div class="api-endpoint">
+                        <p><span class="method">GET</span><span class="path">/org/rankings/kills/image</span></p>
+                        <p>返回2b2t.org近一个月击杀数排行榜前20名(图片)</p>
+                        
+                        <div class="api-source-note">基于2b2t.vc数据进行二次处理</div>
+                        <p><strong>请求示例</strong></p>
+                        <div class="example">
+                            https://api.azsu.top/org/rankings/kills/image
+                        </div>
+                    </div>
+                    <div class="api-endpoint">
+                        <p><span class="method">GET</span><span class="path">/org/rankings/deaths/image</span></p>
+                        <p>返回2b2t.org近一个月死亡数排行榜前20名(图片)</p>
+                        
+                        <div class="api-source-note">基于2b2t.vc数据进行二次处理</div>
+                        <p><strong>请求示例</strong></p>
+                        <div class="example">
+                            https://api.azsu.top/org/rankings/deaths/image
+                        </div>
+                    </div>
+
+                    <div class="api-endpoint">
+                        <p><span class="method">GET</span><span class="path">/org/rankings/playtime/json</span></p>
+                        <p>返回指定玩家在2b2t.org近一个月在线时长的排名信息</p>
+                        <div class="api-source-note">基于2b2t.vc数据进行二次处理</div>
+                        
+                        <p><strong>请求参数</strong></p>
+                        <ul class="param-list">
+                            <p><i class="fas fa-circle"></i><span class="param">player</span> - 玩家ID</p>
+                        </ul>
+                        <p><strong>请求示例</strong></p>
+                        <div class="example">
+                            https://api.azsu.top/org/rankings/playtime/json?player=_Xiaozhen_
+                        </div>
+                    </div>
+                    
+                    <div class="api-endpoint">
+                        <p><span class="method">GET</span><span class="path">/org/rankings/kills/json</span></p>
+                        <p>返回指定玩家在2b2t.org近一个月击杀数的排名信息</p>
+                        <div class="api-source-note">基于2b2t.vc数据进行二次处理</div>
+                        <p><strong>请求参数</strong></p>
+                        <ul class="param-list">
+                            <p><i class="fas fa-circle"></i><span class="param">player</span> - 玩家ID</p>
+                        </ul>
+                        <p><strong>请求示例</strong></p>
+                        <div class="example">
+                            https://api.azsu.top/org/rankings/kills/json?player=_Xiaozhen_
+                        </div>
+                    </div>
+                    <div class="api-endpoint">
+                        <p><span class="method">GET</span><span class="path">/org/rankings/deaths/json</span></p>
+                        <p>返回指定玩家在2b2t.org近一个月死亡数的排名信息</p>
+                        <div class="api-source-note">基于2b2t.vc数据进行二次处理</div>
+                        <p><strong>请求参数</strong></p>
+                        <ul class="param-list">
+                            <p><i class="fas fa-circle"></i><span class="param">player</span> - 玩家ID</p>
+                        </ul>
+                        <p><strong>请求示例</strong></p>
+                        <div class="example">
+                            https://api.azsu.top/org/rankings/deaths/json?player=_Xiaozhen_
+                        </div>
+                    </div>
+                    <div class="api-endpoint">
+                        <p><span class="method">GET</span><span class="path">/org/rankings/all/json</span></p>
+                        <p>返回指定玩家在2b2t.org近一个月的全部排名信息</p>
+                        <div class="api-source-note">基于2b2t.vc数据进行二次处理</div>
+                        <p><strong>请求参数</strong></p>
+                        <ul class="param-list">
+                            <p><i class="fas fa-circle"></i><span class="param">player</span> - 玩家ID</p>
+                        </ul>
+                        <p><strong>请求示例</strong></p>
+                        <div class="example">
+                            https://api.azsu.top/org/rankings/all/json?player=_Xiaozhen_
+                        </div>
+                    </div>
+                    <p><strong>状态码</strong></p>
+                    <table class="sponsor-table ban-table">
+                        <thead>
+                            <tr>
+                                <th>HTTP状态码</th>
+                                <th>Code</th>
+                                <th>描述</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>200</td>
+                                <td>12101</td>
+                                <td>玩家未上榜</td>
+                            </tr>
+                            <tr>
+                                <td>500</td>
+                                <td>12201</td>
+                                <td>数据获取失败</td>
+                            </tr>
+                            <tr>
+                                <td>500</td>
+                                <td>12202</td>
+                                <td>上游服务请求失败</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            
+            <div class="card active">
+                <h2>2B2T.GG</h2>
+                <div class="command-section">
+                    <div class="api-endpoint">
+                        <p><span class="method">GET</span><span class="path">/gg/tablist/json</span></p>
+                        <p>返回2b2t.gg当前在线玩家列表(JSON)</p>
+                        <div class="api-source-note-yellow">该数据自2025.5.17起不再更新</div>
+                        <p><strong>请求示例</strong></p>
+                        <div class="example">
+                            https://api.azsu.top/gg/tablist/json
+                        </div>
+                    </div>
+                    <div class="api-endpoint">
+                        <p><span class="method">GET</span><span class="path">/gg/tablist/image</span></p>
+                        <p>返回2b2t.gg当前在线玩家列表(图片)</p>
+                        <div class="api-source-note-yellow">该数据自2025.5.17起不再更新</div>
+                        <p><strong>请求示例</strong></p>
+                        <div class="example">
+                            https://api.azsu.top/gg/tablist/image
+                        </div>
+                    </div>
+                    <div class="api-endpoint">
+                        <p><span class="method">GET</span><span class="path">/gg/stats/&lt;player_name&gt;</span></p>
+                        <p>返回指定玩家在2b2t.gg的信息</p>
+                        <div class="api-source-note-yellow">该数据自2025.5.17起不再更新</div>
+                        <p><strong>请求参数</strong></p>
+                        <ul class="param-list">
+                            <p><i class="fas fa-circle"></i><span class="param">player_name</span> - 玩家ID</p>
+                        </ul>
+                        <p><strong>请求示例</strong></p>
+                        <div class="example">
+                            https://api.azsu.top/gg/stats/Az_Su
+                        </div>
+                    </div>
+                    <div class="api-endpoint">
+                        <p><span class="method">GET</span><span class="path">/gg/rankings/player/&lt;player_name&gt;</span></p>
+                        <p>返回指定玩家在2b2t.gg的排名信息</p>
+                        <div class="api-source-note-yellow">该数据自2025.5.17起不再更新</div>
+                        <p><strong>请求参数</strong></p>
+                        <ul class="param-list">
+                            <p><i class="fas fa-circle"></i><span class="param">player_name</span> - 玩家ID</p>
+                        </ul>
+                        <p><strong>请求示例</strong></p>
+                        <div class="example">
+                            https://api.azsu.top/gg/rankings/player/Az_Su
+                        </div>
+                    </div>
+                    <div class="api-endpoint">
+                        <p><span class="method">GET</span><span class="path">/gg/rankings/json/&lt;type&gt;/&lt;player_name&gt;</span></p>
+                        <p>返回指定玩家在2b2t.gg中指定类型的排名信息</p>
+                        <div class="api-source-note-yellow">该数据自2025.5.17起不再更新</div>
+                        <p><strong>请求参数</strong></p>
+                        <ul class="param-list">
+                            <p><i class="fas fa-circle"></i><span class="param">type</span> - 类型：joins/kills/deaths/kd/playtime</p>
+                            <p><i class="fas fa-circle"></i><span class="param">player_name</span> - 玩家ID</p>
+                        </ul>
+                        <p><strong>请求示例</strong></p>
+                        <div class="example">
+                            https://api.azsu.top/gg/rankings/json/playtime/Az_Su
+                        </div>
+                    </div>
+                    <div class="api-endpoint">
+                        <p><span class="method">GET</span><span class="path">/gg/rankings/json/&lt;type&gt;</span></p>
+                        <p>返回2b2t.gg中指定类型的排行榜前1000名</p>
+                        <div class="api-source-note-yellow">该数据自2025.5.17起不再更新</div>
+                        <p><strong>请求参数</strong></p>
+                        <ul class="param-list">
+                            <p><i class="fas fa-circle"></i><span class="param">type</span> - 类型：joins/kills/deaths/kd/playtime</p>
+                        </ul>
+                        <p><strong>请求示例</strong></p>
+                        <div class="example">
+                            https://api.azsu.top/gg/rankings/json/playtime
+                        </div>
+                    </div>
+                    <div class="api-endpoint">
+                        <p><span class="method">GET</span><span class="path">/gg/rankings/image/&lt;type&gt;</span></p>
+                        <p>返回2b2t.gg中指定类型的排行榜前20名(图片)</p>
+                        <div class="api-source-note-yellow">该数据自2025.5.17起不再更新</div>
+                        <p><strong>请求参数</strong></p>
+                        <ul class="param-list">
+                            <p><i class="fas fa-circle"></i><span class="param">type</span> - 类型：joins/kills/deaths/kd/playtime</p>
+                        </ul>
+                        <p><strong>请求示例</strong></p>
+                        <div class="example">
+                            https://api.azsu.top/gg/rankings/image/playtime
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
-        
-        <div class="card active"> 
-            <h2>如何加入</h2>
-            <div class="command-section">
-                <p><i class="fas fa-circle"></i><strong>正版玩家：</strong>使用正版账号进入游戏即可<br><i class="fas fa-circle"></i><strong>离线玩家：</strong>一般只能使用<strong> 未被正版玩家使用的ID </strong>，如果要使用被正版占用的ID请找管理。注册时「登录失败无效会话」说明你的ID已被正版玩家占用，换个ID重新进入试试。在QQ群内发送 <strong>/mcid &lt;你的ID&gt;</strong> 可以查询你的ID是否已经被正版玩家使用。<br><i class="fas fa-circle"></i>本服不支持外置登录和离线皮肤模组（如万用皮肤补丁）。玩家可以在<a href="/skin" style="color: #4285f4; text-decoration: none;">点击前往</a>上传自己的皮肤，上传后进入游戏在菜单里更新皮肤即可。</p>
-            </div>
-        </div>
-        
-        <div class="card active"> 
-            <h2>家被熊，遭遇破坏或盗窃</h2>
-            <div class="command-section">
-                <p><i class="fas fa-circle"></i>在游戏内使用指令 <strong>/co i</strong> 打开查熊模式，点击方块可以查询该位置记录信息。将破坏情况、位置、时间等信息发给阿素，证实后可对破坏行为进行回滚，对破坏人员进行处罚。</p>
-            </div>
-        </div>
-        
-        <div id="dynamic-content"></div>
     </div>
     
     <script src="js/main.js"></script>
