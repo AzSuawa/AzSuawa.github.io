@@ -39,7 +39,7 @@ const menuHTML = `
         <i class="fas fa-chevron-right toggle"></i>
     </div>
     <ul class="submenu" style="display: none;">
-        <li><a href="/g" data-page="g"><i class="fas fa-book"></i> 小故事</a></li>
+        <li><a href="../g" data-page="g"><i class="fas fa-book"></i> 小故事</a></li>
     </ul>
 </div>
 `;
