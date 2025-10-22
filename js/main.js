@@ -39,7 +39,7 @@ const menuHTML = `
         <i class="fas fa-chevron-right toggle"></i>
     </div>
     <ul class="submenu" style="display: none;">
-        <li><a href="../g" data-page="g"><i class="fas fa-book"></i> 小故事</a></li>
+        <li><a href="/g" data-page="g"><i class="fas fa-book"></i> 小故事</a></li>
     </ul>
 </div>
 `;
@@ -70,21 +70,51 @@ function isSubPage() {
 // 获取当前页面ID
 function getCurrentPageId() {
     const path = window.location.pathname;
+    
+    // 根目录
     if (path === '/' || path === '/index.html') return 'home';
     
-    // 处理子目录页面
-    const parts = path.split('/').filter(part => part);
-    if (parts.length > 1) {
-        return parts[0]; // 返回子目录名
+    // 移除开头和结尾的斜杠，然后分割路径
+    const cleanPath = path.replace(/^\/|\/$/g, '');
+    const parts = cleanPath.split('/');
+    
+    // 如果是单级路径，直接返回
+    if (parts.length === 1) {
+        return parts[0];
     }
     
-    // 处理根目录HTML文件
-    const pageId = path.split('/')[1];
-    if (pageId && pageId.endsWith('.html')) {
-        return pageId.replace('.html', '');
+    // 对于多级路径，返回第一级作为页面ID
+    return parts[0];
+}
+
+// 构建页面URL路径
+function buildPageUrl(pageId) {
+    if (pageId === 'home') {
+        return '/index.html';
     }
     
-    return pageId || 'home';
+    // 所有页面都指向对应的 index.html
+    const pathParts = pageId.split('/');
+    if (pathParts.length === 1) {
+        return `/${pageId}/index.html`;
+    } else {
+        return `/${pageId}/index.html`;
+    }
+}
+
+// 构建页面请求URL
+function buildPageRequestUrl(pageId) {
+    if (pageId === 'home') {
+        return '/index.html';
+    }
+    
+    // 所有页面都指向对应的 index.html
+    const pathParts = pageId.split('/');
+    if (pathParts.length === 1) {
+        return `/${pageId}/index.html`;
+    } else {
+        return `/${pageId}/index.html`;
+    }
 }
 
 // 检查是否是特殊页面
@@ -262,7 +292,7 @@ function initMenu() {
                 // 主页面SPA导航
                 if (!isSubPage()) {
                     e.preventDefault();
-                    handleSPANavigation(pageId, href);
+                    handleSPANavigation(pageId, buildPageUrl(pageId));
                 }
                 
                 // 移动端点击后自动关闭侧边栏
@@ -359,7 +389,7 @@ function setupNavigation(router) {
             pageId = event.state.pageId;
         } else {
             const path = window.location.pathname;
-            pageId = path === '/' ? 'home' : path.substring(1);
+            pageId = getCurrentPageId();
         }
         
         console.log('popstate 事件:', pageId, '当前页面:', router.currentPage);
@@ -368,7 +398,7 @@ function setupNavigation(router) {
         
         // 特殊页面直接跳转
         if (isSpecialPage(pageId)) {
-            window.location.href = `/${pageId}`;
+            window.location.href = buildPageUrl(pageId);
             return;
         }
         
@@ -434,10 +464,7 @@ async function loadPageContent(pageId, router) {
     });
 
     try {
-        let targetUrl;
-        
-        // 所有页面都是子目录结构
-        targetUrl = `/${pageId}/index.html`;
+        const targetUrl = buildPageRequestUrl(pageId);
         
         console.log('正在请求:', targetUrl);
         const response = await fetch(targetUrl);
@@ -492,10 +519,11 @@ async function loadPageContent(pageId, router) {
         container.innerHTML = `
             <div class="card active error">
                 <h1>加载失败(＞﹏＜)</h1>
-                <p>错误: ${err.message}</p>
-                <p>页面: ${pageId}</p>
+                <p>错误信息: ${err.message}</p>
+                <p>页面ID: ${pageId}</p>
                 <div style="margin-top: 15px;">
-                    <button onclick="location.reload()" style="margin: 5px; padding: 8px 16px; background: #A1BDFF; color: white; border: none; border-radius: 4px; cursor: pointer;">刷新页面</button>
+                    <button onclick="location.reload()" style="margin: 5px; padding: 8px 16px; background: #4285f4; color: white; border: none; border-radius: 4px; cursor: pointer;">刷新页面</button>
+                    <button onclick="window.location.href='${buildPageUrl(pageId)}'" style="margin: 5px; padding: 8px 16px; background: #34a853; color: white; border: none; border-radius: 4px; cursor: pointer;">直接访问页面</button>
                 </div>
             </div>
         `;
