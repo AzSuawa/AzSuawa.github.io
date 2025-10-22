@@ -1,4 +1,4 @@
-// 菜单HTML模板
+// 菜单HTML模板（更新链接格式）
 const menuHTML = `
 <div class="menu-group active">
     <div class="group-header">
@@ -7,11 +7,11 @@ const menuHTML = `
         <i class="fas fa-chevron-down toggle"></i>
     </div>
     <ul class="submenu">
-        <li><a href="/ba" data-page="ba"><i class="fas fa-home"></i> 首页</a></li>
-        <li><a href="/bb" data-page="bb"><i class="fas fa-list-alt"></i> 机制修改</a></li>
-        <li><a href="/sp" data-page="sp"><i class="fas fa-heart"></i> 赞助列表</a></li>
-        <li><a href="/ban" data-page="ban"><i class="fas fa-ban"></i> 封禁列表</a></li>
-        <li><a href="/skin" data-page="skin"><i class="fas fa-star"></i> 上传皮肤</a></li>
+        <li><a href="/" data-page="home"><i class="fas fa-home"></i> 首页</a></li>
+        <li><a href="/bb/" data-page="bb"><i class="fas fa-list-alt"></i> 机制修改</a></li>
+        <li><a href="/sp/" data-page="sp"><i class="fas fa-heart"></i> 赞助列表</a></li>
+        <li><a href="/ban/" data-page="ban"><i class="fas fa-ban"></i> 封禁列表</a></li>
+        <li><a href="/skin/" data-page="skin"><i class="fas fa-star"></i> 上传皮肤</a></li>
     </ul>
 </div>
 
@@ -22,13 +22,13 @@ const menuHTML = `
         <i class="fas fa-chevron-down toggle"></i>
     </div>
     <ul class="submenu">
-        <li><a href="/aa" data-page="aa"><i class="fas fa-home"></i> 首页</a></li>
-        <li><a href="/api" data-page="api"><i class="fas fa-solid fa-code"></i> API</a></li>
-        <li><a href="/ab" data-page="ab"><i class="fas fa-star"></i> 常见问题</a></li>
-        <li><a href="/ac" data-page="ac"><i class="fas fa-heart"></i> 鸣谢和赞助</a></li>
-        <li><a href="/cmds" data-page="cmds"><i class="fas fa-list-alt"></i> 指令列表</a></li>
-        <li><a href="/bot-update" data-page="bot-update"><i class="fas fa-book"></i> 更新日志</a></li>
-        <li><a href="/mcp" data-page="mcp"><i class="fas fa-star"></i> MCPing</a></li>
+        <li><a href="/aa/" data-page="aa"><i class="fas fa-home"></i> 首页</a></li>
+        <li><a href="/api/" data-page="api"><i class="fas fa-solid fa-code"></i> API</a></li>
+        <li><a href="/ab/" data-page="ab"><i class="fas fa-star"></i> 常见问题</a></li>
+        <li><a href="/ac/" data-page="ac"><i class="fas fa-heart"></i> 鸣谢和赞助</a></li>
+        <li><a href="/cmds/" data-page="cmds"><i class="fas fa-list-alt"></i> 指令列表</a></li>
+        <li><a href="/bot-update/" data-page="bot-update"><i class="fas fa-book"></i> 更新日志</a></li>
+        <li><a href="/mcp/" data-page="mcp"><i class="fas fa-star"></i> MCPing</a></li>
     </ul>
 </div>
 
@@ -39,7 +39,7 @@ const menuHTML = `
         <i class="fas fa-chevron-right toggle"></i>
     </div>
     <ul class="submenu" style="display: none;">
-        <li><a href="/g" data-page="g"><i class="fas fa-book"></i> 小故事</a></li>
+        <li><a href="/g/" data-page="g"><i class="fas fa-book"></i> 小故事</a></li>
     </ul>
 </div>
 `;
@@ -67,12 +67,12 @@ function isSubPage() {
     return path !== '/' && path !== '/index.html' && !path.endsWith('.html');
 }
 
-// 获取当前页面ID
+// 获取当前页面ID（适配新URL结构）
 function getCurrentPageId() {
     const path = window.location.pathname;
     
     // 根目录
-    if (path === '/' || path === '/index.html') return 'home';
+    if (path === '/' || path === '' || path === '/index.html') return 'home';
     
     // 移除开头和结尾的斜杠，然后分割路径
     const cleanPath = path.replace(/^\/|\/$/g, '');
@@ -87,34 +87,37 @@ function getCurrentPageId() {
     return parts[0];
 }
 
-// 构建页面URL路径
+// 构建页面URL路径（隐藏index.html，用户看到的URL）
 function buildPageUrl(pageId) {
     if (pageId === 'home') {
-        return '/index.html';
+        return '/';
     }
     
-    // 所有页面都指向对应的 index.html
-    const pathParts = pageId.split('/');
-    if (pathParts.length === 1) {
-        return `/${pageId}/index.html`;
-    } else {
-        return `/${pageId}/index.html`;
-    }
+    // 隐藏 index.html，使用目录形式
+    return `/${pageId}/`;
 }
 
-// 构建页面请求URL
+// 构建页面请求URL（内部仍然请求index.html）
 function buildPageRequestUrl(pageId) {
     if (pageId === 'home') {
         return '/index.html';
     }
     
-    // 所有页面都指向对应的 index.html
-    const pathParts = pageId.split('/');
-    if (pathParts.length === 1) {
-        return `/${pageId}/index.html`;
-    } else {
-        return `/${pageId}/index.html`;
+    // 内部仍然请求 index.html 文件
+    return `/${pageId}/index.html`;
+}
+
+// 从href属性提取页面ID（处理新旧链接格式）
+function getPageIdFromHref(href) {
+    if (href === '/' || href === '') {
+        return 'home';
     }
+    
+    // 移除开头和结尾的斜杠
+    const cleanHref = href.replace(/^\/|\/$/g, '');
+    const parts = cleanHref.split('/');
+    
+    return parts[0];
 }
 
 // 检查是否是特殊页面
@@ -279,7 +282,7 @@ function initMenu() {
         document.querySelectorAll('#sidebar a[href^="/"]').forEach(link => {
             link.addEventListener('click', function(e) {
                 const href = this.getAttribute('href');
-                const pageId = href === '/' ? 'home' : href.substring(1);
+                const pageId = getPageIdFromHref(href);
                 
                 console.log('菜单点击:', { href, pageId, currentPage: router.currentPage });
                 
@@ -321,7 +324,8 @@ function handleSPANavigation(pageId, href) {
         showHomeContent();
         currentRouter.currentPage = 'home';
     } else {
-        history.pushState({ pageId }, null, href);
+        // 使用干净的URL（不包含index.html）
+        history.pushState({ pageId }, null, `/${pageId}/`);
         loadPageContent(pageId, currentRouter);
         currentRouter.currentPage = pageId;
     }
@@ -332,12 +336,22 @@ function handleSPANavigation(pageId, href) {
 
 // 设置活动菜单项
 function setActiveMenuItem(pageId) {
+    // 先移除所有活动状态
+    document.querySelectorAll('#sidebar li').forEach(item => {
+        item.classList.remove('active');
+    });
+    
+    // 设置当前页面为活动状态
     const menuItem = document.querySelector(`[data-page="${pageId}"]`);
     if (menuItem) {
-        document.querySelectorAll('#sidebar li').forEach(item => {
-            item.classList.remove('active');
-        });
         menuItem.parentElement.classList.add('active');
+    } else {
+        // 如果找不到对应的data-page，尝试通过href匹配
+        const hrefToFind = pageId === 'home' ? '/' : `/${pageId}/`;
+        const fallbackItem = document.querySelector(`a[href="${hrefToFind}"]`);
+        if (fallbackItem) {
+            fallbackItem.parentElement.classList.add('active');
+        }
     }
 }
 
@@ -432,8 +446,8 @@ function showHomeContent() {
         // 如果没有默认卡片，显示主页内容
         container.innerHTML = `
             <div class="card active">
-                <h1>欢迎来到素素の生存服</h1>
-                <p>请选择左侧菜单浏览内容</p>
+                <h1>遇到BUG了？</h1>
+                <p>啊这。。。</p>
             </div>
         `;
     }
