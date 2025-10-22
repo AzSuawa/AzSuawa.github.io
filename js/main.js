@@ -7,7 +7,7 @@ const menuHTML = `
         <i class="fas fa-chevron-down toggle"></i>
     </div>
     <ul class="submenu">
-        <li><a href="/" data-page="home"><i class="fas fa-home"></i> 首页</a></li>
+        <li><a href="/ba/" data-page="home"><i class="fas fa-home"></i> 首页</a></li>
         <li><a href="/bb/" data-page="bb"><i class="fas fa-list-alt"></i> 机制修改</a></li>
         <li><a href="/sp/" data-page="sp"><i class="fas fa-heart"></i> 赞助列表</a></li>
         <li><a href="/ban/" data-page="ban"><i class="fas fa-ban"></i> 封禁列表</a></li>
