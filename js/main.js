@@ -1,260 +1,135 @@
-// 菜单HTML模板（更新链接格式）
-const menuHTML = `
-<div class="menu-group active">
+// 精简版菜单数据
+const menuData = [
+    {name: "素素の生存服", items: [
+        {href: "/ba/", page: "home", icon: "home", text: "首页"},
+        {href: "/bb/", page: "bb", icon: "list-alt", text: "机制修改"},
+        {href: "/sp/", page: "sp", icon: "heart", text: "赞助列表"},
+        {href: "/ban/", page: "ban", icon: "ban", text: "封禁列表"},
+        {href: "/skin/", page: "skin", icon: "star", text: "上传皮肤"}
+    ]},
+    {name: "小小素BOT", items: [
+        {href: "/aa/", page: "aa", icon: "home", text: "首页"},
+        {href: "/api/", page: "api", icon: "code", text: "API"},
+        {href: "/ab/", page: "ab", icon: "star", text: "常见问题"},
+        {href: "/ac/", page: "ac", icon: "heart", text: "鸣谢和赞助"},
+        {href: "/cmds/", page: "cmds", icon: "list-alt", text: "指令列表"},
+        {href: "/bot-update/", page: "bot-update", icon: "book", text: "更新日志"},
+        {href: "/mcp/", page: "mcp", icon: "star", text: "MCPing"}
+    ]},
+    {name: "其他", active: false, items: [
+        {href: "/g/", page: "g", icon: "book", text: "测试页面"},
+        {href: "/wikl/cape/", page: "cape", icon: "star", text: "如何兑换Minecraft披风"}
+    ]}
+];
+
+// 生成菜单HTML
+function getMenuHTML() {
+    return menuData.map(group => `
+<div class="menu-group ${group.active!==false?'active':''}">
     <div class="group-header">
         <i class="fas fa-star"></i>
-        <span>素素の生存服</span>
-        <i class="fas fa-chevron-down toggle"></i>
+        <span>${group.name}</span>
+        <i class="fas fa-chevron-${group.active!==false?'down':'right'} toggle"></i>
     </div>
-    <ul class="submenu">
-        <li><a href="/ba/" data-page="home"><i class="fas fa-home"></i> 首页</a></li>
-        <li><a href="/bb/" data-page="bb"><i class="fas fa-list-alt"></i> 机制修改</a></li>
-        <li><a href="/sp/" data-page="sp"><i class="fas fa-heart"></i> 赞助列表</a></li>
-        <li><a href="/ban/" data-page="ban"><i class="fas fa-ban"></i> 封禁列表</a></li>
-        <li><a href="/skin/" data-page="skin"><i class="fas fa-star"></i> 上传皮肤</a></li>
+    <ul class="submenu" ${group.active===false?'style="display:none"':''}>
+        ${group.items.map(item => `
+        <li><a href="${item.href}" data-page="${item.page}"><i class="fas fa-${item.icon}"></i> ${item.text}</a></li>
+        `).join('')}
     </ul>
-</div>
+</div>`).join('');
+}
 
-<div class="menu-group active">
-    <div class="group-header">
-        <i class="fas fa-star"></i>
-        <span>小小素BOT</span>
-        <i class="fas fa-chevron-down toggle"></i>
-    </div>
-    <ul class="submenu">
-        <li><a href="/aa/" data-page="aa"><i class="fas fa-home"></i> 首页</a></li>
-        <li><a href="/api/" data-page="api"><i class="fas fa-solid fa-code"></i> API</a></li>
-        <li><a href="/ab/" data-page="ab"><i class="fas fa-star"></i> 常见问题</a></li>
-        <li><a href="/ac/" data-page="ac"><i class="fas fa-heart"></i> 鸣谢和赞助</a></li>
-        <li><a href="/cmds/" data-page="cmds"><i class="fas fa-list-alt"></i> 指令列表</a></li>
-        <li><a href="/bot-update/" data-page="bot-update"><i class="fas fa-book"></i> 更新日志</a></li>
-        <li><a href="/mcp/" data-page="mcp"><i class="fas fa-star"></i> MCPing</a></li>
-    </ul>
-</div>
+// 配置和状态
+const specialPages = {'skin':1,'mcp':1};
+let menuState = {expandedGroups: ['素素の生存服', '小小素BOT']};
+let router = {currentPage: null, isLoading: false};
 
-<div class="menu-group">
-    <div class="group-header">
-        <i class="fas fa-star"></i>
-        <span>其他</span>
-        <i class="fas fa-chevron-right toggle"></i>
-    </div>
-    <ul class="submenu" style="display: none;">
-        <li><a href="/g/" data-page="g"><i class="fas fa-book"></i> 测试页面</a></li>
-        <li><a href="/wikl/cape/" data-page="cape"><i class="fas fa-star"></i> 如何兑换Minecraft披风</a></li>
-    </ul>
-</div>
-`;
-
-// 特殊页面配置（需要完整HTML结构）
-const specialPages = {
-    'skin': true,
-    'mcp': true
+// 工具函数
+const isSubPage = () => {
+    const p = location.pathname;
+    return p !== '/' && p !== '/index.html' && !p.endsWith('.html');
 };
+
+const getCurrentPageId = () => {
+    const p = location.pathname.replace(/^\/|\/$/g, '');
+    if (p === '' || p === 'index.html') return 'home';
+    return p.split('/')[0];
+};
+
+const getPageIdFromHref = href => {
+    if (href === '/' || href === '') return 'home';
+    return href.replace(/^\/|\/$/g, '').split('/')[0];
+};
+
+const isSpecialPage = pageId => specialPages[pageId];
+
+const buildPageUrl = pageId => pageId === 'home' ? '/' : `/${pageId}/`;
+const buildPageRequestUrl = pageId => pageId === 'home' ? '/index.html' : `/${pageId}/index.html`;
 
 // 菜单状态管理
-let menuState = {
-    expandedGroups: ['素素の生存服', '小小素BOT'] // 默认展开的菜单组
-};
-
-// 全局路由对象
-let router = {
-    currentPage: null,
-    isLoading: false
-};
-
-// 检查是否在子页面
-function isSubPage() {
-    const path = window.location.pathname;
-    return path !== '/' && path !== '/index.html' && !path.endsWith('.html');
-}
-
-// 获取当前页面ID（适配新URL结构）
-function getCurrentPageId() {
-    const path = window.location.pathname;
-    
-    // 根目录
-    if (path === '/' || path === '' || path === '/index.html') return 'home';
-    
-    // 移除开头和结尾的斜杠，然后分割路径
-    const cleanPath = path.replace(/^\/|\/$/g, '');
-    const parts = cleanPath.split('/');
-    
-    // 如果是单级路径，直接返回
-    if (parts.length === 1) {
-        return parts[0];
-    }
-    
-    // 对于多级路径，返回第一级作为页面ID
-    return parts[0];
-}
-
-// 构建页面URL路径（隐藏index.html，用户看到的URL）
-function buildPageUrl(pageId) {
-    if (pageId === 'home') {
-        return '/';
-    }
-    
-    // 隐藏 index.html，使用目录形式
-    return `/${pageId}/`;
-}
-
-// 构建页面请求URL（内部仍然请求index.html）
-function buildPageRequestUrl(pageId) {
-    if (pageId === 'home') {
-        return '/index.html';
-    }
-    
-    // 内部仍然请求 index.html 文件
-    return `/${pageId}/index.html`;
-}
-
-// 从href属性提取页面ID（处理新旧链接格式）
-function getPageIdFromHref(href) {
-    if (href === '/' || href === '') {
-        return 'home';
-    }
-    
-    // 移除开头和结尾的斜杠
-    const cleanHref = href.replace(/^\/|\/$/g, '');
-    const parts = cleanHref.split('/');
-    
-    return parts[0];
-}
-
-// 检查是否是特殊页面
-function isSpecialPage(pageId) {
-    return specialPages[pageId] || false;
-}
-
-// 保存菜单状态到sessionStorage
 function saveMenuState() {
-    const expandedGroups = [];
-    document.querySelectorAll('.menu-group.active').forEach(group => {
-        const groupName = group.querySelector('.group-header span').textContent;
-        expandedGroups.push(groupName);
+    const groups = [];
+    document.querySelectorAll('.menu-group.active').forEach(g => {
+        groups.push(g.querySelector('.group-header span').textContent);
     });
-    menuState.expandedGroups = expandedGroups;
+    menuState.expandedGroups = groups;
     sessionStorage.setItem('menuState', JSON.stringify(menuState));
 }
 
-// 恢复菜单状态
 function restoreMenuState() {
-    const savedState = sessionStorage.getItem('menuState');
-    if (savedState) {
-        menuState = JSON.parse(savedState);
-        
+    const saved = sessionStorage.getItem('menuState');
+    if (saved) {
+        menuState = JSON.parse(saved);
         document.querySelectorAll('.menu-group').forEach(group => {
-            const groupName = group.querySelector('.group-header span').textContent;
+            const name = group.querySelector('.group-header span').textContent;
             const submenu = group.querySelector('.submenu');
             const icon = group.querySelector('.toggle');
+            const isActive = menuState.expandedGroups.includes(name);
             
-            if (menuState.expandedGroups.includes(groupName)) {
-                group.classList.add('active');
-                if (submenu) submenu.style.display = 'block';
-                if (icon) {
-                    icon.classList.remove('fa-chevron-right');
-                    icon.classList.add('fa-chevron-down');
-                }
-            } else {
-                group.classList.remove('active');
-                if (submenu) submenu.style.display = 'none';
-                if (icon) {
-                    icon.classList.remove('fa-chevron-down');
-                    icon.classList.add('fa-chevron-right');
-                }
+            group.classList.toggle('active', isActive);
+            if (submenu) submenu.style.display = isActive ? 'block' : 'none';
+            if (icon) {
+                icon.className = `fas fa-chevron-${isActive?'down':'right'} toggle`;
             }
         });
     }
 }
 
-// 初始化菜单按钮功能
-function initMenuButton() {
-    const menuBtn = document.getElementById('menu-btn');
-    if (menuBtn) {
-        menuBtn.addEventListener('click', function() {
-            toggleSidebar();
-        });
-    }
-}
-
-// 切换侧边栏显示/隐藏
+// 侧边栏和菜单功能
 function toggleSidebar() {
     const sidebar = document.getElementById('sidebar');
     const content = document.getElementById('content');
-    
     if (sidebar && content) {
         sidebar.classList.toggle('active');
         content.classList.toggle('shifted');
     }
 }
 
-// 确保动态内容容器存在
+function initMenuButton() {
+    const btn = document.getElementById('menu-btn');
+    if (btn) btn.addEventListener('click', toggleSidebar);
+}
+
 function ensureDynamicContentContainer() {
-    let container = document.getElementById('dynamic-content');
-    if (!container) {
-        console.log('创建dynamic-content容器');
-        container = document.createElement('div');
-        container.id = 'dynamic-content';
-        const mainContent = document.querySelector('#content .container') || document.querySelector('#content') || document.body;
-        mainContent.appendChild(container);
+    let c = document.getElementById('dynamic-content');
+    if (!c) {
+        c = document.createElement('div');
+        c.id = 'dynamic-content';
+        const main = document.querySelector('#content .container') || document.querySelector('#content') || document.body;
+        main.appendChild(c);
     }
-    return container;
+    return c;
 }
 
-// 初始化所有页面
-function initializePage() {
-    const pageId = getCurrentPageId();
-    
-    console.log('初始化页面，当前页面ID:', pageId);
-    
-    // 初始化路由对象
-    window.router = router;
-    
-    // 设置当前页面
-    router.currentPage = pageId;
-    
-    // 确保动态内容容器存在
-    ensureDynamicContentContainer();
-    
-    // 初始化菜单
-    initMenu();
-    
-    // 初始化菜单按钮
-    initMenuButton();
-    
-    // 设置活动菜单项
-    setActiveMenuItem(pageId);
-    
-    // 恢复菜单状态
-    restoreMenuState();
-    
-    // 特殊页面不需要SPA路由
-    if (isSpecialPage(pageId)) {
-        console.log('特殊页面:', pageId);
-        return;
-    }
-    
-    // 主页面初始化SPA路由
-    if (!isSubPage()) {
-        initRouter(router);
-    }
-}
-
-document.addEventListener('DOMContentLoaded', function() {
-    initializePage();
-});
-
-// 初始化菜单
+// 菜单初始化
 function initMenu() {
     const sidebar = document.getElementById('sidebar');
     if (sidebar) {
-        sidebar.innerHTML = menuHTML;
-        
-        // 添加滚动支持
+        sidebar.innerHTML = getMenuHTML();
         sidebar.style.overflowY = 'auto';
         sidebar.style.maxHeight = 'calc(100vh - 60px)';
 
-        // 折叠菜单功能
+        // 折叠菜单
         document.querySelectorAll('.group-header').forEach(header => {
             header.addEventListener('click', function() {
                 const group = this.parentElement;
@@ -262,158 +137,136 @@ function initMenu() {
                 const icon = this.querySelector('.toggle');
                 
                 group.classList.toggle('active');
+                const isActive = group.classList.contains('active');
                 
-                if (group.classList.contains('active')) {
-                    if (submenu) submenu.style.display = 'block';
-                    if (icon) {
-                        icon.classList.replace('fa-chevron-right', 'fa-chevron-down');
-                    }
-                } else {
-                    if (submenu) submenu.style.display = 'none';
-                    if (icon) {
-                        icon.classList.replace('fa-chevron-down', 'fa-chevron-right');
-                    }
-                }
+                if (submenu) submenu.style.display = isActive ? 'block' : 'none';
+                if (icon) icon.className = `fas fa-chevron-${isActive?'down':'right'} toggle`;
                 
-                saveMenuState(); // 保存菜单状态
+                saveMenuState();
             });
         });
 
-        // 菜单链接点击事件
+        // 菜单链接点击
         document.querySelectorAll('#sidebar a[href^="/"]').forEach(link => {
             link.addEventListener('click', function(e) {
-                const href = this.getAttribute('href');
-                const pageId = getPageIdFromHref(href);
+                const pageId = getPageIdFromHref(this.getAttribute('href'));
                 
-                console.log('菜单点击:', { href, pageId, currentPage: router.currentPage });
+                if (isSpecialPage(pageId)) return true;
                 
-                // 特殊页面直接跳转
-                if (isSpecialPage(pageId)) {
-                    console.log('特殊页面，直接跳转');
-                    return true; // 允许默认行为
-                }
-                
-                // 主页面SPA导航
                 if (!isSubPage()) {
                     e.preventDefault();
                     handleSPANavigation(pageId, buildPageUrl(pageId));
                 }
                 
-                // 移动端点击后自动关闭侧边栏
-                if (window.innerWidth <= 1023) {
-                    toggleSidebar();
-                }
+                if (window.innerWidth <= 1023) toggleSidebar();
             });
         });
     }
 }
 
-// 处理SPA导航
+// 路由和页面功能
+function setActiveMenuItem(pageId) {
+    document.querySelectorAll('#sidebar li').forEach(item => item.classList.remove('active'));
+    const item = document.querySelector(`[data-page="${pageId}"]`) || 
+                 document.querySelector(`a[href="${pageId==='home'?'/':'/'+pageId+'/'}"]`);
+    if (item) item.parentElement.classList.add('active');
+}
+
 function handleSPANavigation(pageId, href) {
-    // 使用全局路由对象
-    const currentRouter = window.router || router;
+    const r = window.router || router;
+    if (r.currentPage === pageId || r.isLoading) return;
     
-    if (currentRouter.currentPage === pageId || currentRouter.isLoading) {
-        console.log('重复导航或正在加载:', pageId);
-        return;
-    }
-    
-    console.log('SPA导航到页面:', pageId, '当前页面:', currentRouter.currentPage);
+    console.log('SPA导航到页面:', pageId);
     
     if (pageId === 'home') {
         history.pushState({ pageId: 'home' }, null, '/');
         showHomeContent();
-        currentRouter.currentPage = 'home';
+        r.currentPage = 'home';
     } else {
-        // 使用干净的URL（不包含index.html）
         history.pushState({ pageId }, null, `/${pageId}/`);
-        loadPageContent(pageId, currentRouter);
-        currentRouter.currentPage = pageId;
+        loadPageContent(pageId, r);
+        r.currentPage = pageId;
     }
     
     setActiveMenuItem(pageId);
     saveMenuState();
 }
 
-// 设置活动菜单项
-function setActiveMenuItem(pageId) {
-    // 先移除所有活动状态
-    document.querySelectorAll('#sidebar li').forEach(item => {
-        item.classList.remove('active');
-    });
+function showHomeContent() {
+    const container = ensureDynamicContentContainer();
+    container.innerHTML = '';
     
-    // 设置当前页面为活动状态
-    const menuItem = document.querySelector(`[data-page="${pageId}"]`);
-    if (menuItem) {
-        menuItem.parentElement.classList.add('active');
+    const cards = document.querySelectorAll('.card');
+    if (cards.length > 0) {
+        cards.forEach(card => card.style.display = 'block');
     } else {
-        // 如果找不到对应的data-page，尝试通过href匹配
-        const hrefToFind = pageId === 'home' ? '/' : `/${pageId}/`;
-        const fallbackItem = document.querySelector(`a[href="${hrefToFind}"]`);
-        if (fallbackItem) {
-            fallbackItem.parentElement.classList.add('active');
-        }
+        container.innerHTML = '<div class="card active"><h1>遇到BUG了？</h1><p>啊这。。。</p></div>';
+    }
+    
+    window.scrollTo(0, 0);
+}
+
+async function loadPageContent(pageId, router) {
+    if (router.isLoading) return;
+    router.isLoading = true;
+    
+    const container = ensureDynamicContentContainer();
+    container.innerHTML = '<div class="card active"><div class="loading"><p>加载中...</p></div></div>';
+    
+    document.querySelectorAll('.card').forEach(card => card.style.display = 'none');
+
+    try {
+        const response = await fetch(buildPageRequestUrl(pageId));
+        if (!response.ok) throw new Error(`HTTP错误! 状态码: ${response.status}`);
+        
+        const html = await response.text();
+        const temp = document.createElement('div');
+        temp.innerHTML = html;
+        
+        let content = temp.querySelector('#content') || temp.querySelector('main') || 
+                     temp.querySelector('.container') || temp.querySelector('.content');
+        
+        container.innerHTML = content ? content.innerHTML : html;
+        setActiveMenuItem(pageId);
+        window.scrollTo(0, 0);
+        
+    } catch (err) {
+        container.innerHTML = `
+            <div class="card active error">
+                <h1>加载失败QAQ</h1>
+                <p>${err.message}</p>
+                <p>ID: ${pageId}</p>
+                <div style="margin-top:15px">
+                    <button onclick="location.reload()" style="margin:5px;padding:8px 16px;background:#8CAEFF;color:white;border:none;border-radius:4px;cursor:pointer">刷新</button>
+                </div>
+            </div>
+        `;
+    } finally {
+        router.isLoading = false;
     }
 }
 
-// 初始化路由系统（仅主页面使用）
 function initRouter(router) {
     window.router = router;
-    
-    // 确保当前页面状态正确
     const currentPageId = getCurrentPageId();
     router.currentPage = currentPageId;
     
-    console.log('初始化路由，当前页面:', currentPageId);
-    
-    // 处理初始路由
-    handleInitialRoute(router);
-    
-    // 设置导航事件监听器
-    setupNavigation(router);
-}
-
-function handleInitialRoute(router) {
-    const path = window.location.pathname;
-    const pageId = getCurrentPageId();
-    
-    console.log('初始路由处理:', { path, pageId });
-    
-    // 处理根路径
-    if (path === '/' || path === '' || path === '/index.html') {
-        console.log('检测到首页，显示主页内容');
+    // 初始路由
+    if (location.pathname === '/' || location.pathname === '' || location.pathname === '/index.html') {
         showHomeContent();
         router.currentPage = 'home';
-        return;
+    } else if (currentPageId !== 'home' && !isSpecialPage(currentPageId)) {
+        loadPageContent(currentPageId, router);
+        router.currentPage = currentPageId;
     }
     
-    // 处理其他页面路由
-    if (pageId !== 'home' && !isSpecialPage(pageId)) {
-        console.log('加载初始页面内容:', pageId);
-        loadPageContent(pageId, router);
-        router.currentPage = pageId;
-    }
-}
-
-function setupNavigation(router) {
-    // 处理浏览器前进/后退
-    window.addEventListener('popstate', function(event) {
-        let pageId;
-        
-        if (event.state && event.state.pageId) {
-            pageId = event.state.pageId;
-        } else {
-            const path = window.location.pathname;
-            pageId = getCurrentPageId();
-        }
-        
-        console.log('popstate 事件:', pageId, '当前页面:', router.currentPage);
-        
+    // 前进后退
+    window.addEventListener('popstate', function(e) {
+        let pageId = e.state && e.state.pageId ? e.state.pageId : getCurrentPageId();
         if (router.currentPage === pageId) return;
         
-        // 特殊页面直接跳转
         if (isSpecialPage(pageId)) {
-            window.location.href = buildPageUrl(pageId);
+            location.href = buildPageUrl(pageId);
             return;
         }
         
@@ -430,128 +283,27 @@ function setupNavigation(router) {
     });
 }
 
-// 显示主页内容
-function showHomeContent() {
-    console.log('显示主页内容');
+// 主初始化
+function initializePage() {
+    const pageId = getCurrentPageId();
+    router.currentPage = pageId;
     
-    const container = ensureDynamicContentContainer();
-    container.innerHTML = '';
+    ensureDynamicContentContainer();
+    initMenu();
+    initMenuButton();
+    setActiveMenuItem(pageId);
+    restoreMenuState();
     
-    // 显示主页的默认卡片
-    const defaultCards = document.querySelectorAll('.card');
-    if (defaultCards.length > 0) {
-        defaultCards.forEach(card => {
-            card.style.display = 'block';
-        });
-    } else {
-        // 如果没有默认卡片，显示主页内容
-        container.innerHTML = `
-            <div class="card active">
-                <h1>遇到BUG了？</h1>
-                <p>啊这。。。</p>
-            </div>
-        `;
-    }
-    
-    window.scrollTo(0, 0);
-}
-
-// 加载页面内容（SPA方式）
-async function loadPageContent(pageId, router) {
-    if (router.isLoading) {
-        console.log('正在加载中，跳过重复请求:', pageId);
-        return;
-    }
-    
-    router.isLoading = true;
-    
-    console.log('开始加载页面内容:', pageId);
-    
-    // 确保容器存在
-    const container = ensureDynamicContentContainer();
-    
-    // 显示加载状态
-    container.innerHTML = '<div class="card active"><div class="loading"><p>加载中...</p></div></div>';
-    
-    // 隐藏所有默认卡片
-    document.querySelectorAll('.card').forEach(card => {
-        card.style.display = 'none';
-    });
-
-    try {
-        const targetUrl = buildPageRequestUrl(pageId);
-        
-        console.log('正在请求:', targetUrl);
-        const response = await fetch(targetUrl);
-        
-        if (!response.ok) {
-            throw new Error(`HTTP错误! 状态码: ${response.status}`);
-        }
-        
-        const html = await response.text();
-        
-        if (!html || html.trim().length === 0) {
-            throw new Error('获取到的内容为空');
-        }
-        
-        console.log('成功获取内容，长度:', html.length);
-        
-        // 提取内容部分
-        const tempDiv = document.createElement('div');
-        tempDiv.innerHTML = html;
-        
-        // 尝试不同的内容提取方式
-        let contentHTML = '';
-        const contentElement = tempDiv.querySelector('#content');
-        if (contentElement) {
-            contentHTML = contentElement.innerHTML;
-        } else {
-            const mainContent = tempDiv.querySelector('main') || tempDiv.querySelector('.container') || tempDiv.querySelector('.content');
-            if (mainContent) {
-                contentHTML = mainContent.innerHTML;
-            } else {
-                // 如果都找不到，使用body内容但排除脚本和样式
-                const bodyContent = tempDiv.querySelector('body');
-                if (bodyContent) {
-                    const clone = bodyContent.cloneNode(true);
-                    const scripts = clone.querySelectorAll('script, style, link, meta, title');
-                    scripts.forEach(el => el.remove());
-                    contentHTML = clone.innerHTML;
-                } else {
-                    contentHTML = html;
-                }
-            }
-        }
-        
-        container.innerHTML = contentHTML;
-        setActiveMenuItem(pageId);
-        window.scrollTo(0, 0);
-        
-        console.log('页面加载完成:', pageId);
-        
-    } catch (err) {
-        console.error('页面加载失败:', err);
-        container.innerHTML = `
-            <div class="card active error">
-                <h1>加载失败QAQ</h1>
-                <p>${err.message}</p>
-                <p>ID: ${pageId}</p>
-                <div style="margin-top: 15px;">
-                    <button onclick="location.reload()" style="margin: 5px; padding: 8px 16px; background: #8CAEFF; color: white; border: none; border-radius: 4px; cursor: pointer;">刷新</button>
-                </div>
-            </div>
-        `;
-    } finally {
-        router.isLoading = false;
-        console.log('加载状态重置完成');
+    if (!isSpecialPage(pageId) && !isSubPage()) {
+        initRouter(router);
     }
 }
 
-// 响应式处理
+// 事件监听
+document.addEventListener('DOMContentLoaded', initializePage);
 window.addEventListener('resize', function() {
     const sidebar = document.getElementById('sidebar');
     const content = document.getElementById('content');
-    
     if(sidebar && content && window.innerWidth > 1023) {
         sidebar.classList.remove('active');
         content.classList.remove('shifted');
