@@ -238,7 +238,7 @@ async function loadPageContent(pageId, router) {
                     <p>${err.message}</p>
                     <p>ID: ${pageId}</p>
                     <div style="margin-top:15px">
-                        <button onclick="location.reload()" style="margin:5px;padding:6px 16px;background:#8CAEFF;color:white;border:none;border-radius:4px;cursor:pointer">刷新</button>
+                        <button onclick="location.reload()" style="margin:5px;padding:8px 16px;background:#8CAEFF;color:white;border:none;border-radius:4px;cursor:pointer;font-size:17px">刷新</button>
                     </div>
                 </div>
             </div>
