@@ -53,18 +53,36 @@ const isSubPage = () => {
 const getCurrentPageId = () => {
     const p = location.pathname.replace(/^\/|\/$/g, '');
     if (p === '' || p === 'index.html') return 'home';
-    return p.split('/')[0];
+    
+    // 对于多级路径，返回完整路径（去掉末尾斜杠）
+    const path = p.split('/').filter(part => part && part !== 'index.html').join('/');
+    return path || 'home';
 };
 
 const getPageIdFromHref = href => {
     if (href === '/' || href === '') return 'home';
-    return href.replace(/^\/|\/$/g, '').split('/')[0];
+    
+    // 对于多级路径，返回完整路径（去掉末尾斜杠）
+    const path = href.replace(/^\/|\/$/g, '').split('/').filter(part => part).join('/');
+    return path || 'home';
 };
 
 const isSpecialPage = pageId => specialPages[pageId];
 
 const buildPageUrl = pageId => pageId === 'home' ? '/' : `/${pageId}/`;
-const buildPageRequestUrl = pageId => pageId === 'home' ? '/index.html' : `/${pageId}/index.html`;
+const buildPageRequestUrl = pageId => {
+    if (pageId === 'home') return '/index.html';
+    
+    // 对于多级路径，需要构建正确的请求URL
+    const pathParts = pageId.split('/');
+    if (pathParts.length > 1) {
+        // 多级路径，直接请求该路径下的index.html
+        return `/${pageId}/index.html`;
+    } else {
+        // 单级路径，使用原来的格式
+        return `/${pageId}/index.html`;
+    }
+};
 
 // 菜单状态管理
 function saveMenuState() {
@@ -167,8 +185,28 @@ function initMenu() {
 // 路由和页面功能
 function setActiveMenuItem(pageId) {
     document.querySelectorAll('#sidebar li').forEach(item => item.classList.remove('active'));
-    const item = document.querySelector(`[data-page="${pageId}"]`) || 
-                 document.querySelector(`a[href="${pageId==='home'?'/':'/'+pageId+'/'}"]`);
+    
+    // 首先尝试精确匹配 data-page 属性
+    let item = document.querySelector(`[data-page="${pageId}"]`);
+    
+    // 如果没有找到，尝试匹配 href 属性
+    if (!item) {
+        const normalizedHref = pageId === 'home' ? '/' : `/${pageId}/`;
+        item = document.querySelector(`a[href="${normalizedHref}"]`);
+    }
+    
+    // 如果还没有找到，尝试部分匹配（对于多级路径）
+    if (!item) {
+        const menuLinks = document.querySelectorAll('#sidebar a[href^="/"]');
+        for (let link of menuLinks) {
+            const linkPageId = getPageIdFromHref(link.getAttribute('href'));
+            if (linkPageId === pageId) {
+                item = link;
+                break;
+            }
+        }
+    }
+    
     if (item) item.parentElement.classList.add('active');
 }
 
@@ -176,7 +214,7 @@ function handleSPANavigation(pageId, href) {
     const r = window.router || router;
     if (r.currentPage === pageId || r.isLoading) return;
     
-    console.log('SPA导航到页面:', pageId);
+    console.log('SPA导航到页面:', pageId, '请求URL:', buildPageRequestUrl(pageId));
     
     if (pageId === 'home') {
         history.pushState({ pageId: 'home' }, null, '/');
@@ -216,7 +254,10 @@ async function loadPageContent(pageId, router) {
     document.querySelectorAll('.card').forEach(card => card.style.display = 'none');
 
     try {
-        const response = await fetch(buildPageRequestUrl(pageId));
+        const requestUrl = buildPageRequestUrl(pageId);
+        console.log('正在请求:', requestUrl);
+        
+        const response = await fetch(requestUrl);
         if (!response.ok) throw new Error(`HTTP错误! 状态码: ${response.status}`);
         
         const html = await response.text();
@@ -231,14 +272,17 @@ async function loadPageContent(pageId, router) {
         window.scrollTo(0, 0);
         
     } catch (err) {
+        console.error('页面加载失败:', err);
         container.innerHTML = `
             <div class="card active error">
                 <h1>加载失败QAQ</h1>
                 <div class="command-section">
                     <p>${err.message}</p>
-                    <p>ID: ${pageId}</p>
+                    <p>页面ID: ${pageId}</p>
+                    <p>请求URL: ${buildPageRequestUrl(pageId)}</p>
                     <div style="margin-top:15px">
                         <button onclick="location.reload()" style="margin:5px;padding:6px 15px;background:#A1BDFF;color:white;border:none;border-radius:4px;cursor:pointer;font-size:15px">刷新</button>
+                        <button onclick="window.router && handleSPANavigation('home', '/')" style="margin:5px;padding:6px 15px;background:#A1BDFF;color:white;border:none;border-radius:4px;cursor:pointer;font-size:15px">返回首页</button>
                     </div>
                 </div>
             </div>
@@ -252,6 +296,8 @@ function initRouter(router) {
     window.router = router;
     const currentPageId = getCurrentPageId();
     router.currentPage = currentPageId;
+    
+    console.log('初始化路由，当前页面:', currentPageId);
     
     // 初始路由
     if (location.pathname === '/' || location.pathname === '' || location.pathname === '/index.html') {
@@ -289,6 +335,8 @@ function initRouter(router) {
 function initializePage() {
     const pageId = getCurrentPageId();
     router.currentPage = pageId;
+    
+    console.log('页面初始化，页面ID:', pageId);
     
     ensureDynamicContentContainer();
     initMenu();
