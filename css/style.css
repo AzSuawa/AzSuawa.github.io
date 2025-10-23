@@ -62,7 +62,7 @@ body {
   top: 60px; /* 从header下面开始 */
   left: 0;
   width: 220px;
-  height: calc(100vh - 60px); /* 减去header高度 */
+  height: calc(100dvh - 60px); 
   background: #F0F5FF;
   transition: left 0.3s;
   z-index: 99;
@@ -71,7 +71,6 @@ body {
   overflow-x: hidden;
   display: flex;
   flex-direction: column;
-  margin-top: 0px;
 }
 
 /* 隐藏滚动条但保持滚动功能 */
