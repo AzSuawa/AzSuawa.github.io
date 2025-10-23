@@ -533,12 +533,11 @@ async function loadPageContent(pageId, router) {
         console.error('页面加载失败:', err);
         container.innerHTML = `
             <div class="card active error">
-                <h1>加载失败(＞﹏＜)</h1>
-                <p>错误信息: ${err.message}</p>
-                <p>页面ID: ${pageId}</p>
+                <h1>加载失败QAQ</h1>
+                <p>${err.message}</p>
+                <p>ID: ${pageId}</p>
                 <div style="margin-top: 15px;">
-                    <button onclick="location.reload()" style="margin: 5px; padding: 8px 16px; background: #4285f4; color: white; border: none; border-radius: 4px; cursor: pointer;">刷新页面</button>
-                    <button onclick="window.location.href='${buildPageUrl(pageId)}'" style="margin: 5px; padding: 8px 16px; background: #34a853; color: white; border: none; border-radius: 4px; cursor: pointer;">直接访问页面</button>
+                    <button onclick="location.reload()" style="margin: 5px; padding: 8px 16px; background: #8CAEFF; color: white; border: none; border-radius: 4px; cursor: pointer;">刷新</button>
                 </div>
             </div>
         `;
