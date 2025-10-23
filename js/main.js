@@ -234,10 +234,10 @@ async function loadPageContent(pageId, router) {
         container.innerHTML = `
             <div class="card active error">
                 <h1>加载失败QAQ</h1>
-                <p>${err.message}</p>
-                <p>ID: ${pageId}</p>
+                <p>  ${err.message}</p>
+                <p>  ID: ${pageId}</p>
                 <div style="margin-top:15px">
-                    <button onclick="location.reload()" style="margin:5px;padding:8px 16px;background:#8CAEFF;color:white;border:none;border-radius:4px;cursor:pointer">刷新</button>
+                    <button onclick="location.reload()" style="margin:5px;padding:8px 14px;background:#8CAEFF;color:white;border:none;border-radius:4px;cursor:pointer">刷新</button>
                 </div>
             </div>
         `;
