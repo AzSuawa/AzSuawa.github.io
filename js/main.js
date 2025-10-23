@@ -39,7 +39,8 @@ const menuHTML = `
         <i class="fas fa-chevron-right toggle"></i>
     </div>
     <ul class="submenu" style="display: none;">
-        <li><a href="/g/" data-page="g"><i class="fas fa-book"></i> 小故事</a></li>
+        <li><a href="/g/" data-page="g"><i class="fas fa-book"></i> 测试页面</a></li>
+        <li><a href="/wikl/cape/" data-page="cape"><i class="fas fa-star"></i> 如何兑换Minecraft披风</a></li>
     </ul>
 </div>
 `;
