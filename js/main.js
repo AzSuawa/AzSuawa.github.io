@@ -16,8 +16,7 @@ const menuData = [
         {href: "/bot-update/", page: "bot-update", icon: "book", text: "更新日志"},
         {href: "/mcp/", page: "mcp", icon: "star", text: "MCPing"}
     ]},
-    {name: "其他", active: false, items: [
-        {href: "/g/", page: "g", icon: "book", text: "测试页面"},
+    {name: "其他", active: false, items: 
         {href: "/wikl/cape/", page: "cape", icon: "star", text: "如何兑换Minecraft披风"}
     ]}
 ];
