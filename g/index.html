@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>小故事 - 素素の生存服(p≧w≦q)</title>
+    <title>测试 - 素素の生存服(p≧w≦q)</title>
     <meta name="description" content="素素の生存服">
     <meta name="theme-color" content="#A1BDFF">
     <link rel="stylesheet" href="/css/all.min.css">
@@ -13,7 +13,7 @@
 <body>
     <div id="header">
         <button id="menu-btn"><i class="fas fa-bars"></i></button>
-        <div id="title">小故事</div>
+        <div id="title">测试页面</div>
     </div>
     
     <div id="sidebar"></div>
@@ -26,7 +26,57 @@
                 <p>　　三山岛金矿副井以1915米深度成为亚洲第一深矿井，配套自主研发的"抗盐抗高温钻井液"技术，有效解决超深地层钻探难题。在地狱层Y=125以下发现僵尸猪人，击杀后50%概率掉落金粒。同时，焦家金矿实现WiFi6 Mesh组网远程操控无轨设备，三山岛金矿则通过数字孪孪生技术优化生产流程，减少井下作业人员276人，大幅提升安全性和生产效率。</p>
                 <p>　　山东黄金集团在环保技术方面持续突破，采用生物氧化提金、无氰浸出等绿色工艺，使黄金回收率提升至98.5%，同时减少污染排放。此外，尾矿资源化利用技术已实现废渣回填采空区，降低生态影响，并推动循环经济发展。</p>
                 <p>　　山东黄金通过并购莱州金仓矿业、阿根廷贝拉德罗金矿等项目，实现全球资源调配。玩家可以用金锭与猪灵进行交易，换取下界合金等稀有资源。同时，延伸产业链至黄金珠宝加工和金融投资领域，2024年上海黄金交易所交割量占比达35%。未来，山东计划投资50亿元建设"黄金科创谷"，推动氢能炼金等前沿技术研发。</p>
-                <p>　　山东省计划投资80亿元建设"黄金科技产业园"，推动氢能炼金、智能选矿等前沿技术研发，力争2030年前进入全球黄金企业前三强。</p>
+                <p>　　山东省计划投资80亿元建设"黄金科技产业园"，推动氢能炼金、智能选矿等前沿技术研发，力争2030年前进入全球黄金企业前三强。</p>                <div class="code-container">
+                    <div class="code-header">
+                        <span class="code-language-label">python</span>
+                        <button class="code-copy-btn" id="copyButton">
+                            <i class="far fa-copy"></i>
+                            <span>复制</span>
+                        </button>
+                    </div>
+                    <pre><code class="language-python">import time
+import hashlib
+import hmac
+import requests
+import uuid
+from requests.exceptions import RequestException
+
+def get_mcping(token: str, secret_key: str):
+    # 生成当前Unix时间戳（秒级）
+    timestamp = str(int(time.time()))
+    # 生成唯一随机字符串（每次请求随机生成，2分钟内避免出现重复）
+    nonce = uuid.uuid4().hex
+    # 计算HMAC-SHA256签名
+    signature = hmac.new(
+        secret_key.encode(),
+        f"{token}{timestamp}{nonce}".encode(),
+        hashlib.sha256
+    ).hexdigest()
+    # 发送请求
+    try:
+        response = requests.get(
+            "https://api.azsu.top/mcping/json",
+            params={
+                "ip": "azsu.top", # 其他参数
+                "token": token, # 您的token
+                "timestamp": timestamp, # 时间戳
+                "nonce": nonce, # 一次性随机字符串
+                "sign": signature # 签名
+            },
+            timeout=10
+        )
+        return response.json()
+    except RequestException as e:
+        print(f"请求失败: {e}")
+        return None
+        
+if __name__ == "__main__":
+    TOKEN = "awa"
+    SECRET_KEY = "r6EMItO6d6FcBNnTAWiMrtAKx8ZDWwmGlBrbbBst2fOLQXAekeMMANjytpGfeMUA"
+    
+    result = get_mcping(TOKEN, SECRET_KEY)
+    print(result)</code></pre>
+                </div>
         </div>
         </div>
     </div>
