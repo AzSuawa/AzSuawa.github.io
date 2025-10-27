@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>认证请求使用方法 - 阿素Wikl(p≧w≦q)</title>
+<meta name="description" content="素素の生存服">
+<meta name="theme-color" content="#A1BDFF">
+<link rel="stylesheet" href="/css/all.min.css">
+<link rel="stylesheet" href="/css/style.css">
+<link rel="icon" href="/images/favicon.ico">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/themes/prism.min.css" rel="stylesheet" />
+</head>
+<body>
+<div id="header">
+<button id="menu-btn"><i class="fas fa-bars"></i></button>
+<div id="title">阿素Wikl</div>
+</div>
+
+<div id="sidebar"></div>
+
+<div id="content">
+<div class="card active"> 
+<h2>认证请求使用方法</h2>
+<div class="wikl-article-meta">
+<div class="wikl-meta-item">
+<i class="fas fa-calendar-check"></i>
+<span class="wikl-meta-label">发布:</span>
+<span class="wikl-meta-value">2025年10月28日</span>
+</div>
+<div class="wikl-meta-item">
+<i class="fas fa-clock"></i>
+<span class="wikl-meta-label">更新:</span>
+<span class="wikl-meta-value">2025年10月28日</span>
+</div>
+<div class="wikl-meta-item">
+<i class="fas fa-user-pen"></i>
+<span class="wikl-meta-label">作者:</span>
+<span class="wikl-meta-value">阿素</span>
+</div>
+<div class="wikl-meta-item">
+<i class="fas fa-edit"></i>
+<span class="wikl-meta-label">编辑</span>
+<span class="wikl-meta-value">1</span>
+<span class="wikl-meta-label">次</span>
+</div>
+</div>
+<div class="command-section">
+<p><i class="fas fa-circle"></i>认证请求与普通请求的区别：</p>
+<table class="sponsor-table ban-table">
+<thead><tr><th>内容</th><th>普通请求</th><th>认证请求</th></tr></thead>
+<tbody>
+<tr><td>频率限制(每分钟)</td><td>30次</td><td>120次</td></tr>
+<tr><td>频率限制(每10分钟)</td><td>90次</td><td>600次</td></tr>
+<tr><td>普通请求繁忙时</td><td>拒绝</td><td>通过</td></tr>
+<tr><td>全局请求繁忙时</td><td>拒绝</td><td>拒绝</td></tr>
+<tr><td>非公开接口</td><td>不可用</td><td>可用</td></tr>
+</tbody>
+</table>
+<p><br><i class="fas fa-circle"></i>你可以从开发者那获得token与密钥，接口提供签名验证和IP白名单验证，为确保请求安全，请您务必启用一种验证方式，若同时启用签名验证和IP验证，您可以从这两种验证方式中任意选择一种进行请求。</p>
+<table class="sponsor-table ban-table">
+<thead><tr><th>参数</th><th>仅token</th><th>签名验证</th><th>IP验证</th></tr></thead>
+<tbody>
+<tr><td>token</td><td>必须</td><td>必须</td><td>必须</td></tr>
+<tr><td>timestamp</td><td>非必须</td><td>必须</td><td>非必须</td></tr>
+<tr><td>nonce</td><td>非必须</td><td>必须</td><td>非必须</td></tr>
+<tr><td>sign</td><td>非必须</td><td>必须</td><td>非必须</td></tr>
+</tbody>
+</table>
+<p><br><i class="fas fa-circle"></i>签名验证示例：</p>
+            
+<div class="code-container">
+<div class="code-header">
+<span class="code-language-label">python</span>
+<button class="code-copy-btn" id="copyButton">
+<i class="far fa-copy"></i>
+<span>复制</span>
+</button>
+</div>
+<pre><code class="language-python">import time
+import hashlib
+import hmac
+import requests
+import uuid
+from requests.exceptions import RequestException
+
+def get_mcping(token: str, secret_key: str):
+    # 生成当前Unix时间戳（秒级）
+    timestamp = str(int(time.time()))
+    # 生成唯一随机字符串（每次请求随机生成，2分钟内避免出现重复）
+    nonce = uuid.uuid4().hex
+    # 计算HMAC-SHA256签名
+    signature = hmac.new(
+        secret_key.encode(),
+        f"{token}{timestamp}{nonce}".encode(),
+        hashlib.sha256
+    ).hexdigest()
+    # 发送请求
+    try:
+        response = requests.get(
+            "https://api.azsu.top/mcping/json",
+            params={
+                "ip": "azsu.top", # 其他参数
+                "token": token, # 您的token
+                "timestamp": timestamp, # 时间戳
+                "nonce": nonce, # 一次性随机字符串
+                "sign": signature # 签名
+            },
+            timeout=10
+        )
+        return response.json()
+    except RequestException as e:
+        print(f"请求失败: {e}")
+        return None
+        
+if __name__ == "__main__":
+    TOKEN = "替换为您的token"
+    SECRET_KEY = "替换为您的密钥"
+    
+    result = get_mcping(TOKEN, SECRET_KEY)
+    print(result)</code></pre>
+</div>
+</div>
+</div>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/prism.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-python.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.10/clipboard.min.js"></script>
+<script src="/js/main.js"></script>
+</body>
