@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>如何使用不支持的版本加入素素の生存服 - 阿素wiki(p≧w≦q)</title>
+    <meta name="description" content="使用ViaForge/ViaFabric/ViaProxy实现旧版本客户端加入素素の生存服的教程，包含HMCL启动器配置步骤。'">
+    <meta name="theme-color" content="#A1BDFF">
+    <link rel="stylesheet" href="/css/all.min.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="icon" href="/images/favicon.ico">
+</head>
+<body>
+    <div id="header">
+        <button id="menu-btn"><i class="fas fa-bars"></i></button>
+        <div id="title">阿素Wiki</div>
+    </div>
+    
+    <div id="sidebar"></div>
+    
+    <div id="content">
+        <div class="card active"> 
+            <h1>如何使用不支持的版本加入素素の生存服</h1>
+            <div class="wiki-article-meta">
+                <div class="wiki-meta-item">
+                    <i class="fas fa-calendar-check"></i>
+                    <span class="wiki-meta-label">发布:</span>
+                    <span class="wiki-meta-value">2025年11月2日</span>
+                </div>
+                <div class="wiki-meta-item">
+                    <i class="fas fa-clock"></i>
+                    <span class="wiki-meta-label">更新:</span>
+                    <span class="wiki-meta-value">2025年11月2日</span>
+                </div>
+                <div class="wiki-meta-item">
+                    <i class="fas fa-user-pen"></i>
+                    <span class="wiki-meta-label">作者:</span>
+                    <span class="wiki-meta-value">阿素</span>
+                </div>
+                <div class="wiki-meta-item">
+                    <i class="fas fa-edit"></i>
+                    <span class="wiki-meta-label">编辑</span>
+                    <span class="wiki-meta-value">2</span>
+                    <span class="wiki-meta-label">次</span>
+                </div>
+            </div>
+            
+            <div class="command-section">
+                <p><i class="fas fa-circle"></i>素素の生存服不允许1.12.2及以下版本进入，但允许使用<a href="https://modrinth.com/mod/viaforge" style="color:#4285f4;text-decoration:none" target="_blank">ViaForge</a>、<a href="https://modrinth.com/mod/viafabric" style="color:#4285f4;text-decoration:none" target="_blank">ViaFabric</a>等跨版本工具进入。ViaForge和ViaFabric支持安装在1.8.9、1.12.2等客户端上，通过修改版本协议实现跨版本联机，对于旧版本客户端连接新版本服务器，会将新版本内容转换为旧版本相似内容以保障体验。<a href="https://github.com/ViaVersion/ViaProxy" style="color:#4285f4;text-decoration:none" target="_blank">ViaProxy</a>是桌面应用程序，通过在本地建立代理服务器中转数据，支持版本​极其广泛，包括Classic、Alpha、Beta等几乎所有历史版本。</p>
+            </div>
+            <h1>1.8.9/1.12.2使用ViaForge加入本服务器教程</h1>
+            <div class="command-section">
+                <p><i class="fas fa-circle"></i>首先需要从<a href="https://files.minecraftforge.net/net/minecraftforge/forge/index_1.8.9.html" style="color:#4285f4;text-decoration:none" target="_blank">Forge官网</a>下载对应版本的Forge(.jar文件)，使用Java运行并按照提示操作以完成安装。一些第三方启动器支持在启动器内直接完成安装。以<a href="https://hmcl.huangyuhui.net/" style="color:#4285f4;text-decoration:none" target="_blank">HMCL</a>为例，在启动器页面点击“实例管理”-“自动安装”-“Forge”(如图)，点击最新版本进行安装。</p>
+                <p><i class="fas fa-circle"></i><a href="https://maven.minecraftforge.net/net/minecraftforge/forge/1.8.9-11.15.1.2318-1.8.9/forge-1.8.9-11.15.1.2318-1.8.9-installer.jar" style="color:#4285f4;text-decoration:none" target="_blank">Forge-1.8.9-11.15.1.2318</a></p>
+                <p><i class="fas fa-circle"></i><a href="https://maven.minecraftforge.net/net/minecraftforge/forge/1.12.2-14.23.5.2859/forge-1.12.2-14.23.5.2859-installer.jar" style="color:#4285f4;text-decoration:none" target="_blank">Forge-1.12.2-14.23.5.2859</a></p>
+                <div style="margin:20px 0;text-align:center"><img src="/wiki/cross-version/wiki-via-1.webp" alt="HMCL-实例管理-自动安装" width="75%" class="ss-mobile-img" style="border-radius:8px;box-shadow:0 4px 8px rgba(0,0,0,.1)"></div>
+                <p><i class="fas fa-circle"></i>然后下载指定版本的<a href="https://modrinth.com/mod/viaforge" style="color:#4285f4;text-decoration:none" target="_blank">ViaForge</a>，放在“mods”文件夹，HMCL启动器可以直接在启动器内完成安装(如图)</p>
+                <p><i class="fas fa-circle"></i><a href="https://cdn.modrinth.com/data/Z6se2s8f/versions/Hc8i8DPx/viaforge-mc189-4.3.0.jar" style="color:#4285f4;text-decoration:none" target="_blank">ViaForge-1.8.9-4.3.0</a></p>
+                <p><i class="fas fa-circle"></i><a href="https://cdn.modrinth.com/data/Z6se2s8f/versions/fXnCQoeb/viaforge-mc1122-4.3.0.jar" style="color:#4285f4;text-decoration:none" target="_blank">ViaForge-1.12.2-4.3.0</a></p>
+                <div style="margin:20px 0;text-align:center"><img src="/wiki/cross-version/wiki-via-2.webp" alt="HMCL-实例管理-模组管理-下载-ViaForge" width="75%" class="ss-mobile-img" style="border-radius:8px;box-shadow:0 4px 8px rgba(0,0,0,.1)"></div>
+                <p><i class="fas fa-circle"></i>启动游戏，点击“多人游戏”，选择本服务器，点击“编辑”-“Set Version”，选择1.13+版本(推荐选择1.13)。</p>
+                <div style="margin:20px 0;text-align:center"><img src="/wiki/cross-version/wiki-via-3.webp" alt="Minecraft1.8.9" width="75%" class="ss-mobile-img" style="border-radius:8px;box-shadow:0 4px 8px rgba(0,0,0,.1)"></div>
+                <div style="margin:20px 0;text-align:center"><img src="/wiki/cross-version/wiki-via-4.webp" alt="Minecraft1.8.9-多人游戏-编辑" width="75%" class="ss-mobile-img" style="border-radius:8px;box-shadow:0 4px 8px rgba(0,0,0,.1)"></div>
+                <div style="margin:20px 0;text-align:center"><img src="/wiki/cross-version/wiki-via-5.webp" alt="Minecraft1.8.9-多人游戏-编辑-SetVersion" width="75%" class="ss-mobile-img" style="border-radius:8px;box-shadow:0 4px 8px rgba(0,0,0,.1)"></div>
+                <p><i class="fas fa-circle"></i>然后进入服务器。</p>
+                <div style="margin:20px 0;text-align:center"><img src="/wiki/cross-version/wiki-via-6.webp" alt="Minecraft1.8.9" width="75%" class="ss-mobile-img" style="border-radius:8px;box-shadow:0 4px 8px rgba(0,0,0,.1)"></div>
+            </div>
+        </div>
+    </div>
+    
+    <script src="/js/main.js"></script>
+</body>
+</html>
