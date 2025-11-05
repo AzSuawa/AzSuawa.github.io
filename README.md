@@ -10,4 +10,4 @@
 
 ---
 
-[https://azsu.top](https://azsu.top)
+- [https://azsu.top](https://azsu.top)
