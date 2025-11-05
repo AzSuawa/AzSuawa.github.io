@@ -9,4 +9,5 @@
 - **无授权许可**：浏览本仓库不代表您获得了任何使用其代码的权利。本仓库不提供任何开源许可证。
 
 ---
-https://azsu.top
+
+[https://azsu.top](https://azsu.top)
