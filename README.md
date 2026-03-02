@@ -10,4 +10,7 @@
 
 ---
 
+- [https://b23.tv/2ieZLCK](BiliBili)
+- [https://qm.qq.com/q/ZJuVkhCv0C](QQ Group)
+- [https://discord.gg/WkeYWaSHUB](Discord)
 - [https://azsu.top](https://azsu.top)
