@@ -11,6 +11,6 @@
 ---
 
 - [BiliBili](https://b23.tv/2ieZLCK)
-- [https://qm.qq.com/q/ZJuVkhCv0C](QQ Group)
-- [https://discord.gg/WkeYWaSHUB](Discord)
+- [QQ Group](https://qm.qq.com/q/ZJuVkhCv0C)
+- [Discord](https://discord.gg/WkeYWaSHUB)
 - [https://azsu.top](https://azsu.top)
