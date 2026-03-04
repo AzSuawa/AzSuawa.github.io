@@ -41,9 +41,10 @@
                 <div class="cmd-section">
                     <div class="cmd-section-header admin"><p><i class="fas fa-terminal"></i> 管理员指令(在Discord暂不支持或需联系阿素设置权限才能使用)</p></div>
                     <div class="cmd-grid">
-                        <div class="command-card"><div class="command-name">mute &lt;@用户&gt; &lt;禁言时间&gt;</div><div class="command-desc">禁言某人，禁言时间支持单位：s(秒,默认),m(分钟),h(小时),d(天),mo(月)，禁言时间为0即解除禁言。<br>声明: 禁言操作系群管理员行为，机器人仅作为执行工具，与机器人开发者无关。</div><div class="command-example">示例: mute @用户 30d</div></div>
-                        <div class="command-card"><div class="command-name">kick &lt;@用户&gt; [拉黑(可选)]</div><div class="command-desc">将某人踢出群聊，支持拉黑。<br>声明: 踢人操作系群管理员行为，机器人仅作为执行工具，与机器人开发者无关。</div><div class="command-example">示例: kick @用户 拉黑</div></div>
-                        <div class="command-card"><div class="command-name">mcp.绑定 &lt;服务器地址&gt;</div><div class="command-desc">绑定当前群聊或私聊的mcping默认服务器地址。<br>Discord用户请联系开发者</div></div>
+                        <div class="command-card"><div class="command-name">mute &lt;@用户&gt; &lt;禁言时间&gt;</div><div class="command-desc">禁言某人，禁言时间支持单位：s(秒,默认),m(分钟),h(小时),d(天),mo(月)，禁言时间为0即解除禁言。<br>声明: 禁言操作系群管理员行为，机器人仅作为执行工具，与机器人开发者无关。<div class="api-source-note-yellow">暂不支持Discord</div>
+</div><div class="command-example">示例: mute @用户 30d</div></div>
+                        <div class="command-card"><div class="command-name">kick &lt;@用户&gt; [拉黑(可选)]</div><div class="command-desc">将某人踢出群聊，支持拉黑。<br>声明: 踢人操作系群管理员行为，机器人仅作为执行工具，与机器人开发者无关。<div class="api-source-note-yellow">暂不支持Discord</div></div><div class="command-example">示例: kick @用户 拉黑</div></div>
+                        <div class="command-card"><div class="command-name">mcp.绑定 &lt;服务器地址&gt;</div><div class="command-desc">绑定当前群聊或私聊的mcping默认服务器地址。<div class="api-source-note">Discord用户请联系开发者设置群管理权限</div></div></div>
                         <div class="command-card"><div class="command-name">mcp.白名单 &lt;地址/关闭&gt;</div><div class="command-desc">添加或关闭白名单，一旦添加则视为本群开启白名单，无法查询白名单以外的地址，并撤回调用指令的消息（需要群管理权限）<br>可添加多个地址，添加的域名及其所有子域名将被允许。若地址未指定端口号则允许该地址的全部端口，若有端口号则仅允许该端口。<br>Discord用户请联系开发者</div></div>
                         <div class="command-card"><div class="command-name">小小素.入群欢迎</div><div class="command-desc">设置或取消入群欢迎，支持多种占位符变量。</div></div>
                         <div class="command-card"><div class="command-name">小小素.设置</div><div class="command-desc">设置一些功能。<br>Diacord用户请联系开发者</div></div>
