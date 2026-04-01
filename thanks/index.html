@@ -27,10 +27,12 @@
             <p>🍀作为公益服，我们仅能给予头衔、鸣谢名单等不影响游戏平衡的回馈</p>
             <p>❗赞助时请备注您的QQ号和游戏ID或跟管理员说下</p>
             <p>⚠️阿素仅负责在此页面更新内容，退款等问题请联系BI4MRT</p>
-            <p><i class="fas fa-circle"></i><strong>总金额：￥703.87</strong></p>
+            <p><i class="fas fa-circle"></i><strong>总金额：<span id="total-amount-value">计算错误T^T</span></strong></p>
             <table class="sponsor-table sp-table">
-                <thead><tr><th>赞助时间</th><th>赞助人</th><th>赞助内容</th></tr></thead>
-                <tbody>
+                <thead>
+                    <tr><th>赞助时间</th><th>赞助人</th><th>赞助内容</th></tr>
+                </thead>
+                <tbody id="sponsor-tbody">
                     <tr><td>2025-07-30 23:33:48</td><td>不透露</td><td>不透露</td></tr>
                     <tr><td>2025-07-30 23:53:54</td><td>AbyssStay</td><td>￥6.66</td></tr>
                     <tr><td>2025-07-30 23:58:44</td><td>Kochiya_520_</td><td>￥30.00</td></tr>
@@ -50,7 +52,6 @@
                     <tr><td>2025-08-05 18:28:13</td><td>ZhangZhang_bao</td><td>￥20.00</td></tr>
                     <tr><td>2025-08-05 23:49:23</td><td>Wzx090723</td><td>￥5.00</td></tr>
                     <tr><td>2025-08-11 11:04:29</td><td>Love_swam</td><td>￥200.00</td></tr>
-
                     <tr><td>2025-08-15 11:26:49</td><td>iuhiuhne</td><td>￥2.99</td></tr>
                     <tr><td>2025-08-24 22:09:49</td><td>lingshiai</td><td>￥45.00</td></tr>
                     <tr><td>2025-09-06 17:29:28</td><td>Ghost_YeLin</td><td>￥30.00</td></tr>
@@ -71,5 +72,23 @@
     </div>
     
     <script src="/js/main.js"></script>
+    <script>
+        (function() {
+            var rows = document.getElementById('sponsor-tbody').querySelectorAll('tr');
+            var total = 0;
+            for (var i = 0; i < rows.length; i++) {
+                var cells = rows[i].querySelectorAll('td');
+                if (cells.length >= 3) {
+                    var text = cells[2].innerText;
+                    var match = text.match(/[\d.]+/);
+                    if (match) {
+                        var num = parseFloat(match[0]);
+                        if (!isNaN(num)) total += num;
+                    }
+                }
+            }
+            document.getElementById('total-amount-value').innerText = '￥' + total.toFixed(2);
+        })();
+    </script>
 </body>
 </html>
