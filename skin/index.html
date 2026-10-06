@@ -482,7 +482,8 @@ async function requestCaptcha(cells) {
         // 状态在 header 里
         const code = resp.headers.get("X-Code");
         const status = resp.headers.get("X-Captcha-Status");
-        const message = resp.headers.get("X-Message") || "";
+        const messageEncoded = resp.headers.get("X-Message") || "";
+        const message = decodeURIComponent(messageEncoded);
         const cuewordEncoded = resp.headers.get("X-Captcha-Cueword") || "";
 
         // 成功
