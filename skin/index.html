@@ -62,55 +62,56 @@
 </head>
 <body>
 <div id="header">
-    <button id="menu-btn"><i class="fas fa-bars"></i></button>
-    <div id="title">素素の生存服</div>
+  <button id="menu-btn"><i class="fas fa-bars"></i></button>
+  <div id="title">素素の生存服</div>
 </div>
 <div id="sidebar"></div>
 <div id="content">
-    <div class="card active">
-        <h1>上传皮肤到服务器</h1>
-        <div class="command-section skin-upload-container">
-            <div class="skin-form-group">
-                <label for="playerId">玩家ID:</label>
-                <input type="text" id="playerId" placeholder="请输入你的游戏名" required />
-            </div>
-            <div class="skin-drop-area" id="dropArea">
-                <p>可拖放文件到此处</p>
-                <button class="skin-btn" id="selectBtn">选择文件</button>
-                <input type="file" id="fileInput" accept="image/png" />
-                <div class="skin-file-size-limit">仅支持原版皮肤(PNG,64×64)</div>
-            </div>
-            <div class="skin-progress-container" id="progressContainer">
-                <p id="statusText">准备上传...</p>
-                <progress class="skin-progress" id="uploadProgress" value="0" max="100"></progress>
-            </div>
-            <div class="skin-file-list" id="fileList"></div>
-        </div>
+  <div class="card active">
+    <h1>上传皮肤到服务器</h1>
+    <div class="command-section skin-upload-container">
+      <div class="skin-form-group">
+        <label for="playerId">玩家ID:</label>
+        <input type="text" id="playerId" placeholder="请输入你的游戏名" required />
+      </div>
+      <div class="skin-drop-area" id="dropArea">
+        <p>可拖放文件到此处</p>
+        <button class="skin-btn" id="selectBtn">选择文件</button>
+        <input type="file" id="fileInput" accept="image/png" />
+        <div class="skin-file-size-limit">仅支持原版皮肤(PNG,64×64)</div>
+      </div>
+      <div class="skin-progress-container" id="progressContainer">
+        <p id="statusText">准备上传...</p>
+        <progress class="skin-progress" id="uploadProgress" value="0" max="100"></progress>
+      </div>
+      <div class="skin-file-list" id="fileList"></div>
     </div>
+  </div>
 </div>
 
+<!-- captcha 弹层 -->
 <div class="captcha-overlay" id="captchaOverlay"></div>
 <div class="captcha-card" id="captchaCard">
-    <div class="captcha-card-header">
-        <h2 class="captcha-card-title">请选择所有包含<span id="cueword" class="captcha-cueword">加载中</span>的内容</h2>
-        <button class="captcha-close-btn" id="captchaCloseBtn">×</button>
+  <div class="captcha-card-header">
+    <h2 class="captcha-card-title">请选择所有包含<span id="cueword" class="captcha-cueword">加载中</span>的内容</h2>
+    <button class="captcha-close-btn" id="captchaCloseBtn">×</button>
+  </div>
+  <div class="captcha-verification-container">
+    <div class="captcha-image-wrapper">
+      <div class="captcha-image-container">
+        <img id="captchaImage" alt="验证图片" style="display:none" />
+        <div class="captcha-grid-overlay" id="captchaGridOverlay"></div>
+        <div id="captchaCenterMessage">正在初始化...</div>
+      </div>
     </div>
-    <div class="captcha-verification-container">
-        <div class="captcha-image-wrapper">
-            <div class="captcha-image-container">
-                <img id="captchaImage" alt="验证图片" style="display:none" />
-                <div class="captcha-grid-overlay" id="captchaGridOverlay"></div>
-                <div id="captchaCenterMessage">正在初始化...</div>
-            </div>
-        </div>
+  </div>
+  <div class="captcha-card-footer">
+    <span class="captcha-footer-text">By 阿素本素</span>
+    <div>
+      <button class="captcha-btn captcha-btn-cancel" id="captchaCancelBtn">取消</button>
+      <button class="captcha-btn" id="captchaSubmitBtn" disabled>继续</button>
     </div>
-    <div class="captcha-card-footer">
-        <span class="captcha-footer-text">By 阿素本素</span>
-        <div>
-            <button class="captcha-btn captcha-btn-cancel" id="captchaCancelBtn">取消</button>
-            <button class="captcha-btn" id="captchaSubmitBtn" disabled>继续</button>
-        </div>
-    </div>
+  </div>
 </div>
 <div class="captcha-success-message" id="captchaSuccessMessage">验证成功！</div>
 <div class="captcha-error-message" id="captchaErrorMessage"><div id="captchaErrorText"></div></div>
@@ -128,34 +129,34 @@
 //   GetCaptcha: true               匿名时声明"愿意做验证"
 // ============================================================
 
-// ---------- API 基址 ----------
+// ---------- API 基址（按你的部署改） ----------
 const API_BASE = "https://api.azsu.top";
 
 // ---------- DOM 引用 ----------
-const dropArea = document.getElementById("dropArea");
-const fileInput = document.getElementById("fileInput");
-const selectBtn = document.getElementById("selectBtn");
-const progressContainer = document.getElementById("progressContainer");
-const uploadProgress = document.getElementById("uploadProgress");
-const statusText = document.getElementById("statusText");
-const fileList = document.getElementById("fileList");
-const playerIdInput = document.getElementById("playerId");
-const captchaOverlay = document.getElementById("captchaOverlay");
-const captchaCard = document.getElementById("captchaCard");
-const captchaGridOverlay = document.getElementById("captchaGridOverlay");
-const captchaSubmitBtn = document.getElementById("captchaSubmitBtn");
-const captchaCancelBtn = document.getElementById("captchaCancelBtn");
-const captchaCloseBtn = document.getElementById("captchaCloseBtn");
-const captchaImage = document.getElementById("captchaImage");
-const cuewordElement = document.getElementById("cueword");
-const captchaCenterMessage = document.getElementById("captchaCenterMessage");
-const captchaSuccessMessage = document.getElementById("captchaSuccessMessage");
-const captchaErrorMessage = document.getElementById("captchaErrorMessage");
-const captchaErrorText = document.getElementById("captchaErrorText");
+const dropArea = document.getElementById("dropArea"),
+      fileInput = document.getElementById("fileInput"),
+      selectBtn = document.getElementById("selectBtn"),
+      progressContainer = document.getElementById("progressContainer"),
+      uploadProgress = document.getElementById("uploadProgress"),
+      statusText = document.getElementById("statusText"),
+      fileList = document.getElementById("fileList"),
+      playerIdInput = document.getElementById("playerId"),
+      captchaOverlay = document.getElementById("captchaOverlay"),
+      captchaCard = document.getElementById("captchaCard"),
+      captchaGridOverlay = document.getElementById("captchaGridOverlay"),
+      captchaSubmitBtn = document.getElementById("captchaSubmitBtn"),
+      captchaCancelBtn = document.getElementById("captchaCancelBtn"),
+      captchaCloseBtn = document.getElementById("captchaCloseBtn"),
+      captchaImage = document.getElementById("captchaImage"),
+      cuewordElement = document.getElementById("cueword"),
+      captchaCenterMessage = document.getElementById("captchaCenterMessage"),
+      captchaSuccessMessage = document.getElementById("captchaSuccessMessage"),
+      captchaErrorMessage = document.getElementById("captchaErrorMessage"),
+      captchaErrorText = document.getElementById("captchaErrorText");
 
 // ---------- 全局状态 ----------
 let selectedCells = [];
-let tempToken = "";
+let tempToken = "";              // 后端签发的临时令牌
 let verificationInProgress = false;
 let pendingFiles = null;
 let pendingPlayerId = "";
@@ -184,12 +185,12 @@ function showError(msg) {
 function updateFileStatus(item, text, status) {
     const el = item.querySelector(".skin-file-status");
     el.textContent = text;
-    el.className = "skin-file-status skin-status-" + status;
+    el.className = `skin-file-status skin-status-${status}`;
 }
 
 function addPreviewLink(item, playerId) {
     const a = document.createElement("a");
-    a.href = API_BASE + "/v2/skin_lib/file?player=" + encodeURIComponent(playerId);
+    a.href = `${API_BASE}/v2/skin_lib/file?player=${encodeURIComponent(playerId)}`;
     a.textContent = "查看皮肤";
     a.className = "skin-preview-link";
     a.target = "_blank";
@@ -234,18 +235,16 @@ function handleFiles(files) {
         return;
     }
 
-    const pngFiles = Array.from(files).filter(function (f) {
-        return f.type === "image/png";
-    });
+    const pngFiles = Array.from(files).filter(f => f.type === "image/png");
     if (pngFiles.length === 0) {
         showError("请选择PNG格式的皮肤文件(p≧w≦q)");
         fileInput.value = "";
         return;
     }
 
-    const oversize = pngFiles.filter(function (f) { return f.size > 10240; });
+    const oversize = pngFiles.filter(f => f.size > 10240);
     if (oversize.length > 0) {
-        showError('文件 "' + oversize[0].name + '" 超过10KB限制(p≧w≦q)');
+        showError(`文件 "${oversize[0].name}" 超过10KB限制(p≧w≦q)`);
         fileInput.value = "";
         return;
     }
@@ -259,19 +258,22 @@ function handleFiles(files) {
             return;
         }
 
+        // 展示文件条目
         const item = document.createElement("div");
         item.className = "skin-file-item";
-        item.innerHTML =
-            '<div class="skin-file-info">' +
-                '<span class="skin-file-icon">📄</span>' +
-                '<span>' + file.name + ' (' + formatFileSize(file.size) + ')</span>' +
-            '</div>' +
-            '<span class="skin-file-status skin-status-pending">准备上传</span>';
+        item.innerHTML = `
+            <div class="skin-file-info">
+                <span class="skin-file-icon">📄</span>
+                <span>${file.name} (${formatFileSize(file.size)})</span>
+            </div>
+            <span class="skin-file-status skin-status-pending">准备上传</span>
+        `;
         fileList.appendChild(item);
 
         pendingFiles = pngFiles;
         pendingPlayerId = playerId;
 
+        // 直接尝试上传（带本地 temp_token，如果有）
         attemptUpload();
     };
     img.onerror = function () {
@@ -297,20 +299,25 @@ function attemptUpload() {
     formData.append("file", file);
     formData.append("player_id", playerId);
 
-    const xhr = new XMLHttpRequest();
-    xhr.open("POST", API_BASE + "/v2/skin_lib/upload", true);
-
+    const headers = {};
     if (tempToken) {
-        xhr.setRequestHeader("Authorization", "Bearer " + tempToken);
+        headers["Authorization"] = `Bearer ${tempToken}`;
     } else {
-        xhr.setRequestHeader("GetCaptcha", "true");
+        // 匿名时声明"我愿意做验证"，让后端返回 14106 + temp_token
+        headers["GetCaptcha"] = "true";
+    }
+
+    const xhr = new XMLHttpRequest();
+    xhr.open("POST", `${API_BASE}/v2/skin_lib/upload`, true);
+    for (const [k, v] of Object.entries(headers)) {
+        xhr.setRequestHeader(k, v);
     }
 
     xhr.upload.onprogress = function (e) {
         if (e.lengthComputable) {
             const percent = Math.round(e.loaded / e.total * 100);
             uploadProgress.value = percent;
-            statusText.textContent = "上传中: " + percent + "%";
+            statusText.textContent = `上传中: ${percent}%`;
         }
     };
 
@@ -318,7 +325,7 @@ function attemptUpload() {
         let resp = null;
         try {
             resp = JSON.parse(xhr.responseText);
-        } catch (err) {
+        } catch (e) {
             resp = null;
         }
 
@@ -334,10 +341,9 @@ function attemptUpload() {
             statusText.style.color = "#28a745";
             uploadProgress.value = 100;
             const item = document.querySelector(".skin-file-item");
-            if (item) {
-                updateFileStatus(item, "上传成功", "success");
-                addPreviewLink(item, playerId);
-            }
+            updateFileStatus(item, "上传成功", "success");
+            addPreviewLink(item, playerId);
+            // 上传成功后清掉 temp_token（一次性）
             clearTempToken();
             fileInput.value = "";
             pendingFiles = null;
@@ -355,6 +361,7 @@ function attemptUpload() {
             storeTempToken(newToken);
             statusText.textContent = "需要人机验证...";
             statusText.style.color = "#ffc107";
+            // 弹验证卡片
             showCaptcha();
             initVerification();
             return;
@@ -367,9 +374,10 @@ function attemptUpload() {
         const item = document.querySelector(".skin-file-item");
         if (item) updateFileStatus(item, msg, "error");
 
+        // 401 且本地有 token → 说明 token 失效，清掉重试一次
         if (resp.code === 401 && tempToken) {
             clearTempToken();
-            statusText.textContent = "登录已过期，请重试";
+            statusText.textContent = "登录已过期，请重新选择文件";
         }
     };
 
@@ -415,24 +423,25 @@ function hideCenterMessage() {
 
 function showCaptchaSuccess() {
     captchaSuccessMessage.style.display = "block";
-    setTimeout(function () { captchaSuccessMessage.style.display = "none"; }, 1000);
+    setTimeout(() => { captchaSuccessMessage.style.display = "none"; }, 1000);
 }
 
 function showCaptchaError(msg) {
     captchaErrorText.textContent = msg;
     captchaErrorMessage.style.display = "block";
-    setTimeout(function () { captchaErrorMessage.style.display = "none"; }, 3000);
+    setTimeout(() => { captchaErrorMessage.style.display = "none"; }, 3000);
 }
 
 function resetCaptchaSelection() {
     selectedCells = [];
-    document.querySelectorAll(".captcha-grid-cell.selected").forEach(function (el) {
+    document.querySelectorAll(".captcha-grid-cell.selected").forEach(el => {
         el.classList.remove("selected");
     });
     captchaSubmitBtn.disabled = true;
 }
 
-function initVerification() {
+// ---------- 拿题（首次） ----------
+async function initVerification() {
     if (!tempToken) {
         showCaptchaError("缺少验证令牌");
         hideCaptcha();
@@ -441,10 +450,11 @@ function initVerification() {
     setCaptchaLoading(true);
     updateCenterMessage("正在加载验证图片...");
     resetCaptchaSelection();
-    requestCaptcha(null);
+    await requestCaptcha(null);
 }
 
-function submitCaptcha() {
+// ---------- 提交答案 ----------
+async function submitCaptcha() {
     if (verificationInProgress) return;
     if (selectedCells.length === 0) return;
 
@@ -452,65 +462,71 @@ function submitCaptcha() {
     captchaSubmitBtn.disabled = true;
     updateCenterMessage("正在验证...");
 
-    requestCaptcha(selectedCells);
+    await requestCaptcha(selectedCells);
 }
 
 // ---------- 统一请求 captcha 接口 ----------
-function requestCaptcha(cells) {
+async function requestCaptcha(cells) {
     const body = cells === null ? {} : { selected_cells: cells };
 
-    fetch(API_BASE + "/v2/captcha/", {
-        method: "POST",
-        headers: {
-            "Authorization": "Bearer " + tempToken,
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify(body)
-    })
-    .then(function (resp) {
+    try {
+        const resp = await fetch(`${API_BASE}/v2/captcha/`, {
+            method: "POST",
+            headers: {
+                "Authorization": `Bearer ${tempToken}`,
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(body),
+        });
+
+        // 状态在 header 里
+        const code = resp.headers.get("X-Code");
         const status = resp.headers.get("X-Captcha-Status");
         const message = resp.headers.get("X-Message") || "";
         const cuewordEncoded = resp.headers.get("X-Captcha-Cueword") || "";
 
+        // 成功
         if (status === "success") {
             hideCaptcha();
-            setTimeout(function () {
+            setTimeout(() => {
                 showCaptchaSuccess();
-                setTimeout(function () {
+                setTimeout(() => {
                     resetCaptchaSelection();
                     setCaptchaLoading(false);
+                    // 验证成功 → 重新上传
                     attemptUpload();
                 }, 1000);
             }, 10);
-            return null;
+            return;
         }
 
+        // 失败
         if (status === "failed") {
             showCaptchaError("验证失败: " + message);
             setCaptchaLoading(false);
             hideCaptcha();
+            // 失败后 temp_token 已被后端删除，清掉本地的
             clearTempToken();
-            return null;
+            return;
         }
 
         // processing → 拿新题
-        return resp.blob().then(function (blob) {
-            if (blob && blob.size > 0) {
-                captchaImage.src = URL.createObjectURL(blob);
-                captchaImage.style.display = "block";
-                hideCenterMessage();
-            }
-            if (cuewordEncoded) {
-                cuewordElement.textContent = decodeURIComponent(cuewordEncoded);
-            }
-            resetCaptchaSelection();
-            setCaptchaLoading(false);
-        });
-    })
-    .catch(function (e) {
+        const blob = await resp.blob();
+        if (blob && blob.size > 0) {
+            captchaImage.src = URL.createObjectURL(blob);
+            captchaImage.style.display = "block";
+            hideCenterMessage();
+        }
+        if (cuewordEncoded) {
+            cuewordElement.textContent = decodeURIComponent(cuewordEncoded);
+        }
+        resetCaptchaSelection();
+        setCaptchaLoading(false);
+
+    } catch (e) {
         showCaptchaError("验证请求失败: " + e.message);
         setCaptchaLoading(false);
-    });
+    }
 }
 
 function cancelCaptcha() {
@@ -527,17 +543,17 @@ function cancelCaptcha() {
 // ============================================================
 // 事件绑定
 // ============================================================
-selectBtn.addEventListener("click", function () { fileInput.click(); });
-fileInput.addEventListener("change", function () { handleFiles(fileInput.files); });
+selectBtn.addEventListener("click", () => fileInput.click());
+fileInput.addEventListener("change", () => handleFiles(fileInput.files));
 
-["dragenter", "dragover", "dragleave", "drop"].forEach(function (evt) {
+["dragenter", "dragover", "dragleave", "drop"].forEach(evt => {
     dropArea.addEventListener(evt, preventDefaults, false);
 });
-["dragenter", "dragover"].forEach(function (evt) {
-    dropArea.addEventListener(evt, function () { dropArea.classList.add("highlight"); }, false);
+["dragenter", "dragover"].forEach(evt => {
+    dropArea.addEventListener(evt, () => dropArea.classList.add("highlight"), false);
 });
-["dragleave", "drop"].forEach(function (evt) {
-    dropArea.addEventListener(evt, function () { dropArea.classList.remove("highlight"); }, false);
+["dragleave", "drop"].forEach(evt => {
+    dropArea.addEventListener(evt, () => dropArea.classList.remove("highlight"), false);
 });
 dropArea.addEventListener("drop", handleDrop, false);
 
@@ -547,26 +563,25 @@ captchaCloseBtn.addEventListener("click", cancelCaptcha);
 
 // 生成 16 个格子
 for (let i = 0; i < 16; i++) {
-    (function (idx) {
-        const cell = document.createElement("div");
-        cell.className = "captcha-grid-cell";
-        cell.dataset.index = idx;
-        cell.addEventListener("click", function () {
-            if (verificationInProgress) return;
-            this.classList.toggle("selected");
-            if (this.classList.contains("selected")) {
-                if (selectedCells.indexOf(idx) === -1) selectedCells.push(idx);
-            } else {
-                selectedCells = selectedCells.filter(function (x) { return x !== idx; });
-            }
-            captchaSubmitBtn.disabled = selectedCells.length === 0;
-        });
-        captchaGridOverlay.appendChild(cell);
-    })(i);
+    const cell = document.createElement("div");
+    cell.className = "captcha-grid-cell";
+    cell.dataset.index = i;
+    cell.addEventListener("click", function () {
+        if (verificationInProgress) return;
+        this.classList.toggle("selected");
+        const idx = parseInt(this.dataset.index);
+        if (this.classList.contains("selected")) {
+            if (!selectedCells.includes(idx)) selectedCells.push(idx);
+        } else {
+            selectedCells = selectedCells.filter(x => x !== idx);
+        }
+        captchaSubmitBtn.disabled = selectedCells.length === 0;
+    });
+    captchaGridOverlay.appendChild(cell);
 }
 
 // ============================================================
-// 页面初始化
+// 页面初始化：加载本地 temp_token
 // ============================================================
 loadTempToken();
 </script>
