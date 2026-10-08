@@ -4,11 +4,15 @@
 <div id="content">
 <div id="api">
 <div class="card active">
-<h1>小小素API文档 <div class="command-example">上次更新: 2025-10-28</div></h1>
+<h1>小小素API文档 <div class="command-example">上次更新: 2026-10-08</div></h1>
 <div class="command-section">
-<p><strong>公开本API提供的数据应标注来源：本站/开发者Github/开发者B站。普通请求存在频率限制，可向开发者申请认证请求，<a href="/wiki/api-auth/" style="color:#4285f4;text-decoration:none" target="_blank">认证请求调用方式</a>。</strong></p>
+<p><strong>普通请求存在频率限制，可向开发者申请令牌。</strong></p>
 <div class="api-endpoint">
-<div class="api-source-note">BaseURL: https://api.azsu.top</div>
+<div class="api-source-note-yellow">
+  <strong>注意: </strong>v1 已停止服务，
+  <code>/mcping</code>、<code>/org</code> 为 v1 时期接口，因外部调用较多，暂时保留并内部转发至 v2。
+  请尽快迁移至 <code>/v2/mcping</code>、<code>/v2/org</code>。
+</div>
 <p><strong>通用状态码</strong></p>
 <table class="sponsor-table ban-table">
 <thead><tr><th>HTTP状态码</th><th>Code</th><th>描述</th></tr></thead>
@@ -33,25 +37,27 @@
 <h2>MCPing</h2>
 <div class="command-section">
 <div class="api-endpoint">
-<p><span class="method">GET</span><span class="path">/mcping/json</span></p>
+<p><span class="method">GET</span><span class="path">/v2/mcping/json</span></p>
 <p>返回指定MC服务器的Ping信息(JSON)</p>
 <p><strong>请求参数</strong></p>
 <ul class="param-list">
 <p><i class="fas fa-circle"></i><span class="param">ip</span> - 服务器地址</p>
 </ul>
 <p><strong>请求示例</strong></p>
-<div class="example">https://api.azsu.top/mcping/json?ip=azsu.top</div>
+<div class="example">https://api.azsu.top/v2/mcping/json?ip=azsu.top</div>
 </div>
 <div class="api-endpoint">
-<p><span class="method">GET</span><span class="path">/mcping/image</span></p>
+<p><span class="method">GET</span><span class="path">/v2/mcping/image</span></p>
 <p>返回指定MC服务器的Ping信息(图片)</p>
 <p><strong>请求参数</strong></p>
 <ul class="param-list">
 <p><i class="fas fa-circle"></i><span class="param">ip</span> - 服务器地址</p>
 <p><i class="fas fa-circle"></i><span class="param">watermark</span> - 自定义水印文字(可选)</p>
+<p><i class="fas fa-circle"></i><span class="param">ip2</span> - 服务器地址2(可选)</p>
+<p><i class="fas fa-circle"></i><span class="param">watermark2</span> - 自定义水印文字2(可选)</p>
 </ul>
 <p><strong>请求示例</strong></p>
-<div class="example">https://api.azsu.top/mcping/image?ip=azsu.top&amp;watermark=§c延迟仅供参考§7｜§e小小素交流群:§6199755660§7｜§b制作:阿素本素§3(Az_Su)</div>
+<div class="example">https://api.azsu.top/v2/mcping/image?ip=azsu.top&amp;watermark=§c延迟仅供参考§7｜§e小小素交流群:§6199755660§7｜§b制作:阿素本素§3(Az_Su)</div>
 </div>
 <p><strong>状态码</strong></p>
 <table class="sponsor-table ban-table">
@@ -73,15 +79,15 @@
 <h2>Skin</h2>
 <div class="command-section">
 <div class="api-endpoint">
-<p><span class="method">GET</span><span class="path">/skin/file</span></p>
-<p>返回指定ID由玩家上传的皮肤文件，若没有上传皮肤，正版ID返回正版皮肤，非正版ID返回菜鸟皮肤，用于azsu.top服务器设置皮肤功能。若SkinsRestorer插件无法识别请改为5003端口。【因DDoS攻击，SkinsRestorer插件专用接口(5003端口)已开启白名单，请联系开发者添加】</p>
+<p><span class="method">GET</span><span class="path">/v2/skin_lib/file</span></p>
+<p>返回由玩家自行上传的皮肤文件，若没有上传皮肤，正版ID返回正版皮肤，非正版ID返回一个默认皮肤。</p>
 <div class="api-source-note">正版玩家皮肤来自Mojang API</div>
 <p><strong>请求参数</strong></p>
 <ul class="param-list">
-<p><i class="fas fa-circle"></i><span class="param">player</span> - 玩家ID</p>
+<p><i class="fas fa-circle"></i><span class="param">player</span> - 玩家</p>
 </ul>
 <p><strong>请求示例</strong></p>
-<div class="example">https://api.azsu.top:5003/skin/file?player=Az_Su</div>
+<div class="example">https://api.azsu.top/v2/skin_lib/file?player=Az_Su</div>
 </div>
 <p><strong>状态码</strong></p>
 <table class="sponsor-table ban-table">
@@ -99,7 +105,7 @@
 </table>
 </div>
 </div>
-
+<!--
 <div class="card active">
 <h2>Whois</h2>
 <div class="command-section">
@@ -120,73 +126,73 @@
 </table>
 </div>
 </div>
-
+-->
 <div class="card active">
 <h2>2B2T.ORG</h2>
 <div class="command-section">
 <div class="api-endpoint">
-<p><span class="method">GET</span><span class="path">/org/tablist/image</span></p>
+<p><span class="method">GET</span><span class="path">/v2/org/tablist/image</span></p>
 <p>返回2b2t.org当前在线玩家列表(图片)</p>
 <div class="api-source-note">基于2b2t.vc数据进行二次处理</div>
-<div class="example">https://api.azsu.top/org/tablist/image</div>
+<div class="example">https://api.azsu.top/v2/org/tablist/image</div>
 </div>
 <div class="api-endpoint">
-<p><span class="method">GET</span><span class="path">/org/rankings/playtime/image</span></p>
+<p><span class="method">GET</span><span class="path">/v2/org/rankings/playtime/image</span></p>
 <p>返回2b2t.org近一个月在线时长排行榜前20名(图片)</p>
 <div class="api-source-note">基于2b2t.vc数据进行二次处理</div>
-<div class="example">https://api.azsu.top/org/rankings/playtime/image</div>
+<div class="example">https://api.azsu.top/v2/org/rankings/playtime/image</div>
 </div>
 <div class="api-endpoint">
-<p><span class="method">GET</span><span class="path">/org/rankings/kills/image</span></p>
+<p><span class="method">GET</span><span class="path">/v2/org/rankings/kills/image</span></p>
 <p>返回2b2t.org近一个月击杀数排行榜前20名(图片)</p>
 <div class="api-source-note">基于2b2t.vc数据进行二次处理</div>
-<div class="example">https://api.azsu.top/org/rankings/kills/image</div>
+<div class="example">https://api.azsu.top/v2/org/rankings/kills/image</div>
 </div>
 <div class="api-endpoint">
-<p><span class="method">GET</span><span class="path">/org/rankings/deaths/image</span></p>
+<p><span class="method">GET</span><span class="path">/v2/org/rankings/deaths/image</span></p>
 <p>返回2b2t.org近一个月死亡数排行榜前20名(图片)</p>
 <div class="api-source-note">基于2b2t.vc数据进行二次处理</div>
-<div class="example">https://api.azsu.top/org/rankings/deaths/image</div>
+<div class="example">https://api.azsu.top/v2/org/rankings/deaths/image</div>
 </div>
 <div class="api-endpoint">
-<p><span class="method">GET</span><span class="path">/org/rankings/playtime/json</span></p>
+<p><span class="method">GET</span><span class="path">/v2/org/rankings/playtime/json</span></p>
 <p>返回指定玩家在2b2t.org近一个月在线时长的排名信息</p>
 <div class="api-source-note">基于2b2t.vc数据进行二次处理</div>
 <p><strong>请求参数</strong></p>
 <ul class="param-list">
 <p><i class="fas fa-circle"></i><span class="param">player</span> - 玩家ID</p>
 </ul>
-<div class="example">https://api.azsu.top/org/rankings/playtime/json?player=_Xiaozhen_</div>
+<div class="example">https://api.azsu.top/v2/org/rankings/playtime/json?player=_Xiaozhen_</div>
 </div>
 <div class="api-endpoint">
-<p><span class="method">GET</span><span class="path">/org/rankings/kills/json</span></p>
+<p><span class="method">GET</span><span class="path">/v2/org/rankings/kills/json</span></p>
 <p>返回指定玩家在2b2t.org近一个月击杀数的排名信息</p>
 <div class="api-source-note">基于2b2t.vc数据进行二次处理</div>
 <p><strong>请求参数</strong></p>
 <ul class="param-list">
 <p><i class="fas fa-circle"></i><span class="param">player</span> - 玩家ID</p>
 </ul>
-<div class="example">https://api.azsu.top/org/rankings/kills/json?player=_Xiaozhen_</div>
+<div class="example">https://api.azsu.top/v2/org/rankings/kills/json?player=_Xiaozhen_</div>
 </div>
 <div class="api-endpoint">
-<p><span class="method">GET</span><span class="path">/org/rankings/deaths/json</span></p>
+<p><span class="method">GET</span><span class="path">/v2/org/rankings/deaths/json</span></p>
 <p>返回指定玩家在2b2t.org近一个月死亡数的排名信息</p>
 <div class="api-source-note">基于2b2t.vc数据进行二次处理</div>
 <p><strong>请求参数</strong></p>
 <ul class="param-list">
 <p><i class="fas fa-circle"></i><span class="param">player</span> - 玩家ID</p>
 </ul>
-<div class="example">https://api.azsu.top/org/rankings/deaths/json?player=_Xiaozhen_</div>
+<div class="example">https://api.azsu.top/v2/org/rankings/deaths/json?player=_Xiaozhen_</div>
 </div>
 <div class="api-endpoint">
-<p><span class="method">GET</span><span class="path">/org/rankings/all/json</span></p>
+<p><span class="method">GET</span><span class="path">/v2/org/rankings/all/json</span></p>
 <p>返回指定玩家在2b2t.org近一个月的全部排名信息</p>
 <div class="api-source-note">基于2b2t.vc数据进行二次处理</div>
 <p><strong>请求参数</strong></p>
 <ul class="param-list">
 <p><i class="fas fa-circle"></i><span class="param">player</span> - 玩家ID</p>
 </ul>
-<div class="example">https://api.azsu.top/org/rankings/all/json?player=_Xiaozhen_</div>
+<div class="example">https://api.azsu.top/v2/org/rankings/all/json?player=_Xiaozhen_</div>
 </div>
 <p><strong>状态码</strong></p>
 <table class="sponsor-table ban-table">
@@ -199,7 +205,7 @@
 </table>
 </div>
 </div>
-
+<!--
 <div class="card active">
 <h2>2B2T.GG</h2>
 <div class="command-section">
@@ -267,6 +273,7 @@
 <div class="example">https://api.azsu.top/gg/rankings/image/playtime</div>
 </div>
 </div>
+-->
 </div>
 </div>
 </div>
